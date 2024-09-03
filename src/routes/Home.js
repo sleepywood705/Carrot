@@ -1,4 +1,5 @@
 import './Home.css'
+import { Link } from 'react-router-dom';
 
 
 export function Home() {
@@ -16,9 +17,11 @@ export function Home() {
                     </span>
                     에서 시작합니다
                 </p>
+                <Link to="/trial">체험해보기</Link>
             </section>
             <section className="sect2">
                 <p>오늘도 내 앞을 지나는 택시</p>
+                <img src="/img/taxi.jpg" alt="taxi"/>
                 <img src="/img/taxi.jpg" alt="taxi"/>
             </section>
             <section className="sect3">
