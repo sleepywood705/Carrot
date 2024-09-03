@@ -1,10 +1,9 @@
 import './Header.css'
 import { Link } from 'react-router-dom';
 
-
-export function Header() {
+export function Header({ isScrolled }) {
     return (
-        <header>
+        <header className={isScrolled ? 'scrolled' : ''}>
             <Link to="/" id="logo">
                 <img src="/img/logo.svg" alt="logo" />
                 당근마차
@@ -20,4 +19,4 @@ export function Header() {
             </Link>
         </header>
     );
-};  
+};

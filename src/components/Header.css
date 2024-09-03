@@ -6,8 +6,7 @@ header {
     display: flex;
     align-items: center;
 }
-header > a,
-header > button {
+header > a {
     padding: 0 20px;
     width: fit-content; height: 100%;
     color: #fff;
@@ -32,14 +31,18 @@ header > a > div {
 header > a > div > img {
     height: 50%;
 }
-#logo { 
+header.scrolled a {
+    color: #000;
+}
+#logo {
+    position: relative;
     margin-right: auto;
     aspect-ratio: 2 / 1;
     color: #FF6F0F;
     font-size: 24px;
     font-weight: 900;
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center
+}
+#logo > img {
+    position: absolute;
+    left: 7%; top: 18%;
 }
