@@ -1,12 +1,14 @@
 header {
+    z-index: 999;
+    position: fixed;
+    padding: 0 320px;
     width: 100vw; height: 80px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    /* border: 1px solid #000; */
 }
-header > a {
-    height: 100%; aspect-ratio: 2 / 1;
+header > a,
+header > button {
+    height: 100%; aspect-ratio: 1;
     font-size: 17px;
     display: grid;
     place-items: center;
@@ -14,18 +16,28 @@ header > a {
 header > a > img {
     height: 40px;
 }
-header > a > button {
+header > a > div {
     width: 120px; height: 40px;
+    color: #000;
     font-size: 14px;
     border-radius: 50px;
     background-color: #f2f2f2;
+    gap: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+header > a > div > img {
+    height: 50%;
 }
 #logo { 
+    margin-right: auto;
+    aspect-ratio: 2 / 1;
     color: #FF6F0F;
     font-size: 24px;
     font-weight: 900;
     gap: 10px;
     display: flex;
-    align-content: center;
-    justify-content: center;
+    align-items: center;
+    justify-content: center
 }

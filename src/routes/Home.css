@@ -1,0 +1,11 @@
+#Home {
+    width: 100vw; height: fit-content;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+#Home .cont_video {
+    position: relative;
+    width: 100%; height: 100vh;
+    border: 1px solid #000;
+}
