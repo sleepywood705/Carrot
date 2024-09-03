@@ -1,19 +1,21 @@
 header {
     z-index: 999;
     position: fixed;
-    padding: 0 320px;
+    padding: 0 160px;
     width: 100vw; height: 80px;
     display: flex;
     align-items: center;
 }
 header > a,
 header > button {
-    height: 100%; aspect-ratio: 1;
+    padding: 0 20px;
+    width: fit-content; height: 100%;
+    color: #fff;
     font-size: 17px;
     display: grid;
     place-items: center;
 }
-header > a > img {
+header > a > img {  
     height: 40px;
 }
 header > a > div {

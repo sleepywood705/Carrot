@@ -10,8 +10,8 @@ export function Header() {
                 당근마차
             </Link>
             <Link to="/guide">이용가이드</Link>
-            <button>로그인</button>
-            <button>회원가입</button>
+            <Link to="/sign">로그인</Link>
+            <Link to="/sign">회원가입</Link>
             <Link to="/trial">
                 <div> 
                     <img src="/img/logo.svg" alt="logo" />
@@ -20,4 +20,4 @@ export function Header() {
             </Link>
         </header>
     );
-};
+};  
