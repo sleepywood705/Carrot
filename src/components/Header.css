@@ -1,0 +1,31 @@
+header {
+    width: 100vw; height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid #000; */
+}
+header > a {
+    height: 100%; aspect-ratio: 2 / 1;
+    font-size: 17px;
+    display: grid;
+    place-items: center;
+}
+header > a > img {
+    height: 40px;
+}
+header > a > button {
+    width: 120px; height: 40px;
+    font-size: 14px;
+    border-radius: 50px;
+    background-color: #f2f2f2;
+}
+#logo { 
+    color: #FF6F0F;
+    font-size: 24px;
+    font-weight: 900;
+    gap: 10px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}

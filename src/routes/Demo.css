@@ -1,0 +1,11 @@
+#Demo {
+    padding: 0 160px;
+    width: 100%; height: 100%;
+    border: 1px solid red;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+#Demo > section {
+    width: 100%; height: 100%;
+    border: 1px solid #000;
+}
