@@ -5,12 +5,13 @@ header {
     width: 100vw; height: 80px;
     display: flex;
     align-items: center;
+    background-color: black;
 }
 header > a,
 header > button {
     padding: 0 20px;
     width: fit-content; height: 100%;
-    color: #fff;
+    color: #ffffff;
     font-size: 17px;
     display: grid;
     place-items: center;

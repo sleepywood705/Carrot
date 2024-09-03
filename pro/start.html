@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가치타 - 똑똑한 카풀 택시앱!</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #333;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .hero {
+            background-color: #f0f0f0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .bubble-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .bubble {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+            text-align: center;
+        }
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .feature {
+            width: 45%;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            border-radius: 10px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">회사소개</a></li>
+                <li><a href="#">서비스 소개</a></li>
+                <li><a href="#">이용 가이드</a></li>
+                <li><a href="#">자주 묻는 질문</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div>
+            <h1>같이타서 가치있는 모빌리티 앱</h1>
+            <p>모두를 위한 이동수단의 혁신</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>매일매일 반복되는 어른이들의 고민</h2>
+        <div class="bubble-container">
+            <div class="bubble"><p><strong>사회초년생</strong><br>자차가 꼭 필요할까?</p></div>
+            <div class="bubble"><p><strong>뚜벅이</strong><br>혼자 제주 여행 관광 명소가 멀다면?</p></div>
+            <div class="bubble"><p><strong>프로지각러</strong><br>이번 달 택시비도 폭탄이네..</p></div>
+            <div class="bubble"><p><strong>직장인</strong><br>숨막히는 지옥철</p></div>
+            <div class="bubble"><p><strong>환경사랑</strong><br>탄소 제로시티 함께해요</p></div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>60% 절약되는 같이 타기 이렇게 해요</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>누구나 쏠쏠한 혜택 - 공통 편</h3>
+                <p>#guide common</p>
+            </div>
+            <div class="feature">
+                <h3>같이 가실 분 구함 - 메이커 편</h3>
+                <p>#guide maker</p>
+            </div>
+            <div class="feature">
+                <h3>저요~ 같이가요! - 투게더 편</h3>
+                <p>#guide together</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>쓸수록 좋은 가치타 - 같이 타서 특별한 4가지 이유</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>똑똑한 비용 나누기</h3>
+                <p>이동하는 기회를 공유해보세요. 내가 받고 싶은 금액을 설정하고 나누면 교통비가 확 줄겠죠?</p>
+            </div>
+            <div class="feature">
+                <h3>현금화 가능한 포인트</h3>
+                <p>사용한 만큼 돌려받아요. 등급 달성 시 늘어나는 혜택, 포인트는 내 계좌로 받아요.</p>
+            </div>
+            <div class="feature">
+                <h3>자동 결제 시스템</h3>
+                <p>매칭부터 이용 완료까지 대화는 필요하지 않아요. 이미 중고거래에서 우리는 경험해 봤을 거예요.</p>
+            </div>
+            <div class="feature">
+                <h3>탄소 배출 절감에 기여</h3>
+                <p>환경을 보호해요! 같이 이동함으로써 복잡했던 도로의 차량이 줄고, 탄소 배출 절감에 기여할 수 있어요.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>(주)가치 주식회사 가치</p>
+        <p>사업자 등록번호:131-86-71725 대표 : 송우일</p>
+        <p>41028 대구 동구 팔공로 227 대구 텍스타일 콤플렉스 815호</p>
+        <p>Copylight ⓒ Gachi. All rights reserved.</p>
+    </footer>
+</body>
+</html>
