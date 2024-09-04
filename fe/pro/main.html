@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>당근마차 - 카풀/택시 서비스</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">당근마차</div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">홈</a></li>
+                        <li><a href="#search">검색</a></li>
+                        <li><a href="#about">서비스 소개</a></li>
+                        <li><a href="#contact">고객센터</a></li>
+                        <li id="loginButton"><a href="#login">로그인</a></li>
+                        <li id="signupButton"><a href="#signup">회원가입</a></li>
+                        <li id="profileButton" style="display: block;">😊</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="main-content">
+            <section class="search-section">
+                <h2 class="search-title">카풀/택시팟을 찾아볼까요?</h2>
+                <form class="search-form" onsubmit="event.preventDefault(); searchTrips();">
+                    <input type="text" id="departure" class="search-input" placeholder="출발지">
+                    <input type="text" id="arrival" class="search-input" placeholder="도착지">
+                    <input type="date" id="tripDate" class="search-input">
+                    <button type="submit" class="search-button">검색</button>
+                </form>
+                <div class="post-filter">
+                    <button class="filter-button active">탑승자</button>
+                    <button class="filter-button">운전자</button>
+                    <button class="filter-button">택시</button>
+                </div>
+                </div>
+            </section>
+            <section class="info-section">
+                <h3>최근 게시물</h3>
+                <div id="tripList" class="recent-trips">
+                    <!-- 게시물은 JavaScript로 동적으로 추가됩니다 -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 당근마차. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 로그인 모달 -->
+    <div id="loginModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>로그인</h2>
+            <form id="loginForm">
+                <input type="text" id="loginUsername" placeholder="사용자 이름" required>
+                <input type="password" id="loginPassword" placeholder="비밀번호" required>
+                <button type="submit">로그인</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 회원가입 모달 -->
+    <div id="signupModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>회원가입</h2>
+            <form id="signupForm">
+                <input type="text" id="signupUsername" placeholder="사용자 이름" required>
+                <input type="password" id="signupPassword" placeholder="비밀번호" required>
+                <input type="email" id="signupEmail" placeholder="이메일" required>
+                <button type="submit">회원가입</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 프로필 메뉴 -->
+    <div id="profileMenu" class="profile-menu">
+        <div class="profile-menu-content">
+            <h2 id="profileUsername">황종완</h2>
+            <p>⭐ 0 · 후기 0 ></p>
+            <div class="profile-section">
+                <h3>C pay</h3>
+                <p>0원 ></p>
+            </div>
+            <div class="profile-section">
+                <p>C pay 카챔페이 더 알아보기 ></p>
+            </div>
+            <div class="menu-items">
+                <div class="menu-item">관심목록 ></div>
+                <div class="menu-item">작성한 후기 ></div>
+                <div class="menu-item">회사 인증 ></div>
+                <div class="menu-item">차량/운전면허 관리 ></div>
+                <div class="menu-item">이용내역 ></div>
+                <div class="menu-item">결제내역 ></div>
+                <div class="menu-item">결제수단 관리 ></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

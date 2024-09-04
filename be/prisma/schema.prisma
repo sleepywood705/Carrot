@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    Int            @id @default(autoincrement())
+  email                 String         @unique
+  password              String
+  name                  String?       
+  point                 Int            @default(10000)
+  role                  Role           @default(USER)
+  posts                 Post[]
+  reservationsMade      Reservastion[] @relation("ReservationsMade")
+}
+
+model Post {
+  id                    Int            @id @default(autoincrement())
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  title                 String
+  author                User           @relation(fields: [authorId], references: [id])
+  authorId              Int @unique
+  reservations          Reservastion[]
+  Reservastion          Reservastion[] @relation("BookedReservations")
+}
+
+model Reservastion {
+  id                    Int            @id @default(autoincrement())
+  comment               String?
+  post                  Post           @relation(fields: [postId], references: [id])
+  postId                Int            @map("postId")
+
+  booker                User           @relation("ReservationsMade", fields: [bookerId], references: [id])
+  bookerId              Int            @map("bookerId")
+             
+  booked                Post           @relation("BookedReservations", fields: [bookedId], references: [authorId])
+  bookedId              Int            @map("bookedId")
+}
+
+enum Role {
+  USER
+  DRIVER
+  ADMIN
+}
