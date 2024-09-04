@@ -1,0 +1,24 @@
+header {
+    z-index: 999;
+    position: fixed;
+    padding: 0 160px;
+    width: 100vw; height: 80px;
+    display: flex;
+    align-items: center;
+}
+header > a,
+header > button,
+header > span {
+    padding: 0 20px;
+    width: fit-content; height: 100%;
+    font-size: 16px;
+    display: grid;
+    place-items: center;
+    /* border: 1px solid #000; */
+}
+header > a:nth-child(1) {
+    margin-right: auto;
+    color: #FF6F0F;
+    font-size: 30px;
+    font-weight: 800;
+}
