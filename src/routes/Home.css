@@ -2,10 +2,117 @@
     width: 100vw; height: fit-content;
     display: flex;
     flex-direction: column;
+}
+#Home > section {
+    position: relative;
+}
+.sect1 {
+    width: 100%; height: 100vh;
+    /* border: 1px solid #fff; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
 }
-#Home .cont_video {
+.sect1 > a {
     position: relative;
+    margin: 40px auto 0;
+    padding: 8px 16px;
+    color: #FF6F0F;
+    font-size: 18px;
+    font-weight: 600;
+    border: 1px solid #fff;
+    border-radius: 50px;
+    background-color: #fff;
+    display: grid;
+    place-items: center;
+}
+video {
+    z-index: -1;
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+}
+.sect1 > p {
+    color: #fff;
+    font-size: 50px;
+}
+.sect1 > p span {
+    position: relative;
+    color: #FF6F0F;
+    font-size: 70px;
+    font-weight: 700;
+}
+.sect1 > p span img {
+    position: absolute;
+    left: -60px; top: -20px;
+    height: 90px;
+}
+.sect2,
+.sect3 {
     width: 100%; height: 100vh;
-    border: 1px solid #000;
+}
+.sect2 {
+    display: flex;
+    /* border: 1px solid #000; */
+}
+.sect2 > p{
+    z-index: 1;
+    margin: 160px auto auto;
+    font-size: 40px;
+    font-weight: 600;
+}
+.sect2 > img {
+    position: absolute;
+    height: 200px;
+}
+.sect2 > img:nth-child(2) {
+    animation: movingCar 5s infinite linear;
+}
+.sect2 > img:nth-child(3) {
+    animation: movingCar2 5s infinite linear;
+}
+@keyframes movingCar {
+    0% {
+        right: 0%; top: 0%;
+    }
+    100% {
+        right: 100%; top: 100%;
+    }
+}
+@keyframes movingCar2 {
+    0% {
+        right: 302px; top: 400px;
+    }
+    100% {
+        right: calc(100% + 302px); top: calc(100% + 400px);
+    }
+}
+.sect3 img {
+    position: absolute;
+}
+.sect3 img:nth-child(1) {
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+}
+.sect3 img:nth-child(2) {
+    left: 60%; top: 40%;
+    transform: translate(-50%, -50%);
+}
+.sect3 img:nth-child(3) {
+    left: 60%; top: 60%;
+    transform: translate(-50%, -50%);
+}
+.sect3 img:nth-child(4) {
+    left: 40%; top: 45%;
+    transform: translate(-50%, -50%);
+}
+.sect3 img:nth-child(5) {
+    left: 63%; top: 45%;
+    transform: translate(-50%, -50%);
+}
+.sect3 img:nth-child(6) {
+    left: 50%; top: 30%;
+    transform: translate(-50%, -50%);
 }

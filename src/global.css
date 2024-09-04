@@ -5,9 +5,6 @@
     scroll-behavior: smooth;
     transition: all 0.5s;
 }
-::-webkit-scrollbar {
-    width: 1px; height: 1px;
-}
 html{
     font-size: 17px;
     scroll-behavior: smooth;

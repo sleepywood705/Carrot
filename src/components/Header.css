@@ -16,31 +16,12 @@ header > button {
     display: grid;
     place-items: center;
 }
-header > a > img {  
-    height: 40px;
-}
-header > a > div {
-    width: 120px; height: 40px;
-    color: #000;
-    font-size: 14px;
-    border-radius: 50px;
-    background-color: #f2f2f2;
-    gap: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-header > a > div > img {
-    height: 50%;
-}
-#logo { 
+header > a:nth-child(1) {
     margin-right: auto;
-    aspect-ratio: 2 / 1;
     color: #FF6F0F;
-    font-size: 24px;
-    font-weight: 900;
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center
+    font-size: 30px;
+    font-weight: 800;
+}
+header.scrolled a {
+    color: #000;
 }

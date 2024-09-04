@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Header.css'
 import { Link } from 'react-router-dom';
 import LoginModal from './LoginModal';
@@ -11,6 +11,7 @@ export function Header() {
     const [showProfileNavbar, setShowProfileNavbar] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('');
+    const [isScrolled, setIsScrolled] = useState(false);
     
     const handleLogin = (loggedInUsername) => {
         setIsLoggedIn(true);
@@ -23,12 +24,26 @@ export function Header() {
         setUsername('');
     };
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const offset = window.scrollY;
+            if (offset > 200) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+    }, []);
+
     return (
-        <header>
-            <Link to="/" id="logo">
-                <img src="/img/logo.svg" alt="logo" />
-                당근마차
-            </Link>
+        <header className={isScrolled ? 'scrolled' : ''}>
+            <Link to="/" id="logo">당근마차</Link>
             <Link to="/guide">이용가이드</Link>
             {isLoggedIn ? (
                 <>
@@ -42,12 +57,7 @@ export function Header() {
                     <button onClick={() => setShowSignupModal(true)}>회원가입</button>
                 </>
             )}
-            <Link to="/main">
-                <div> 
-                    <img src="/img/logo.svg" alt="logo" />
-                    체험해보기
-                </div>
-            </Link>
+            
             {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} onLogin={handleLogin} />}
             {showSignupModal && <SignupModal onClose={() => setShowSignupModal(false)} />}
             {showProfileNavbar && <ProfileNavbar onClose={() => setShowProfileNavbar(false)} />}
@@ -55,3 +65,4 @@ export function Header() {
     );
 };
 
+export default Header;
