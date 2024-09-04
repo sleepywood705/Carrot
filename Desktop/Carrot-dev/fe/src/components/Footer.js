@@ -1,9 +1,0 @@
-import './Footer.css'
-
-export function Footer() {
-    return (
-        <footer id="Footer">
-            
-        </footer>
-    );
-};
