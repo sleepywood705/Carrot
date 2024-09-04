@@ -5,6 +5,7 @@ import './App.css';
 import { Header }  from './components/Header';
 import { Footer } from './components/Footer';
 import { Home } from './routes/Home';
+import MyPage from './components/MyPage';
 import Main  from './routes/Main';
 import { Route, Routes } from 'react-router-dom';
 
@@ -34,8 +35,8 @@ function App() {
       <Header/>
       <Routes>
         <Route path="/" element={<Home/>}/>
-
         <Route path="/Main" element={<Main/>}/>
+        <Route path="/Mypage" element={<MyPage/>}/>
       </Routes>
       <Footer/>
     </div>

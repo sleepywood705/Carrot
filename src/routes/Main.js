@@ -13,6 +13,11 @@ function Main() {
     const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [selectedTrip, setSelectedTrip] = useState(null);
+    const [taxiOption, setTaxiOption] = useState(null);
+    const [waitingTaxis, setWaitingTaxis] = useState([]);
+    const [passengerCount, setPassengerCount] = useState(2);
+    const [estimatedTime, setEstimatedTime] = useState(null);
+    const [estimatedCost, setEstimatedCost] = useState(null);
 
     useEffect(() => {
         // 초기 데이터 설정
@@ -58,6 +63,10 @@ function Main() {
             const filtered = trips.filter(trip => trip.type === filterType);
             setFilteredTrips(filtered);
         }
+        setTaxiOption(null);
+        setWaitingTaxis([]);
+        setEstimatedTime(null);
+        setEstimatedCost(null);
     };
 
     const handleWriteSubmit = (newTrip) => {
@@ -77,6 +86,32 @@ function Main() {
         const updatedTrips = trips.filter(trip => trip !== tripToDelete);
         setTrips(updatedTrips);
         setFilteredTrips(updatedTrips);
+    };
+
+    const handleTaxiOptionSelect = (option) => {
+        setTaxiOption(option);
+        if (option === 'share') {
+            setPassengerCount(2);
+        }
+        // 대기 중인 택시 목록 생성 (실제로는 API 호출 등으로 데이터를 가져와야 함)
+        const dummyTaxis = [
+            { id: 1, driver: '김택시', car: '소나타', plate: '서울 가 1234', rating: 4.5, capacity: 4 },
+            { id: 2, driver: '이운전', car: 'K5', plate: '서울 나 5678', rating: 4.8, capacity: 4 },
+            { id: 3, driver: '박기사', car: 'SM6', plate: '서울 다 9012', rating: 4.2, capacity: 6 },
+        ];
+        setWaitingTaxis(dummyTaxis);
+
+        // 예상 시간과 비용 설정 (실제로는 API를 통해 계산된 값을 받아와야 함)
+        setEstimatedTime(option === 'quick' ? '15분' : '20분');
+        setEstimatedCost(option === 'quick' ? '15,000원' : '10,000원');
+    };
+
+    const handleIncreasePassengers = () => {
+        setPassengerCount(prevCount => Math.min(prevCount + 1, 4));
+    };
+
+    const handleDecreasePassengers = () => {
+        setPassengerCount(prevCount => Math.max(prevCount - 1, 2));
     };
 
     return (
@@ -119,6 +154,62 @@ function Main() {
                         </div>
                     </section>
                     <button onClick={() => setIsWriteModalOpen(true)} className="write-button">글쓰기</button>
+                    
+                    {activeFilter === '택시' && (
+                        <div className="taxi-options">
+                            <button 
+                                onClick={() => handleTaxiOptionSelect('quick')} 
+                                className={`taxi-option-button ${taxiOption === 'quick' ? 'active' : ''}`}
+                            >
+                                빠른 매칭
+                            </button>
+                            <button 
+                                onClick={() => handleTaxiOptionSelect('share')} 
+                                className={`taxi-option-button ${taxiOption === 'share' ? 'active' : ''}`}
+                            >
+                                함께 타기
+                            </button>
+                        </div>
+                    )}
+
+                    {taxiOption === 'share' && (
+                        <div className="passenger-count">
+                            <label>인원 수: </label>
+                            <button onClick={handleDecreasePassengers} disabled={passengerCount <= 2}>-</button>
+                            <span>{passengerCount}명</span>
+                            <button onClick={handleIncreasePassengers} disabled={passengerCount >= 4}>+</button>
+                        </div>
+                    )}
+
+                    {estimatedTime && estimatedCost && (
+                        <div className="taxi-estimates">
+                            <p>예상 소요 시간: {estimatedTime}</p>
+                            <p>예상 요금: {estimatedCost}</p>
+                        </div>
+                    )}
+
+                    {waitingTaxis.length > 0 && (
+                        <section className="waiting-taxis">
+                            <h3>대기 중인 택시</h3>
+                            <div className="taxi-list">
+                                {waitingTaxis.map(taxi => (
+                                    <div key={taxi.id} className="taxi-item">
+                                        <p>기사: {taxi.driver}</p>
+                                        <p>차량: {taxi.car}</p>
+                                        <p>번호판: {taxi.plate}</p>
+                                        <p>평점: {taxi.rating}</p>
+                                        <p>최대 탑승 인원: {taxi.capacity}명</p>
+                                        {taxiOption === 'share' && (
+                                            <p className={taxi.capacity >= passengerCount ? 'available' : 'unavailable'}>
+                                                {taxi.capacity >= passengerCount ? '탑승 가능' : '인원 초과'}
+                                            </p>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
                     <section className="info-section">
                         <h3>최근 게시물</h3>
                         <div id="tripList" className="recent-trips">
