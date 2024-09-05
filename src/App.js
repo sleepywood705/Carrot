@@ -5,6 +5,7 @@ import { Landing } from './routes/Landing';
 import { Header }  from './components/Header';
 import { Footer } from './components/Footer';
 import { Main }  from './routes/Main';
+import { Guide } from './routes/Guide'
 import { Login } from './routes/Login';
 import { Mypage } from './routes/Mypage'
 import { useState, useEffect } from 'react';
@@ -38,7 +39,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing/>}/>
         <Route path="/Main" element={<Main/>}/>
-        {/* <Route path="/Guide" element={<Guide/>}/> */}
+        <Route path="/Guide" element={<Guide/>}/>
         <Route path="/Mypage" element={<Mypage/>}/>
         <Route path="/Login" element={<Login onLogin={handleLogin} />}/>
       </Routes>
