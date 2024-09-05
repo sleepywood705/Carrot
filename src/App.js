@@ -6,6 +6,7 @@ import { Header }  from './components/Header';
 import { Footer } from './components/Footer';
 import { Main }  from './routes/Main';
 import { Login } from './routes/Login';
+import { Mypage } from './routes/Mypage'
 import { useState, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
@@ -37,6 +38,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing/>}/>
         <Route path="/Main" element={<Main/>}/>
+        {/* <Route path="/Guide" element={<Guide/>}/> */}
+        <Route path="/Mypage" element={<Mypage/>}/>
         <Route path="/Login" element={<Login onLogin={handleLogin} />}/>
       </Routes>
       <Footer/>
