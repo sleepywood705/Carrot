@@ -24,9 +24,8 @@ model Post {
   updatedAt             DateTime       @updatedAt
   title                 String
   author                User           @relation(fields: [authorId], references: [id])
-  authorId              Int @unique
+  authorId              Int 
   reservations          Reservastion[]
-  Reservastion          Reservastion[] @relation("BookedReservations")
 }
 
 model Reservastion {
@@ -34,12 +33,8 @@ model Reservastion {
   comment               String?
   post                  Post           @relation(fields: [postId], references: [id])
   postId                Int            @map("postId")
-
   booker                User           @relation("ReservationsMade", fields: [bookerId], references: [id])
-  bookerId              Int            @map("bookerId")
-             
-  booked                Post           @relation("BookedReservations", fields: [bookedId], references: [authorId])
-  bookedId              Int            @map("bookedId")
+  bookerId              Int            @map("bookerId")     
 }
 
 enum Role {

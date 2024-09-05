@@ -33,15 +33,3 @@ CREATE TABLE `Reservastion` (
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- AddForeignKey
-ALTER TABLE `Post` ADD CONSTRAINT `Post_authorId_fkey` FOREIGN KEY (`authorId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Reservastion` ADD CONSTRAINT `Reservastion_postId_fkey` FOREIGN KEY (`postId`) REFERENCES `Post`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Reservastion` ADD CONSTRAINT `Reservastion_bookerId_fkey` FOREIGN KEY (`bookerId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Reservastion` ADD CONSTRAINT `Reservastion_bookedId_fkey` FOREIGN KEY (`bookedId`) REFERENCES `Post`(`authorId`) ON DELETE RESTRICT ON UPDATE CASCADE;
