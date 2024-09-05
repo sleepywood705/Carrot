@@ -22,3 +22,8 @@ header > a:nth-child(1) {
     font-size: 30px;
     font-weight: 800;
 }
+.landing-header a, 
+.landing-header span, 
+.landing-header button {
+    color: #fff; /* Landing 페이지에서만 흰색 적용 */
+}

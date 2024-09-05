@@ -13,12 +13,6 @@
   overflow: hidden;
 }
 
-.write-containter > video {
-  position: absolute;
-  left: 50%; bottom: 0;
-  filter: brightness(50%);
-}
-
 .write-button {
   position: absolute;
   left: 320px; top: 50%;
