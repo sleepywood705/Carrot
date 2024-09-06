@@ -4,7 +4,7 @@ export class ReservationsService {
 
     createReservation = async (from, to, date, postId, bookerId) => {
         if (!from || !to || !date || !postId || !bookerId) {
-            throw new Error('=');
+            throw new Error('All reservation details (from, to, date, postId, bookerId) are required');
         }
         const createdReservation = await this.reservationsRepository.createReservation(from, to, date, postId, bookerId);
         return createdReservation;
