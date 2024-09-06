@@ -1,5 +1,5 @@
 import "./Main.css";
-import { ModalPost } from "../components/Modal_Post";
+import { ModalPosting } from "../components/Modal_Posting";
 import { ModalEditor } from "../components/Modal_Editor";
 import { useState, useEffect } from "react";
 
@@ -139,6 +139,7 @@ export function Main() {
     setTrips(updatedTrips);
     setFilteredTrips(updatedTrips);
   };
+
   return (
     <div id="Main">
       <div className="banner">
@@ -243,7 +244,7 @@ export function Main() {
           </div>
         </section>
       </div>
-      <ModalPost
+      <ModalPosting
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
         onSubmit={handleWriteSubmit}
