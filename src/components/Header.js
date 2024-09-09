@@ -19,7 +19,7 @@ export function Header({ isLoggedIn, username, onLogout }) {
 			{isLoggedIn && (
 				<button 
 					className={onBoarding ? 'invert' : ''} 
-					onClick={togglePersonalNav} // 클릭 시 상태 변경
+					onClick={togglePersonalNav}
 				>
 					{username}님 ㅎㅇ
 				</button>
@@ -29,8 +29,7 @@ export function Header({ isLoggedIn, username, onLogout }) {
 			) : (
 				<Link to="/login" className={onBoarding ? 'invert' : ''}>로그인</Link>
 			)}
-			<Link to="/login" className={onBoarding ? 'invert' : ''}>회원가입</Link>
-
+			<Link to="/signup" className={onBoarding ? 'invert' : ''}>회원가입</Link>
 			{showPersonalNav && <PersonalNav onClose={togglePersonalNav} username={username} />}
 		</header>
 	);

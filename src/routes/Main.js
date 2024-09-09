@@ -143,9 +143,9 @@ export function Main() {
   return (
     <div id="Main">
       <div className="banner">
-        <video autoPlay muted loop>
+        {/* <video autoPlay muted loop>
           <source src="/vid/vid2.mp4" />
-        </video>
+        </video> */}
       </div>
       <div className="content">
         <section className="sct_search">

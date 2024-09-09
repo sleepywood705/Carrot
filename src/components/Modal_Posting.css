@@ -19,7 +19,7 @@
   color: #666;
   font-weight: 500;
 }
-#ModalPosting .left .cnt_map,
+#ModalPosting .left #map,
 #ModalPosting form > div:not(.wrap_route, .calendar, .wrap_btn),
 #ModalPosting form > select,
 #ModalPosting form > input[type="time"],
@@ -34,9 +34,8 @@
   display: flex;
   align-items: start;
 }
-#ModalPosting .left .cnt_map {
+#ModalPosting .left #map {
   height: 100%; aspect-ratio: 1;
-  background: url(/public/img/map_temp.jpg) center/cover no-repeat;
 }
 #ModalPosting .right {
   padding-right: 320px;

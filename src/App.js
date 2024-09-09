@@ -7,6 +7,7 @@ import { Footer } from './components/Footer';
 import { Main }  from './routes/Main';
 import { Guide } from './routes/Guide'
 import { Login } from './routes/Login';
+import { Signup } from './routes/Signup';
 import { Mypage } from './routes/Mypage'
 import { useState, useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -38,12 +39,13 @@ function App() {
       <Header isLoggedIn={isLoggedIn} username={username} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<Landing/>}/>
-        <Route path="/Main" element={<Main/>}/>
-        <Route path="/Guide" element={<Guide/>}/>
-        <Route path="/Mypage" element={<Mypage/>}/>
-        <Route path="/Login" element={<Login onLogin={handleLogin} />}/>
+        <Route path="/main" element={<Main/>}/>
+        <Route path="/guide" element={<Guide/>}/>
+        <Route path="/mypage" element={<Mypage/>}/>
+        <Route path="/login" element={<Login onLogin={handleLogin} />}/>
+        <Route path="/signup" element={<Signup/>}/>
       </Routes>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   ); 
 }

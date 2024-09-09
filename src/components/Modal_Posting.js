@@ -2,6 +2,7 @@ import './Modal_Posting.css'
 import './Calendar.css'
 import { useState, useEffect } from 'react';
 
+// const { kakao } = window;
 
 export function ModalPosting({ isOpen, onClose, onSubmit }) {
 
@@ -10,6 +11,7 @@ export function ModalPosting({ isOpen, onClose, onSubmit }) {
   const [arrival, setArrival] = useState('');
   const [time, setTime] = useState('');
   const [date, setDate] = useState('');
+  const [textArea, setTextArea] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,10 +24,8 @@ export function ModalPosting({ isOpen, onClose, onSubmit }) {
     onClose();
   };
 
-  const [textArea, setTextArea] = useState(''); // 입력된 텍스트 상태
-
   const handleTextTyping = (e) => {
-    setTextArea(e.target.value); // 텍스트가 변경될 때 상태 업데이트
+    setTextArea(e.target.value);
   };
 
   if (!isOpen) return null;
@@ -33,7 +33,7 @@ export function ModalPosting({ isOpen, onClose, onSubmit }) {
   return (
     <div id="ModalPosting">
       <div className="left">
-        <div className="cnt_map"/>
+        <KakaoMap/>
       </div>
       <div className="right">
         <form onSubmit={handleSubmit}>
@@ -100,7 +100,26 @@ export function ModalPosting({ isOpen, onClose, onSubmit }) {
   );
 }
 
-const Calendar = () => {
+function KakaoMap() {
+  useEffect(() => {
+    if (window.kakao && window.kakao.maps) {
+      const container = document.getElementById('map');
+      const option = {
+        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3,
+      };
+      const map = new window.kakao.maps.Map(container, option);
+    } else {
+      console.error("Kakao 객체가 정의되지 않았습니다.");
+    }
+  }, []);
+  return (
+    <div id="map"></div>
+  )
+}
+
+
+function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [daysInMonth, setDaysInMonth] = useState([]);
 
@@ -108,22 +127,18 @@ const Calendar = () => {
     generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
   }, [currentDate]);
 
-  // 달력 생성 함수
   const generateCalendar = (year, month) => {
-    const firstDayOfMonth = new Date(year, month, 1).getDay(); // 그 달의 첫째 날 요일
-    const lastDateOfMonth = new Date(year, month + 1, 0).getDate(); // 그 달의 마지막 날
-    const lastDateOfPrevMonth = new Date(year, month, 0).getDate(); // 이전 달의 마지막 날
+    const firstDayOfMonth = new Date(year, month, 1).getDay();
+    const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
+    const lastDateOfPrevMonth = new Date(year, month, 0).getDate();
 
-    // 달력 배열 생성
     const calendarDays = [];
     let week = [];
 
-    // 이전 달 날짜 채우기 (해당 월의 첫 번째 날 이전의 빈칸)
     for (let i = firstDayOfMonth - 1; i >= 0; i--) {
       week.push({ day: lastDateOfPrevMonth - i, isCurrentMonth: false });
     }
 
-    // 현재 달 날짜 채우기
     for (let day = 1; day <= lastDateOfMonth; day++) {
       week.push({ day, isCurrentMonth: true });
       if (week.length === 7) {
@@ -132,7 +147,6 @@ const Calendar = () => {
       }
     }
 
-    // 다음 달 날짜 채우기 (빈칸을 채울 만큼)
     let nextMonthDay = 1;
     while (week.length < 7) {
       week.push({ day: nextMonthDay++, isCurrentMonth: false });
@@ -142,15 +156,13 @@ const Calendar = () => {
     setDaysInMonth(calendarDays);
   };
 
-  // 이전 달로 이동
   const handlePrevMonth = (event) => {
-    event.preventDefault(); // 기본 동작 막기
+    event.preventDefault();
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
   };
 
-  // 다음 달로 이동
   const handleNextMonth = (event) => {
-    event.preventDefault(); // 기본 동작 막기
+    event.preventDefault();
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
   };
 
@@ -172,7 +184,7 @@ const Calendar = () => {
               <th
                 key={index}
                 style={{
-                  color: index === 0 || index === 6 ? '#0075ff' : '#000', // 일요일과 토요일은 파란색
+                  color: index === 0 || index === 6 ? '#0075ff' : '#000',
                 }}
               >
                 {day}
@@ -189,9 +201,9 @@ const Calendar = () => {
                   style={{
                     color: isCurrentMonth
                       ? dayIndex === 0 || dayIndex === 6
-                        ? '#0075ff' // 현재 달의 일요일과 토요일은 파란색
+                        ? '#0075ff'
                         : '#000'
-                      : '#aaa', // 해당 월이 아닌 날은 회색
+                      : '#aaa',
                   }}
                 >
                   {day}
