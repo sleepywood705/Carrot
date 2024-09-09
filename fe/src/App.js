@@ -17,7 +17,7 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);  // 라우팅 시 스크롤을 맨 위로 이동
+    window.scrollTo(0, 0);
   }, [location]);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,7 +27,7 @@ function App() {
   const handleLogin = (user) => {
     setUsername(user);
     setIsLoggedIn(true);
-    navigate(-1);  // 이전 경로로 리다이렉션
+    navigate(-1);
   };
 
   const handleLogout = () => {
@@ -38,11 +38,11 @@ function App() {
     <div className="App">
       <Header isLoggedIn={isLoggedIn} username={username} onLogout={handleLogout} />
       <Routes>
-        <Route path="/" element={<Landing/>}/>
+        <Route path="/" element={<Landing isLoggedIn={isLoggedIn}/>}/>
         <Route path="/main" element={<Main/>}/>
         <Route path="/guide" element={<Guide/>}/>
         <Route path="/mypage" element={<Mypage/>}/>
-        <Route path="/login" element={<Login onLogin={handleLogin} />}/>
+        <Route path="/login" element={<Login onLogin={handleLogin}/>}/>
         <Route path="/signup" element={<Signup/>}/>
       </Routes>
       {/* <Footer/> */}

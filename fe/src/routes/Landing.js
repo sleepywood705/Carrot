@@ -2,7 +2,7 @@ import './Landing.css'
 import { Link } from 'react-router-dom';
 
 
-export function Landing() {
+export function Landing({ isLoggedIn }) {
 	return (
 		<div id="Landing">
 			<section className="sect1">
@@ -11,7 +11,9 @@ export function Landing() {
 				</video>
 				<p>더 <span>스마트</span>한 이동</p>
 				<p><span>당근마차</span>에서 시작됩니다</p>
-				<Link to="/main" className="btn-trial">체험해보기</Link>
+				{isLoggedIn && (
+					<Link to="/main" className="btn-trial">체험해보기</Link>
+				)}
 			</section>
 			<section className="sect2">
 				<p>오늘도 나를 지나치는 <span>택시</span></p>

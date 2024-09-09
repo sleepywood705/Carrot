@@ -7,11 +7,11 @@
   flex-direction: column;
   align-items: center;
 }
-#Login > form,
-#Login > div,
-#Login > button {
+#Login form {
   width: 340px;
-  border-radius: 4px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
 }
 #Login h2 {
   height: 60px;
@@ -20,25 +20,18 @@
   font-weight: 800;
   text-align: center;
 }
-#Login form {
-  margin-bottom: 80px;
-  gap: 10px;
-  display: flex;
-  flex-direction: column;
-}
-#Login form a {
+#Login a {
   display: grid;
   place-items: center;
 }
-#Login form a,
-#Login form button,
+#Login a,
 #Login input[type="text"],
-#Login input[type="password"] {
+#Login input[type="password"],
+#Login button[type="submit"] {
   padding-left: 10px;
   width: 100%; height: 40px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  outline: none;
 }
 #Login input::placeholder {
   font-size: 14px;
@@ -46,6 +39,7 @@
 #Login button[type="submit"] {
   color: #fff;
   width: 100%; height: 40px;
+  border: none;
   background-color: #FF6F0F;
 }
 #Login .wrap {
@@ -73,6 +67,8 @@
   padding: 0 10px;
   background-color: #fff;
 }
+
+
 #Login .kakao,
 #Login .google {
   height: 40px;
