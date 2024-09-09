@@ -3,60 +3,58 @@
   left: 0; top: 0;
   padding: 80px 0 40px;
   width: 100%; height: 100vh;
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
+  place-items: center;
   overflow-y: scroll;
 }
-#ModalPosting > div {
+#ModalPosting .btn_close {
+  position: absolute;
+  right: -60px; top: 0;
+  width: 40px; aspect-ratio: 1;
+  color: #000;
+  background: url(../../public/img/close.png) center/cover no-repeat;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+#ModalPosting form {
+  position: relative;
+  width: 480px; height: fit-content;
   padding: 20px;
-  height: 100%;
-  overflow-y: scroll;
-  /* border: 1px solid #000; */
+  border-radius: 10px;
+  background-color: #fff;
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
 }
 #ModalPosting h2,
 #ModalPosting h3 {
-  color: #666;
+  color: #333;
   font-weight: 500;
 }
-#ModalPosting .left #map,
 #ModalPosting form > div:not(.wrap_route, .calendar, .wrap_btn),
 #ModalPosting form > select,
-#ModalPosting form > input[type="time"],
+#ModalPosting form > input,
 #ModalPosting form > textarea,
 #ModalPosting form > .wrap_btn > button {
   width: 100%;
   border: 2px solid #ddd;
   border-radius: 10px;
 }
-#ModalPosting .left {
-  padding-left: 320px;
-  display: flex;
-  align-items: start;
-}
-#ModalPosting .left #map {
-  height: 100%; aspect-ratio: 1;
-}
-#ModalPosting .right {
-  padding-right: 320px;
-}
-#ModalPosting .right form {
-  width: 100%; height: fit-content;
-  /* border: 1px solid #000; */
-  gap: 30px;
-  display: flex;
-  flex-direction: column;
-}
 #ModalPosting form > h2 {
   font-size: 28px;
 }
-#ModalPosting form select {
+#ModalPosting form > select {
   padding: 0 20px;
   height: 80px;
   color: #666;
   font-size: 18px;
   font-weight: 500;
   cursor: pointer;
+}
+#ModalPosting form > #map  {
+  width: 100%; height: 240px;
 }
 #ModalPosting form > .wrap_route {
   display: grid;
@@ -102,7 +100,8 @@
 #ModalPosting form > .cnt_textarea {
   height: 260px;
 }
-#ModalPosting form > input[type="time"] {
+#ModalPosting form > input[type="time"],
+#ModalPosting form > input[type="date"] {
   padding: 0 20px;
   height: 80px;
 }
@@ -119,9 +118,6 @@
   padding: 20px;
   width: 100%; height: 100%;
   font-size: 18px;
-  border: none;
-}
-#ModalPosting .cnt_textarea textarea {
   border: none; outline: none;
 }
 #ModalPosting .cnt_textarea > p,

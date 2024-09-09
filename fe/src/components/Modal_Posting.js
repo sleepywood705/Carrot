@@ -1,4 +1,4 @@
-import "./Modal_Posting.css";
+import "./Modal.css";
 import "./Calendar.css";
 import { useState, useEffect } from "react";
 
@@ -10,12 +10,7 @@ export function ModalPosting({ isOpen, onClose, onSubmit }) {
 
   return (
     <div id="ModalPosting">
-      <div className="left">
-        <KakaoMap />
-      </div>
-      <div className="right">
-        <PostingForm onSubmit={onSubmit} onClose={onClose} />
-      </div>
+      <PostingForm onSubmit={onSubmit} onClose={onClose}/>
     </div>
   );
 }
@@ -66,6 +61,7 @@ function PostingForm({ onSubmit, onClose }) {
           required
         />
       </div>
+      <KakaoMap />
       <h2>몇 시에 출발하시나요?</h2>
       <input
         type="time"
@@ -75,7 +71,13 @@ function PostingForm({ onSubmit, onClose }) {
         required
       />
       <h2>언제 출발하시나요?</h2>
-      <Calendar />
+      {/* <Calendar /> */}
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+        required
+      />
       <h2>이동 설명</h2>
       <div className="cnt_textarea">
         <textarea
@@ -106,7 +108,7 @@ function PostingForm({ onSubmit, onClose }) {
         <button></button>
         <button></button>
       </div>
-      <button type="submit">등록</button>
+      <button type="submit">작성</button>
     </form>
   );
 }
@@ -127,104 +129,104 @@ function KakaoMap() {
   return <div id="map"></div>;
 }
 
-function Calendar() {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [daysInMonth, setDaysInMonth] = useState([]);
+// function Calendar() {
+//   const [currentDate, setCurrentDate] = useState(new Date());
+//   const [daysInMonth, setDaysInMonth] = useState([]);
 
-  useEffect(() => {
-    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
-  }, [currentDate]);
+//   useEffect(() => {
+//     generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+//   }, [currentDate]);
 
-  const generateCalendar = (year, month) => {
-    const firstDayOfMonth = new Date(year, month, 1).getDay();
-    const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
-    const lastDateOfPrevMonth = new Date(year, month, 0).getDate();
+//   const generateCalendar = (year, month) => {
+//     const firstDayOfMonth = new Date(year, month, 1).getDay();
+//     const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
+//     const lastDateOfPrevMonth = new Date(year, month, 0).getDate();
 
-    const calendarDays = [];
-    let week = [];
+//     const calendarDays = [];
+//     let week = [];
 
-    for (let i = firstDayOfMonth - 1; i >= 0; i--) {
-      week.push({ day: lastDateOfPrevMonth - i, isCurrentMonth: false });
-    }
+//     for (let i = firstDayOfMonth - 1; i >= 0; i--) {
+//       week.push({ day: lastDateOfPrevMonth - i, isCurrentMonth: false });
+//     }
 
-    for (let day = 1; day <= lastDateOfMonth; day++) {
-      week.push({ day, isCurrentMonth: true });
-      if (week.length === 7) {
-        calendarDays.push(week);
-        week = [];
-      }
-    }
+//     for (let day = 1; day <= lastDateOfMonth; day++) {
+//       week.push({ day, isCurrentMonth: true });
+//       if (week.length === 7) {
+//         calendarDays.push(week);
+//         week = [];
+//       }
+//     }
 
-    let nextMonthDay = 1;
-    while (week.length < 7) {
-      week.push({ day: nextMonthDay++, isCurrentMonth: false });
-    }
-    calendarDays.push(week);
+//     let nextMonthDay = 1;
+//     while (week.length < 7) {
+//       week.push({ day: nextMonthDay++, isCurrentMonth: false });
+//     }
+//     calendarDays.push(week);
 
-    setDaysInMonth(calendarDays);
-  };
+//     setDaysInMonth(calendarDays);
+//   };
 
-  const handlePrevMonth = (event) => {
-    event.preventDefault();
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1)
-    );
-  };
+//   const handlePrevMonth = (event) => {
+//     event.preventDefault();
+//     setCurrentDate(
+//       new Date(currentDate.getFullYear(), currentDate.getMonth() - 1)
+//     );
+//   };
 
-  const handleNextMonth = (event) => {
-    event.preventDefault();
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1)
-    );
-  };
+//   const handleNextMonth = (event) => {
+//     event.preventDefault();
+//     setCurrentDate(
+//       new Date(currentDate.getFullYear(), currentDate.getMonth() + 1)
+//     );
+//   };
 
-  const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+//   const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 
-  return (
-    <div className="calendar">
-      <h3>
-        {currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월
-        <div className="wrap_btn">
-          <button onClick={handlePrevMonth}></button>
-          <button onClick={handleNextMonth}></button>
-        </div>
-      </h3>
-      <table>
-        <thead>
-          <tr>
-            {daysOfWeek.map((day, index) => (
-              <th
-                key={index}
-                style={{
-                  color: index === 0 || index === 6 ? "#0075ff" : "#000",
-                }}
-              >
-                {day}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {daysInMonth.map((week, index) => (
-            <tr key={index}>
-              {week.map(({ day, isCurrentMonth }, dayIndex) => (
-                <td
-                  key={dayIndex}
-                  style={{
-                    color: isCurrentMonth
-                      ? dayIndex === 0 || dayIndex === 6
-                        ? "#0075ff"
-                        : "#000"
-                      : "#aaa",
-                  }}
-                >
-                  {day}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
+//   return (
+//     <div className="calendar">
+//       <h3>
+//         {currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월
+//         <div className="wrap_btn">
+//           <button onClick={handlePrevMonth}></button>
+//           <button onClick={handleNextMonth}></button>
+//         </div>
+//       </h3>
+//       <table>
+//         <thead>
+//           <tr>
+//             {daysOfWeek.map((day, index) => (
+//               <th
+//                 key={index}
+//                 style={{
+//                   color: index === 0 || index === 6 ? "#0075ff" : "#000",
+//                 }}
+//               >
+//                 {day}
+//               </th>
+//             ))}
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {daysInMonth.map((week, index) => (
+//             <tr key={index}>
+//               {week.map(({ day, isCurrentMonth }, dayIndex) => (
+//                 <td
+//                   key={dayIndex}
+//                   style={{
+//                     color: isCurrentMonth
+//                       ? dayIndex === 0 || dayIndex === 6
+//                         ? "#0075ff"
+//                         : "#000"
+//                       : "#aaa",
+//                   }}
+//                 >
+//                   {day}
+//                 </td>
+//               ))}
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// }

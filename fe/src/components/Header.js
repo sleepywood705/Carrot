@@ -1,12 +1,12 @@
 import './Header.css';
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { PersonalNav } from './Nav_Personal';  // Nav_Personal 컴포넌트 import
+import { PersonalNav } from './Nav_Personal';
 
 export function Header({ isLoggedIn, username, onLogout }) {
 	const location = useLocation();
 	const onBoarding = location.pathname === '/';
-	const [showPersonalNav, setShowPersonalNav] = useState(false); // 상태 관리 추가
+	const [showPersonalNav, setShowPersonalNav] = useState(false);
 
 	const togglePersonalNav = () => {
 		setShowPersonalNav(!showPersonalNav);

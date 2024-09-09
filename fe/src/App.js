@@ -38,7 +38,7 @@ function App() {
     <div className="App">
       <Header isLoggedIn={isLoggedIn} username={username} onLogout={handleLogout} />
       <Routes>
-        <Route path="/" element={<Landing isLoggedIn={isLoggedIn}/>}/>
+        <Route path="/" element={<Landing/>}/>
         <Route path="/main" element={<Main/>}/>
         <Route path="/guide" element={<Guide/>}/>
         <Route path="/mypage" element={<Mypage/>}/>
