@@ -76,8 +76,7 @@ export class UsersController {
             const { email, password } = req.body;
             const token = await this.usersService.loginUser(email, password);
             // console.log('Bearer ' + token)
-            return res.status(200).setHeader("authorization", 'Bearer ' + token).json({ message: 'Token logged in console' });
-
+            return res.status(200).setHeader('authorization', `Bearer ${token}`).json({ message: 'Token logged in console' });
         } catch (err) {
             // next(err);
             console.log("error : ", err)

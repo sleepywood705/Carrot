@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import './Modal.css';
-import axios from '../api/axios';
+import axios from '../api/axios';  // 인스턴스를 불러옴
 
 function LoginModal({ onClose, onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const response = await axios.post('/users/signin', { email, password });
-      console.log(response)
-      const token = response.headers["authorization"]
-      console.log(response.headers, response.headers["authorization"], token)
-      // 토큰을 로컬 스토리지에 저장
-      localStorage.setItem('token', token);
-      onLogin(email);
-      onClose();
+      const token = response.headers['authorization'] || response.headers['Authorization'];
+
+      if (token) {
+        // console.log('Received token:', token);
+        localStorage.setItem('token', token);
+        onLogin(email);
+        onClose();
+      } else {
+        alert('No token received.');
+      }
     } catch (error) {
       console.error('Login error:', error);
       alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');

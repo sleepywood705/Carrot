@@ -4,6 +4,8 @@ import router from './routes/index.js';
 import LogMiddleware from './middlewares/log.middleware.js';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv'
+import bodyParser from 'body-parser';
+
 // import ErrorHandlingMiddleware from './middlewares/error-handling.middleware.js';
 
 dotenv.config();
@@ -14,8 +16,9 @@ const port = process.env.PORT || 4000;
 app.use(cors({
   origin: process.env.FRONTEND_URL, // React 앱의 URL
   credentials: true, // 쿠키를 포함한 요청을 허용
+  exposedHeaders: ['authorization'],
 }));
-
+app.use(bodyParser.json())
 app.use(LogMiddleware);
 app.use(express.json());
 app.use(cookieParser());

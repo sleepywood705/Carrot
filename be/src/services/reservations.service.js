@@ -4,7 +4,7 @@ export class ReservationsService {
 
     createReservation = async (from, to, date, postId, bookerId) => {
         if (!from || !to || !date || !postId || !bookerId) {
-            throw new Error('All reservation details (from, to, date, postId, bookerId) are required');
+            throw new Error('All details (from, to, date, postId, bookerId) are required');
         }
         const createdReservation = await this.reservationsRepository.createReservation(from, to, date, postId, bookerId);
         return createdReservation;
@@ -24,11 +24,17 @@ export class ReservationsService {
     }
 
     updateReservation = async (id, data) => {
+        if (!id || !data) {
+            throw new Error('All details (Id, data) are required');
+        }
         const updatedReservation = await this.reservationsRepository.updateReservation(id, data);
         return updatedReservation
     }
 
     deleteReservation = async (id) => {
+        if (!id) {
+            throw new Error('Id required.');
+        }
         const deletedReservation = await this.reservationsRepository.deleteReservation(id);
         return deletedReservation
     }
