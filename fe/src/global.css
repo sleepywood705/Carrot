@@ -33,6 +33,7 @@ li{
 }
 input,
 button{
+    font-size: 17px;
     border: none; outline: none; 
     background-color: inherit;
 }

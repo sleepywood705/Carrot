@@ -1,50 +1,36 @@
-import './Header.css'
-import { Link } from 'react-router-dom';
-import LoginModal from './LoginModal';
-import SignupModal from './SignupModal';
-import ProfileNavbar from './ProfileNavbar';
-import React, { useState, useEffect } from 'react';
+import './Header.css';
+import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { PersonalNav } from './Nav_Personal';
 
-export function Header() {
-    const [showLoginModal, setShowLoginModal] = useState(false);
-    const [showSignupModal, setShowSignupModal] = useState(false);
-    const [showProfileNavbar, setShowProfileNavbar] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [username, setUsername] = useState('');
-    
-    const handleLogin = (loggedInUsername) => {
-        setIsLoggedIn(true);
-        setUsername(loggedInUsername);
-        setShowLoginModal(false);
-    };
+export function Header({ isLoggedIn, username, onLogout }) {
+	const location = useLocation();
+	const onBoarding = location.pathname === '/';
+	const [showPersonalNav, setShowPersonalNav] = useState(false);
 
-    const handleLogout = () => {
-        setIsLoggedIn(false);
-        setUsername('');
-    };
+	const togglePersonalNav = () => {
+		setShowPersonalNav(!showPersonalNav);
+	};
 
-    return (
-        <header>
-            <Link to="/" id="logo">당근마차</Link>
-            <Link to="/guide">이용가이드</Link>
-            {isLoggedIn ? (
-                <>
-                    <span>안녕하세요, {username}님!</span>
-                    <button onClick={() => setShowProfileNavbar(!showProfileNavbar)}>프로필</button>
-                    <button onClick={handleLogout}>로그아웃</button>
-                </>
-            ) : (
-                <>
-                    <button onClick={() => setShowLoginModal(true)}>로그인</button>
-                    <button onClick={() => setShowSignupModal(true)}>회원가입</button>
-                </>
-            )}
-            
-            {showLoginModal && <LoginModal onClose={() => setShowLoginModal(false)} onLogin={handleLogin} />}
-            {showSignupModal && <SignupModal onClose={() => setShowSignupModal(false)} />}
-            {showProfileNavbar && <ProfileNavbar onClose={() => setShowProfileNavbar(false)} />}
-        </header>
-    );
-};
-
-export default Header;
+	return (
+		<header>
+			<Link to="/" id="logo" className={onBoarding ? 'invert' : ''}>당근마차</Link>
+			<Link to="/guide" className={onBoarding ? 'invert' : ''}>이용가이드</Link>
+			{isLoggedIn && (
+				<button 
+					className={onBoarding ? 'invert' : ''} 
+					onClick={togglePersonalNav}
+				>
+					{username}님 ㅎㅇ
+				</button>
+			)}
+			{isLoggedIn ? (
+				<button onClick={onLogout} className={onBoarding ? 'invert' : ''}>로그아웃</button>
+			) : (
+				<Link to="/login" className={onBoarding ? 'invert' : ''}>로그인</Link>
+			)}
+			<Link to="/signup" className={onBoarding ? 'invert' : ''}>회원가입</Link>
+			{showPersonalNav && <PersonalNav onClose={togglePersonalNav} username={username} />}
+		</header>
+	);
+}

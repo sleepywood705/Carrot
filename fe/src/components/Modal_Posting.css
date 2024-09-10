@@ -1,0 +1,157 @@
+#ModalPosting {
+  position: fixed;
+  left: 0; top: 0;
+  padding: 80px 0 40px;
+  width: 100%; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  overflow-y: scroll;
+}
+#ModalPosting .btn_close {
+  position: absolute;
+  right: -60px; top: 0;
+  width: 40px; aspect-ratio: 1;
+  color: #000;
+  background: url(../../public/img/close.png) center/cover no-repeat;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+#ModalPosting form {
+  position: relative;
+  width: 480px; height: fit-content;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+}
+#ModalPosting h2,
+#ModalPosting h3 {
+  color: #333;
+  font-weight: 500;
+}
+#ModalPosting form > div:not(.wrap_route, .calendar, .wrap_btn),
+#ModalPosting form > select,
+#ModalPosting form > input,
+#ModalPosting form > textarea,
+#ModalPosting form > .wrap_btn > button {
+  width: 100%;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+}
+#ModalPosting form > h2 {
+  font-size: 28px;
+}
+#ModalPosting form > select {
+  padding: 0 20px;
+  height: 80px;
+  color: #666;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+#ModalPosting form > #map  {
+  width: 100%; height: 240px;
+}
+#ModalPosting form > .wrap_route {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+}
+#ModalPosting form > .wrap_route input[type="text"] {
+  padding: 0 0 0 40px;
+  width: 100%; height: 60px;
+  color: #aaa;
+  font-size: 18px;
+  transition: all 0s;
+}
+#ModalPosting form > .wrap_route input[type="text"]::placeholder {
+  color: #ccc;
+}
+#ModalPosting form > .wrap_route input[type="text"]:nth-child(1) {
+  border-radius: 10px 10px 0 0;
+  border-left: 2px solid #ddd;
+  border-top: 2px solid #ddd;
+  border-right: 2px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  /* border-bottom: 1px solid #ddd; */
+}
+#ModalPosting form > .wrap_route input[type="text"]:nth-child(2) {
+  border-radius: 0 0 10px 10px;
+  border-left: 2px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-right: 2px solid #ddd;
+  border-bottom: 2px solid #ddd;
+}
+#ModalPosting form > .wrap_route input[type="text"]:nth-child(1):focus {
+  border-left: 2px solid #FF6F0F;
+  border-top: 2px solid #FF6F0F;
+  border-right: 2px solid #FF6F0F;
+  border-bottom: 2px solid #FF6F0F;
+}
+#ModalPosting form > .wrap_route input[type="text"]:nth-child(2):focus {
+  border-left: 2px solid #FF6F0F;
+  border-top: 2px solid #FF6F0F;
+  border-right: 2px solid #FF6F0F;
+  border-bottom: 2px solid #FF6F0F;
+}
+#ModalPosting form > .cnt_textarea {
+  height: 260px;
+}
+#ModalPosting form > input[type="time"],
+#ModalPosting form > input[type="date"] {
+  padding: 0 20px;
+  height: 80px;
+}
+#ModalPosting form > .cnt_textarea {
+  position: relative;
+  font-size: 17px;
+  overflow: hidden;
+  transition: all 0s;
+}
+#ModalPosting form > .cnt_textarea.focus {
+  border: 2px solid #FF6F0F;
+}
+#ModalPosting .cnt_textarea textarea {
+  padding: 20px;
+  width: 100%; height: 100%;
+  font-size: 18px;
+  border: none; outline: none;
+}
+#ModalPosting .cnt_textarea > p,
+#ModalPosting .cnt_textarea > span {
+  color: #aaa;
+  font-size: 18px;
+}
+#ModalPosting .cnt_textarea > p {
+  position: absolute;
+  left: 20px; top: 20px;
+  line-height: 30px;
+}
+#ModalPosting .cnt_textarea > span {
+  position: absolute;
+  right: 20px; bottom: 20px;
+  margin-left: auto;
+}
+#ModalPosting .cnt_textarea.focus p,
+#ModalPosting .cnt_textarea.focus span {
+  display: none;
+}
+#ModalPosting form > .wrap_btn {
+  gap: 20px;
+  display: flex;
+}
+#ModalPosting form > .wrap_btn > button {
+  height: 120px;
+}
+#ModalPosting form > button[type="submit"] {
+  width: 100%; height: 60px;
+  background-color: #eee;
+  border-radius: 10px;
+}
+#ModalPosting form > button[type="submit"]:hover {
+  color: #fff;
+  background-color: #FF6F0F;
+}
