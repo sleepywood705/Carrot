@@ -35,6 +35,16 @@ export class UsersController {
         }
     };
 
+    getCurrentUser = async (req, res, next) => {
+        try {
+            const user = await this.usersService.getCurrentUser(req.user);
+            return res.status(200).json({ data: user });
+        } catch (err) {
+            // next(error);  
+            console.log("error : ", err)
+        }
+    }
+
     createUser = async (req, res, next) => {
         try {
             const { email, password, name } = req.body;
@@ -76,8 +86,7 @@ export class UsersController {
             const { email, password } = req.body;
             const token = await this.usersService.loginUser(email, password);
             // console.log('Bearer ' + token)
-            return res.status(200).setHeader("authorization", 'Bearer ' + token).json({ message: 'Token logged in console' });
-
+            return res.status(200).setHeader('authorization', `Bearer ${token}`).json({ message: 'Token logged in console' });
         } catch (err) {
             // next(err);
             console.log("error : ", err)

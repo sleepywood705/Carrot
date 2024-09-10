@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
 import './Modal.css';
+import axios from '../api/axios';  // 인스턴스를 불러옴
 
 function LoginModal({ onClose, onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 여기서 실제 로그인 로직을 구현해야 합니다.
-    // 지금은 간단히 아이디와 비밀번호가 비어있지 않으면 로그인 성공으로 처리합니다.
-    if (username && password) {
-      onLogin(username);
-      onClose();
-    } else {
-      alert('아이디와 비밀번호를 입력해주세요.');
+
+    try {
+      const response = await axios.post('/users/signin', { email, password });
+      const token = response.headers['authorization'] || response.headers['Authorization'];
+
+      if (token) {
+        // console.log('Received token:', token);
+        localStorage.setItem('token', token);
+        onLogin(email);
+        onClose();
+      } else {
+        alert('No token received.');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
     }
   };
 

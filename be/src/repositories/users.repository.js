@@ -10,6 +10,13 @@ export class UsersRepository {
     findUserById = async (id) => {
         const user = await prisma.user.findUnique({
             where: { id: parseInt(id, 10) },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                point: true,
+                role: true
+            }
         });
         return user;
     };
@@ -17,6 +24,13 @@ export class UsersRepository {
     findUserByEmail = async (email) => {
         const user = await prisma.user.findUnique({
             where: { email },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                point: true,
+                role: true
+            }
         });
         return user;
     };

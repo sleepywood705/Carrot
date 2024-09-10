@@ -15,31 +15,28 @@ model User {
   point                 Int            @default(10000)
   role                  Role           @default(USER)
   posts                 Post[]
-  reservationsMade      Reservastion[] @relation("ReservationsMade")
+  reservationsMade      Reservation[] @relation("ReservationsMade")
 }
 
 model Post {
   id                    Int            @id @default(autoincrement())
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @updatedAt
-  title                 String
+  title                 String         
   author                User           @relation(fields: [authorId], references: [id])
-  authorId              Int @unique
-  reservations          Reservastion[]
-  Reservastion          Reservastion[] @relation("BookedReservations")
+  authorId              Int            
+  reservations          Reservation[]
 }
 
-model Reservastion {
+model Reservation {
   id                    Int            @id @default(autoincrement())
-  comment               String?
+  from                  String
+  to                    String
+  date                  DateTime       
   post                  Post           @relation(fields: [postId], references: [id])
   postId                Int            @map("postId")
-
   booker                User           @relation("ReservationsMade", fields: [bookerId], references: [id])
   bookerId              Int            @map("bookerId")
-             
-  booked                Post           @relation("BookedReservations", fields: [bookedId], references: [authorId])
-  bookedId              Int            @map("bookedId")
 }
 
 enum Role {

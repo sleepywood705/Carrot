@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
 import './Modal.css'; // 모달 스타일을 위한 CSS 파일
+import axios from '../api/axios';
 
 function SignupModal({ onClose }) {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       alert('비밀번호가 일치하지 않습니다.');
       return;
     }
-    // 여기에 회원가입 로직을 구현하세요
-    console.log('회원가입 시도:', username, password);
-    // 회원가입 성공 후 모달 닫기
-    onClose();
+
+    try {
+      // 회원가입 요청
+      const response = await axios.post('/users/signup', {
+        email,
+        password,
+        name: email,
+        role: 'USER'
+      });
+
+      console.log('회원가입 성공:', response.data);
+      onClose();
+    } catch (error) {
+      console.error('회원가입 오류:', error.response ? error.response.data : error.message);
+      alert('회원가입에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
+    }
   };
 
   return (
@@ -25,9 +39,9 @@ function SignupModal({ onClose }) {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder="아이디"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            placeholder="이메일"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
