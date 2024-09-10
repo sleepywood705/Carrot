@@ -8,6 +8,7 @@ export function Signup() {
   const [usermail, setUsermail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
+
   // const [username, setUsername] = useState('');
   // const [usergender, setUsergender] = useState('');
 
@@ -37,6 +38,7 @@ export function Signup() {
       <h2>회원가입</h2>
       <form onSubmit={handleSubmit} >
         <input
+
           type="text"
           value={usermail}
           onChange={(e) => setUsermail(e.target.value)}
