@@ -1,0 +1,166 @@
+#Mypage2 {
+    padding: 80px 500px;
+    margin-top: 80px;
+    width: 100%; height: calc(100vh - 80px);
+    border: 1px solid red;
+    background-color: #FBFBFF;
+    display: flex;
+    flex-direction: column;
+}
+#Mypage2 > div {
+    width: 100%; height: 100%;
+    /* border: 1px solid #000; */
+}
+#Mypage2 .bot {
+    gap: 10px;
+    display: grid;
+    grid-template-columns: 290px auto;
+}
+
+#SNB details,
+#ChangeInfo,
+#ChangeInfo input,
+#ChangeInfo button,
+#MyPoint,
+#MyPoint .pointList,
+#Withdrawal,
+#Withdrawal .wrap > button {
+    border-radius: 8px;
+}
+
+#SNB details,
+#ChangeInfo > h2,
+#MyPoint > h2,
+#MyPoint > h3,
+#MyPoint .pointList,
+#Withdrawal {
+    color: #333;
+    font-weight: 500;
+}
+
+#ChangeInfo > h2,
+#MyPoint > h2,
+#Withdrawal > h2 {
+    color: #333;
+    font-size: 19px;
+}
+
+#ChangeInfo,
+#MyPoint,
+#Withdrawal {
+    min-width: 618px;
+    padding: 30px;
+    /* border: 1px solid #000; */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+#SNB > details > ul,
+#Withdrawal > div p {
+    color: #666;
+}
+
+
+#SNB {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+#SNB > details {
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+#SNB > details > summary {
+    color: #333;
+    font-size: 17px;
+}
+#SNB > details > ul {
+    margin-top: 20px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+#ChangeInfo form {
+    height: 100%;
+    background-color: #fff;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+#ChangeInfo form > div {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;   
+}
+#ChangeInfo input {
+    padding: 16px 20px;
+    width: 100%; height: fit-content;
+    border: 1px solid #ddd;
+}
+#ChangeInfo .wrap,
+#Withdrawal .wrap {
+    width: 100%;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+#ChangeInfo .wrap > button,
+#Withdrawal .wrap > button {
+    padding: 6px 16px;
+}
+
+
+
+
+#MyPoint > h3 {
+    font-size: 17px;
+}
+#MyPoint ul {
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+#MyPoint .pointList {
+    padding: 16px 20px;
+    width: 100%; height: 60px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+}
+
+
+#Withdrawal {
+    height: fit-content;
+}
+#Withdrawal > div:nth-child(2) {
+    padding: 20px;
+    line-height: 27px;
+    text-align: center;
+    display: grid;
+    place-items: center;
+}
+#Withdrawal > div p {
+    font-size: 17px;
+}
+
+
+
+
+.btn_cancel,
+.btn_confirm {
+    background-color: #F2F2F2;
+}
+.btn_change {
+    color: #fff;
+    background-color: #FF6F0F;
+}
