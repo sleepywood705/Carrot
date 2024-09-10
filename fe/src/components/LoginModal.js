@@ -3,7 +3,7 @@ import './Modal.css';
 import axios from '../api/axios';  // 인스턴스를 불러옴
 
 function LoginModal({ onClose, onLogin }) {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,10 +32,10 @@ function LoginModal({ onClose, onLogin }) {
         <h2>로그인</h2>
         <form onSubmit={handleSubmit}>
           <input
-            type="email"
-            placeholder="이메일"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            placeholder="아이디"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
           <input

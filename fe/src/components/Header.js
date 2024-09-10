@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import './Header.css'
 import { Link } from 'react-router-dom';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import ProfileNavbar from './ProfileNavbar';
+import React, { useState, useEffect } from 'react';
 
 export function Header() {
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -11,7 +11,6 @@ export function Header() {
     const [showProfileNavbar, setShowProfileNavbar] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('');
-    const [isScrolled, setIsScrolled] = useState(false);
     
     const handleLogin = (loggedInUsername) => {
         setIsLoggedIn(true);
@@ -24,25 +23,8 @@ export function Header() {
         setUsername('');
     };
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const offset = window.scrollY;
-            if (offset > 200) {
-                setIsScrolled(true);
-            } else {
-                setIsScrolled(false);
-            }
-        }
-
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        }
-    }, []);
-
     return (
-        <header className={isScrolled ? 'scrolled' : ''}>
+        <header>
             <Link to="/" id="logo">당근마차</Link>
             <Link to="/guide">이용가이드</Link>
             {isLoggedIn ? (
