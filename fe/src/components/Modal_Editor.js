@@ -1,7 +1,8 @@
+import './Modal_Post.css';
 import React, { useState, useEffect } from 'react';
-import './Modal.css';
 
-function EditDeleteModal({ isOpen, onClose, trip, onEdit, onDelete }) {
+
+export function ModalEditor({ isOpen, onClose, trip, onEdit, onDelete }) {
   const [editedTrip, setEditedTrip] = useState({
     type: '',
     departure: '',
@@ -102,5 +103,3 @@ function EditDeleteModal({ isOpen, onClose, trip, onEdit, onDelete }) {
     </div>
   );
 }
-
-export default EditDeleteModal;

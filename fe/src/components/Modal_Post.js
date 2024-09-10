@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import './Modal.css';
+import './Modal_Post.css';
+import { useState } from 'react';
 
-function WritePostModal({ isOpen, onClose, onSubmit }) {
+
+export function ModalPost({ isOpen, onClose, onSubmit }) {
   const [type, setType] = useState('탑승자');
   const [departure, setDeparture] = useState('');
   const [arrival, setArrival] = useState('');
@@ -66,5 +67,3 @@ function WritePostModal({ isOpen, onClose, onSubmit }) {
     </div>
   );
 }
-
-export default WritePostModal;
