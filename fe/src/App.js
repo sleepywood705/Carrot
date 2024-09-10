@@ -2,20 +2,48 @@ import './global.css';
 import './font.css';
 import './App.css';
 import { Landing } from './routes/Landing';
-import Main  from './routes/Main';
 import { Header }  from './components/Header';
 import { Footer } from './components/Footer';
-import { Route, Routes } from 'react-router-dom';
+import { Main }  from './routes/Main';
+import { Guide } from './routes/Guide'
+import { Login } from './routes/Login';
+import { Signup } from './routes/Signup';
+import { Mypage } from './routes/Mypage'
+import { useState, useEffect } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 
 function App() {
-  
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = (user) => {
+    setUsername(user);
+    setIsLoggedIn(true);
+    navigate(-1);
+  };
+
+  const handleLogout = () => {
+    setUsername('');
+    setIsLoggedIn(false);
+  };
   return (
     <div className="App">
-      <Header/>
+      <Header isLoggedIn={isLoggedIn} username={username} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<Landing/>}/>
-        <Route path="/Main" element={<Main/>}/>
+        <Route path="/main" element={<Main/>}/>
+        <Route path="/guide" element={<Guide/>}/>
+        <Route path="/mypage" element={<Mypage/>}/>
+        <Route path="/login" element={<Login onLogin={handleLogin}/>}/>
+        <Route path="/signup" element={<Signup/>}/>
       </Routes>
       {/* <Footer/> */}
     </div>

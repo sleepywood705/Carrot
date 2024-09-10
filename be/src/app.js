@@ -1,7 +1,6 @@
 import cors from 'cors';
 import express from 'express';
 import router from './routes/index.js';
-import LogMiddleware from './middlewares/log.middleware.js';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv'
 import bodyParser from 'body-parser';
@@ -17,7 +16,6 @@ app.use(cors({
   exposedHeaders: ['authorization'],
 }));
 app.use(bodyParser.json())
-app.use(LogMiddleware);
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api', router);
