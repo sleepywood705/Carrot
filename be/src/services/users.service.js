@@ -22,6 +22,10 @@ export class UsersService {
         return this.excludePassword(user);
     };
 
+    getCurrentUser = async (user) => {
+        return user;
+    }
+
     createUser = async (email, password, name, role = "USER") => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const createdUser = await this.usersRepository.createUser(email, hashedPassword, name, role);

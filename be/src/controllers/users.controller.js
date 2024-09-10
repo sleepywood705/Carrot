@@ -35,6 +35,16 @@ export class UsersController {
         }
     };
 
+    getCurrentUser = async (req, res, next) => {
+        try {
+            const user = await this.usersService.getCurrentUser(req.user);
+            return res.status(200).json({ data: user });
+        } catch (err) {
+            // next(error);  
+            console.log("error : ", err)
+        }
+    }
+
     createUser = async (req, res, next) => {
         try {
             const { email, password, name } = req.body;
