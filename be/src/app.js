@@ -15,6 +15,7 @@ app.use(cors({
   credentials: true, // 쿠키를 포함한 요청을 허용
   exposedHeaders: ['authorization'],
 }));
+
 app.use(bodyParser.json())
 app.use(express.json());
 app.use(cookieParser());

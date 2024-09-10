@@ -55,7 +55,7 @@ export class UsersController {
             return res.status(201).json({ data: createdUser });
         } catch (err) {
             // next(err);
-            console.log("error : ", err)
+            console.log("error : ", err);
         }
     };
 

@@ -15,6 +15,8 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -22,7 +24,6 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
-  const navigate = useNavigate();
 
   const handleLogin = (user) => {
     setUsername(user);
@@ -33,7 +34,9 @@ function App() {
   const handleLogout = () => {
     setUsername('');
     setIsLoggedIn(false);
+    localStorage.removeItem('token');
   };
+
   return (
     <div className="App">
       <Header isLoggedIn={isLoggedIn} username={username} onLogout={handleLogout} />
@@ -47,7 +50,7 @@ function App() {
       </Routes>
       {/* <Footer/> */}
     </div>
-  ); 
+  );
 }
 
 export default App;
