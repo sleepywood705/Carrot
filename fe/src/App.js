@@ -16,6 +16,10 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 function App() {
   const location = useLocation();
 
+
+  const [showModal, setShowMdoal] = useState(false);
+  
+ 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
