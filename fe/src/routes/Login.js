@@ -1,5 +1,5 @@
 import './Login.css';
-import '../components/Modal.css';
+import '../components/Modal_Post.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 

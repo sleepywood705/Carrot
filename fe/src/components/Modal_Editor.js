@@ -1,4 +1,4 @@
-import './Modal.css';
+import './Modal_Post.css';
 import React, { useState, useEffect } from 'react';
 
 

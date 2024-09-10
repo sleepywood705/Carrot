@@ -199,10 +199,7 @@ export function Main() {
               </button>
             </div>
           </div>
-          <button
-            onClick={() => setIsWriteModalOpen(true)}
-            className="btn_write"
-          >
+          <button onClick={() => setIsWriteModalOpen(true)} className="btn_write">
             카풀 요청하기
           </button>
         </section>

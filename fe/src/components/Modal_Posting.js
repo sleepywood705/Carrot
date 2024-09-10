@@ -1,4 +1,4 @@
-import "./Modal.css";
+import "./Modal_Posting.css";
 import "./Calendar.css";
 import { useState, useEffect } from "react";
 
