@@ -1,8 +1,9 @@
 #Mypage2 {
-    padding: 80px 500px;
+    padding: 60px 500px;
     margin-top: 80px;
     width: 100%; height: calc(100vh - 80px);
     background-color: #FBFBFF;
+    gap: 60px;
     display: flex;
     flex-direction: column;
 }
@@ -11,7 +12,11 @@
     /* border: 1px solid #000; */
 }
 #Mypage2 > .top {
-    border: 1px solid #000;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 #Mypage2 .bot {
     gap: 10px;
@@ -19,11 +24,37 @@
     grid-template-columns: 290px auto;
 }
 
+.cnt_img {
+    position: relative;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.cnt_img > img {
+    width: 55px; height: 50px;
+}
+.img_profile {
+    width: 120px; aspect-ratio: 1;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+}
+.nickname {
+    padding: 8px 16px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+
+
+.nickname,
 #SNB details,
 #ChangeInfo,
 #ChangeInfo input,
 #ChangeInfo button,
 #MyPoint,
+#MyPoint .currentPoint,
 #MyPoint .pointList,
 #Withdrawal,
 #Withdrawal .wrap > button {
@@ -130,9 +161,12 @@
     display: flex;
     flex-direction: column;
 }
+#MyPoint .currentPoint,
 #MyPoint .pointList {
     padding: 16px 20px;
     width: 100%; height: 60px;
+    color: #666;
+    font-size: 14px;
     border: 1px solid #ddd;
     display: flex;
     align-items: center;
