@@ -1,4 +1,5 @@
 import "./Mypage.css";
+import axios from '../api/axios.js'
 
 // 사용자 프로필 컴포넌트
 function UserProfile({ user }) {
@@ -50,6 +51,9 @@ function PointInfo({ currentPoints, pointHistory }) {
 
 // 메인 마이페이지 컴포넌트
 export function Mypage() {
+
+
+
   // 임의의 사용자 정보
   const user = {
     name: "김카풀",
@@ -65,6 +69,8 @@ export function Mypage() {
       { date: "2023-04-05", amount: 200, type: "적립" },
     ]
   };
+
+
 
   return (
     <div className="carpool-mypage-container">
