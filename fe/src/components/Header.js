@@ -37,9 +37,12 @@ export function Header({ isLoggedIn, username, onLogout }) {
           로그인
         </Link>
       )}
-      <Link to="/signup" className={onBoarding ? "invert" : ""}>
-        회원가입
-      </Link>
+      {
+        !isLoggedIn &&
+        <Link to="/signup" className={onBoarding ? "invert" : ""}>
+          회원가입
+        </Link>
+      }
       {showPersonalNav && (
         <PersonalNav onClose={togglePersonalNav} username={username} />
       )}
