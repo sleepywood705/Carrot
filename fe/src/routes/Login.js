@@ -1,5 +1,4 @@
 import './Login.css';
-import '../components/Modal_Post.css';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from '../api/axios.js'
@@ -35,7 +34,7 @@ export function Login({ onLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email == 'test@test' && password == '1') {
+    if (email == '11' && password == '1') {
       console.log('로그인 성공');
       onLogin(email);
       navigate('/main');

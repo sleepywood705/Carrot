@@ -1,46 +1,77 @@
 import "./Modal_Posting.css";
-import "./Calendar.css";
 import { useState, useEffect } from "react";
 
 const { kakao } = window;
 
-export function ModalEditor({ isOpen, onClose, onEdit,onReserve, onDelete, editData, currentUser }) {
+export function ModalEditor({
+  isOpen,
+  onClose,
+  onEdit,
+  onReserve,
+  onDelete,
+  editData,
+  currentUser,
+}) {
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
     <div id="ModalPosting">
-      <PostingForm 
-      onEdit={onEdit} 
-      onDelete={onDelete} 
-      onClose={onClose} 
-      onReserve={onReserve}
-      editData={editData}
-      currentUser={currentUser} 
+      <PostingForm
+        onEdit={onEdit}
+        onDelete={onDelete}
+        onClose={onClose}
+        onReserve={onReserve}
+        editData={editData}
+        currentUser={currentUser}
       />
     </div>
   );
 }
 
-function PostingForm({ onEdit, onDelete, onClose, onReserve, editData, currentUser }) {
-  const [type, setType] = useState('탑승자');
-  const [departure, setDeparture] = useState('');
-  const [arrival, setArrival] = useState('');
-  const [time, setTime] = useState('');
-  const [date, setDate] = useState('');
-  const [description, setDescription] = useState('');
+function PostingForm({
+  onEdit,
+  onDelete,
+  onClose,
+  onReserve,
+  editData,
+  currentUser,
+}) {
+  const [type, setType] = useState("탑승자");
+  const [departure, setDeparture] = useState("");
+  const [arrival, setArrival] = useState("");
+  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [gender, setGender] = useState("성별무관");  // 성별 상태 추가
 
   useEffect(() => {
     if (editData) {
-      setType(editData.type || '');
-      const [dep, arr] = (editData.route || '').split('→');
-      setDeparture(dep ? dep.trim() : '');
-      setArrival(arr ? arr.trim() : '');
-      setTime(editData.time || '');
-      setDate(editData.date || '');
-      setDescription(editData.description || '');
+      setType(editData.type || "");
+      const [dep, arr] = (editData.route || "").split("→");
+      setDeparture(dep ? dep.trim() : "");
+      setArrival(arr ? arr.trim() : "");
+      setTime(editData.time || "");
+      setDate(editData.date || "");
+      setDescription(editData.description || "");
     }
   }, [editData]);
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const editedTrip = {
@@ -48,7 +79,7 @@ function PostingForm({ onEdit, onDelete, onClose, onReserve, editData, currentUs
       route: `${departure} → ${arrival}`,
       time,
       date,
-      description
+      description,
     };
     onEdit(editedTrip);
     onClose();
@@ -66,10 +97,11 @@ function PostingForm({ onEdit, onDelete, onClose, onReserve, editData, currentUs
     onClose();
   };
 
-  const isAuthor = currentUser && editData && currentUser.name === editData.authorName;
+  const isAuthor =
+    currentUser && editData && currentUser.name === editData.authorName;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="form_posting">
       <h2>게시물 수정</h2>
       <select value={type} onChange={(e) => setType(e.target.value)}>
         <option value="탑승자">탑승자</option>
@@ -109,46 +141,36 @@ function PostingForm({ onEdit, onDelete, onClose, onReserve, editData, currentUs
         onChange={(e) => setDate(e.target.value)}
         required
       />
-      <h2>이동 설명</h2>
-      <div className="cnt_textarea">
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          onFocus={(e) => e.target.parentElement.classList.add("focus")}
-          onBlur={(e) => {
-            if (e.target.value === "") {
-              e.target.parentElement.classList.remove("focus");
-            }
-          }}
-        ></textarea>
-        {description === "" && (
-          <>
-            <p>
-              어떤 카풀인가요?
-              <br />
-              자세히 설명하면 탑승자들에게 도움이 됩니다.
-              <br />
-              예) 경유 가능, 시간 조율 가능, 앞자리 타도 돼요
-            </p>
-            <span>0 / 150</span>
-          </>
-        )}
-      </div>
       <h2>어떤 분과 탑승하시나요?</h2>
-      <div className="wrap_btn">
-        <button type="button"></button>
-        <button type="button"></button>
+      <div className="wrap_radio">
+        <label>
+          <input
+            type="radio"
+            name="gender"
+            value="성별무관"
+            checked={gender === "성별무관"}
+            onChange={(e) => setGender(e.target.value)} // 성별 선택 처리
+          />
+          성별무관
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="gender"
+            value="동성끼리 탑승"
+            checked={gender === "동성끼리 탑승"}
+            onChange={(e) => setGender(e.target.value)} // 성별 선택 처리
+          />
+          동성끼리 탑승
+        </label>
       </div>
-      <div className="button-group">
-        {isAuthor ? (
-          <>
-            <button type="submit">수정</button>
-            <button type="button" onClick={handleDelete}>삭제</button>
-            <button type="button" onClick={onClose}>취소</button>
-          </>
-        ) : (
-          <button type="button" onClick={handleReserve}>예약하기</button>
-        )}
+      <div className="wrap_btn">
+        <button type="submit" onClick={handleReserve}>
+          예약하기
+        </button>
+        <button type="submit" onClick={handleSubmit}>
+          수정하기
+        </button>
       </div>
     </form>
   );

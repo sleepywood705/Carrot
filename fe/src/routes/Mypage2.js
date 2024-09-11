@@ -1,4 +1,7 @@
 import "./Mypage2.css";
+import { Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
+
 
 export function Mypage2() {
   return (
@@ -30,9 +33,11 @@ export function Mypage2() {
                 </ul>
           </details>
         </div>
-        {/* <ChangeInfo /> */}
-        {/* <MyPoint /> */}
-        <Withdrawal />
+        <Routes>
+          <Route path="/info" element={<ChangeInfo />}/>
+          <Route path="/mypoint" element={<MyPoint />}/>
+          <Route path="/withdrawal" element={<Withdrawal />}/>
+        </Routes>
       </div>
     </div>
   );
