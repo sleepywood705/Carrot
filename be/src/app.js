@@ -12,8 +12,8 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000', // React 앱의 URL
-  credentials: true, // 쿠키를 포함한 요청을 허용
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true, 
   exposedHeaders: ['authorization'],
 }));
 
