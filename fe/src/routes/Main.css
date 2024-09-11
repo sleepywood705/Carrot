@@ -85,10 +85,12 @@
 }
 .sct_search button.btn_write {
   width: 100%; height: 60px;
-  color: #aaa;
+  color: #fff;
+  color: #333;
   font-size: 18px;
   border-radius: 4px;
-  background-color: #F2f2f2;
+  background-color: #FF6F0F;
+  background-color: #F2F2F2;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .sct_search button.btn_write:hover {
@@ -156,7 +158,7 @@
   text-align: center;
 }
 .row3 .time,
-.row3 .sexType {
+.row3 .genderType {
   padding-left: 8px;
   color: #999;
   font-size: 14px;
@@ -165,6 +167,6 @@
   align-items: center;
 }
 .row3 .time > img,
-.row3 .sexType > img {
+.row3 .genderType > img {
   height: 14px;
 }

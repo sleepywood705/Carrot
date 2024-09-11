@@ -1,5 +1,4 @@
 import './Login.css';
-import '../components/Modal_Post.css';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from '../api/axios.js'
@@ -9,6 +8,7 @@ export function Login({ onLogin }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,17 +31,24 @@ export function Login({ onLogin }) {
     }
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (email == '11' && password == '1') {
+  //     console.log('로그인 성공');
+  //     onLogin(email);
+  //     navigate('/main');
+  //   } 
+  // }
+
   return (
     <div id="Login">
       <form onSubmit={handleSubmit}>
         <h2>당근마차</h2>
         <input
           type="text"
-
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-
           required
         />
         <input
@@ -51,15 +58,8 @@ export function Login({ onLogin }) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <div className="wrap">
-          <input type="checkbox" id="remember"></input>
-          <label htmlFor="remember">아이디 기억하기</label>
-        </div>
         <button type="submit">로그인</button>
         <Link to="/Signup">회원가입</Link>
-        <div><span>간편하게 시작하기</span></div>
-        <button className="kakao">카카오 아이디로 로그인하기</button>
-        <button className="google">구글 아이디로 로그인하기</button>
       </form>
     </div>
   );

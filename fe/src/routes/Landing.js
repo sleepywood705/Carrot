@@ -13,7 +13,7 @@ export function Landing() {
 				<p><span>당근마차</span>에서 시작됩니다</p>
 				<Link to="/main" className="btn-trial">체험해보기</Link>
 			</section>
-			<section className="sect2">
+			{/* <section className="sect2">
 				<p>오늘도 나를 지나치는 <span>택시</span></p>
 			</section>
 			<section className="sect3">
@@ -60,7 +60,7 @@ export function Landing() {
 						정확하게 공유할 수 있어요
 					</p>
 				</div>
-			</section>
+			</section> */}
 		</div>
 	);
 }
