@@ -25,9 +25,10 @@ export function Signup() {
         name: usermail,
       });
       // 회원가입 성공 시 처리
+      alert('회원가입 성공:', response.data);
       console.log('회원가입 성공:', response.data);
     } catch (err) {
-      
+      console.log(err)
       alert('회원가입에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
     }
   };

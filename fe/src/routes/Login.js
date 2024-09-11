@@ -16,16 +16,15 @@ export function Login({ onLogin }) {
       const response = await axios.post('/users/signin', { email, password });
 
       const token = response.headers['authorization']
-      console.log('Token:', token);
+      // console.log('Token:', token);
 
       if (token) {
-        console.log('                   succesfull')
         localStorage.setItem('token', token);
         onLogin(email);
       } else {
         alert('No token received.');
       }
-      console.log('login_process_ended')
+      console.log("successfully logged in")
     } catch (error) {
       console.error('Login error:', error);
       alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');

@@ -46,8 +46,8 @@ function App() {
         <Route path="/" element={<Landing/>}/>
         <Route path="/main" element={<Main/>}/>
         <Route path="/guide" element={<Guide/>}/>
-        {/* <Route path="/mypage" element={<Mypage/>}/> */}
-        <Route path="/mypage" element={<Mypage2/>}/>
+        <Route path="/mypage" element={<Mypage/>}/>
+        {/* <Route path="/mypage" element={<Mypage2/>}/> */}
         <Route path="/login" element={<Login onLogin={handleLogin}/>}/>
         <Route path="/signup" element={<Signup/>}/>
       </Routes>
