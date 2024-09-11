@@ -26,6 +26,7 @@
 }
 #Login a,
 #Login input[type="text"],
+#Login input[type="email"],
 #Login input[type="password"],
 #Login button[type="submit"] {
   padding-left: 10px;
@@ -42,18 +43,19 @@
   border: none;
   background-color: #FF6F0F;
 }
-#Login .wrap {
-  padding: 4px 0;
-  height: fit-content;
-  font-size: 14px;
+#Login .wrap.radio {
+  width: 100%;
   gap: 10px;
   display: flex;
-  align-items: center;
 }
-#Login .wrap input[type="checkbox"] {
-  height: 16px; aspect-ratio: 1;
-  appearance: none;
+#Login .wrap.radio label {
+  width: 100%; height: 40px;
   border: 1px solid #ddd;
+  border-radius: 4px;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #Login > div:nth-last-child(3) {
   margin-bottom: 20px;
@@ -66,19 +68,4 @@
 #Login > div:nth-last-child(3) span {
   padding: 0 10px;
   background-color: #fff;
-}
-
-
-#Login .kakao,
-#Login .google {
-  height: 40px;
-  font-size: 14px;
-  display: grid;
-  place-items: center;
-}
-#Login .kakao {
-  background-color: #FFCD00;
-}
-#Login .google {
-  border: 1px solid #ddd;
 }

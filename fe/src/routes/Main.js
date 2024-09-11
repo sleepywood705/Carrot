@@ -3,7 +3,6 @@ import { ModalPosting } from "../components/Modal_Posting";
 import { ModalEditor } from "../components/Modal_Editor";
 import { useState, useEffect } from "react";
 
-
 export function Main() {
   const [trips, setTrips] = useState([]);
   const [filteredTrips, setFilteredTrips] = useState([]);
@@ -20,70 +19,70 @@ export function Main() {
         route: "서울 → 부산",
         time: "오후 2:00 출발",
         date: "2024-09-03",
-        manner: "36.5",
+        gender: "성별무관"
       },
       {
         type: "탑승자",
         route: "인천 → 대전",
         time: "오전 9:00 출발",
         date: "2024-09-04",
-        manner: "36.5",
+        gender: "성별무관"
       },
       {
         type: "탑승자",
         route: "대구 → 광주",
         time: "오후 3:00 출발",
         date: "2024-09-03",
-        manner: "36.5",
+        gender: "성별무관"
       },
       {
         type: "탑승자",
         route: "수원 → 천안",
         time: "저녁 7:00 출발",
         date: "2024-09-04",
-        manner: "36.5",
+        gender: "성별무관"
       },
       {
         type: "운전자",
         route: "부산 → 서울",
         time: "오전 6:00 출발",
         date: "2024-09-03",
-        manner: "36.5",
+        gender: "성별무관"
       },
       {
         type: "운전자",
         route: "대전 → 인천",
         time: "오후 1:00 출발",
         date: "2024-09-04",
-        manner: "36.5",
+        gender: "성별무관"
       },
       {
         type: "운전자",
         route: "광주 → 대구",
         time: "오후 4:00 출발",
         date: "2024-09-03",
-        manner: "36.5",
+        gender: "성별무관"
       },
       {
         type: "운전자",
         route: "천안 → 수원",
         time: "오전 10:00 출발",
         date: "2024-09-04",
-        manner: "36.5",
+        gender: "성별무관"
       },
       {
         type: "택시",
         route: "서울 시내",
         time: "저녁 8:00 출발",
         date: "2024-09-03",
-        manner: "36.5",
+        gender: "성별무관"
       },
       {
         type: "택시",
         route: "인천 국제공항 → 서울",
         time: "오전 7:00 출발",
         date: "2024-09-03",
-        manner: "36.5",
+        gender: "성별무관"
       },
     ];
     setTrips(initialTrips);
@@ -139,6 +138,10 @@ export function Main() {
     setTrips(updatedTrips);
     setFilteredTrips(updatedTrips);
   };
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setSelectedTrip(null);
+  };
 
   return (
     <div id="Main">
@@ -152,11 +155,7 @@ export function Main() {
           <div className="cnt_form">
             <h2>카풀/택시팟을 찾아볼까요?</h2>
             <form onSubmit={searchTrips}>
-              <input
-                type="text"
-                id="departure"
-                placeholder="출발지"
-              />
+              <input type="text" id="departure" placeholder="출발지" />
               <input
                 type="text"
                 id="arrival"
@@ -164,42 +163,47 @@ export function Main() {
                 placeholder="도착지"
               />
               <input type="date" id="tripDate" />
-              <button type="submit">
-                검색
-              </button>
+              <button type="submit">검색</button>
             </form>
             <div className="wrap">
               <button
-                className={`btn_filter ${activeFilter === "전체" ? "active" : ""
-                  }`}
+                className={`btn_filter ${
+                  activeFilter === "전체" ? "active" : ""
+                }`}
                 onClick={() => filterTrips("전체")}
               >
                 전체
               </button>
               <button
-                className={`btn_filter ${activeFilter === "탑승자" ? "active" : ""
-                  }`}
+                className={`btn_filter ${
+                  activeFilter === "탑승자" ? "active" : ""
+                }`}
                 onClick={() => filterTrips("탑승자")}
               >
                 탑승자
               </button>
               <button
-                className={`btn_filter ${activeFilter === "운전자" ? "active" : ""
-                  }`}
+                className={`btn_filter ${
+                  activeFilter === "운전자" ? "active" : ""
+                }`}
                 onClick={() => filterTrips("운전자")}
               >
                 운전자
               </button>
               <button
-                className={`btn_filter ${activeFilter === "택시" ? "active" : ""
-                  }`}
+                className={`btn_filter ${
+                  activeFilter === "택시" ? "active" : ""
+                }`}
                 onClick={() => filterTrips("택시")}
               >
                 택시
               </button>
             </div>
           </div>
-          <button onClick={() => setIsWriteModalOpen(true)} className="btn_write">
+          <button
+            onClick={() => setIsWriteModalOpen(true)}
+            className="btn_write"
+          >
             카풀 요청하기
           </button>
         </section>
@@ -231,9 +235,9 @@ export function Main() {
                     <img src="/img/clock.png" alt="clock" />
                     {trip.time}
                   </div>
-                  <div className="sexType">
-                    <img src="/img/person.png" alt="clock" />
-                    성별 무관
+                  <div className="genderType">
+                    <img src="/img/person.png" alt="person" />
+                    {trip.gender}
                   </div>
                 </div>
               </div>
@@ -248,8 +252,8 @@ export function Main() {
       />
       <ModalEditor
         isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        trip={selectedTrip}
+        onClose={handleCloseEditModal}
+        editData={selectedTrip}
         onEdit={handleEdit}
         onDelete={handleDelete}
       />
