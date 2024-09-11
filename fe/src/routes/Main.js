@@ -11,7 +11,7 @@ export function Main() {
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedTrip, setSelectedTrip] = useState(null);
-
+ 
   useEffect(() => {
     // 초기 데이터 설정
     const initialTrips = [
@@ -139,6 +139,10 @@ export function Main() {
     setTrips(updatedTrips);
     setFilteredTrips(updatedTrips);
   };
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setSelectedTrip(null);  
+  };
 
   return (
     <div id="Main">
@@ -248,8 +252,8 @@ export function Main() {
       />
       <ModalEditor
         isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        trip={selectedTrip}
+        onClose={handleCloseEditModal}
+        editData={selectedTrip}
         onEdit={handleEdit}
         onDelete={handleDelete}
       />
