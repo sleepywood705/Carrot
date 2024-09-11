@@ -38,9 +38,11 @@ export function Login({ onLogin }) {
         <h2>당근마차</h2>
         <input
           type="text"
+
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+
           required
         />
         <input
