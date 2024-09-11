@@ -2,7 +2,6 @@
     padding: 80px 500px;
     margin-top: 80px;
     width: 100%; height: calc(100vh - 80px);
-    border: 1px solid red;
     background-color: #FBFBFF;
     display: flex;
     flex-direction: column;

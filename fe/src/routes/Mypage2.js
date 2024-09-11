@@ -1,6 +1,5 @@
 import "./Mypage2.css";
-import { Routes } from "react-router-dom";
-import { Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 
 export function Mypage2() {
@@ -15,15 +14,9 @@ export function Mypage2() {
           <details>
             <summary>내 정보 관리</summary>
             <ul>
-              <li>
-                <a href="#">회원정보변경</a>
-              </li>
-              <li>
-                <a href="#">내 포인트</a>
-              </li>
-              <li>
-                <a href="#">회원 탈퇴</a>
-              </li>
+              <li>회원정보변경</li>
+              <li>내 포인트</li>
+              <li>회원 탈퇴</li>
             </ul>
           </details>
           <details>
@@ -33,11 +26,11 @@ export function Mypage2() {
                 </ul>
           </details>
         </div>
-        <Routes>
-          <Route path="/info" element={<ChangeInfo />}/>
-          <Route path="/mypoint" element={<MyPoint />}/>
-          <Route path="/withdrawal" element={<Withdrawal />}/>
-        </Routes>
+        <div>
+          <ChangeInfo />
+          {/* <MyPoint /> */}
+          {/* <Withdrawal /> */}
+        </div>
       </div>
     </div>
   );
