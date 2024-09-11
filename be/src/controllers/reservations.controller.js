@@ -1,4 +1,4 @@
-import { ReservationsService } from "../services/Reservations.service.js";
+import { ReservationsService } from "../services/reservations.service.js";
 
 export class ReservationsController {
     reservationsService = new ReservationsService();
