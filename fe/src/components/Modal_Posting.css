@@ -1,4 +1,5 @@
 #ModalPosting {
+  z-index: 999;
   position: fixed;
   left: 0; top: 0;
   padding: 40px 0;
@@ -18,6 +19,14 @@
   place-items: center;
   cursor: pointer;
 }
+#ModalPosting h2,
+#ModalPosting h3 {
+  color: #333;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .form_posting {
   position: relative;
   width: 480px; height: fit-content;
@@ -28,13 +37,13 @@
   display: flex;
   flex-direction: column;
 }
-#ModalPosting h2,
-#ModalPosting h3 {
-  color: #333;
-  font-weight: 500;
-}
 .form_posting > h2 {
   font-size: 24px;
+}
+.form_posting > h2 > button {
+  height: 20px; aspect-ratio: 1;
+  background: url(/public/img/close_blk.png) center/cover no-repeat;
+  cursor: pointer;
 }
 .form_posting > div:not(.wrap_route, .calendar, .wrap_radio, .wrap_btn),
 .form_posting > select,
@@ -44,7 +53,6 @@
   border: 2px solid #ddd;
   border-radius: 10px;
 }
-
 .form_posting > select {
   padding: 0 20px;
   height: 80px;
@@ -116,10 +124,21 @@
   justify-content: center;
 }
 .form_posting > .wrap_btn {
-  gap: 10px;
   display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
-.form_posting button[type="submit"],
+.form_posting > .wrap_btn button[type="submit"] {
+  width: 100%;
+  height: 60px;
+  color: #fff;
+  background-color: #FF6F0F;
+  border-radius: 10px;
+}
+.form_posting > .wrap_btn button[type="submit"]:first-child {
+  grid-column: 1 / -1;
+}
+.form_posting > button[type="submit"],
 .form_posting > .wrap_btn button[type="submit"] {
   width: 100%; height: 60px;
   color: #fff;

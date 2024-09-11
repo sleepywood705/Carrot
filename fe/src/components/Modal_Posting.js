@@ -35,7 +35,7 @@ export function PostingForm({ onSubmit, onClose }) {
   const [arrival, setArrival] = useState("");
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
-  const [gender, setGender] = useState("성별무관");  // 성별 상태 추가
+  const [gender, setGender] = useState("성별무관");
 
   useEffect(() => {
     // 현재 날짜와 시간을 가져오기
@@ -47,8 +47,8 @@ export function PostingForm({ onSubmit, onClose }) {
     // 시간을 'HH:MM' 형식으로 설정
     const formattedTime = currentDate.toTimeString().slice(0, 5);
 
-    setDate(formattedDate);  // 현재 날짜 설정
-    setTime(formattedTime);  // 현재 시간 설정
+    setDate(formattedDate); // 현재 날짜 설정
+    setTime(formattedTime); // 현재 시간 설정
   }, []);
 
   const handleSubmit = (e) => {
@@ -58,13 +58,21 @@ export function PostingForm({ onSubmit, onClose }) {
       route: `${departure} → ${arrival}`,
       time,
       date,
-      gender,  // 성별 정보 추가
+      gender,
     });
     onClose();
   };
 
+  const handleCloseModal = () => {
+    onClose();
+  }
+
   return (
     <form onSubmit={handleSubmit} className="form_posting">
+      <h2>
+        유형을 선택해 주세요
+        <button onClick={handleCloseModal}></button>
+      </h2>
       <select value={type} onChange={(e) => setType(e.target.value)}>
         <option value="탑승자">탑승자</option>
         <option value="운전자">운전자</option>
@@ -110,7 +118,7 @@ export function PostingForm({ onSubmit, onClose }) {
             name="gender"
             value="성별무관"
             checked={gender === "성별무관"}
-            onChange={(e) => setGender(e.target.value)}  // 성별 선택 처리
+            onChange={(e) => setGender(e.target.value)} // 성별 선택 처리
           />
           성별무관
         </label>
@@ -120,7 +128,7 @@ export function PostingForm({ onSubmit, onClose }) {
             name="gender"
             value="동성끼리 탑승"
             checked={gender === "동성끼리 탑승"}
-            onChange={(e) => setGender(e.target.value)}  // 성별 선택 처리
+            onChange={(e) => setGender(e.target.value)} // 성별 선택 처리
           />
           동성끼리 탑승
         </label>

@@ -6,12 +6,14 @@
     gap: 60px;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
 }
 #Mypage2 > div {
     width: 100%; height: 100%;
     /* border: 1px solid #000; */
 }
 #Mypage2 > .top {
+    height: 250px;
     gap: 20px;
     display: flex;
     flex-direction: column;
@@ -51,7 +53,7 @@
 .nickname,
 #SNB details,
 #ChangeInfo,
-#ChangeInfo input,
+#ChangeInfo .userInfo > div > div,
 #ChangeInfo button,
 #MyPoint,
 #MyPoint .currentPoint,
@@ -121,34 +123,35 @@
 }
 
 
-#ChangeInfo form {
+#ChangeInfo .userInfo {
     height: 100%;
     background-color: #fff;
     gap: 20px;
     display: flex;
     flex-direction: column;
 }
-#ChangeInfo form > div {
+#ChangeInfo .userInfo > div:not(.wrap_btn) {
     display: grid;
     grid-template-columns: 1fr 3fr;
     align-items: center;   
 }
-#ChangeInfo input {
+#ChangeInfo .userInfo > div > div {
     padding: 16px 20px;
     width: 100%; height: fit-content;
     border: 1px solid #ddd;
 }
-#ChangeInfo .wrap,
-#Withdrawal .wrap {
+#ChangeInfo .wrap_btn,
+#Withdrawal .wrap_btn {
     width: 100%;
     gap: 10px;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
 }
-#ChangeInfo .wrap > button,
-#Withdrawal .wrap > button {
+#ChangeInfo .wrap_btn > button,
+#Withdrawal .wrap_btn > button {
     padding: 6px 16px;
+    width: fit-content;
 }
 
 

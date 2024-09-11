@@ -18,8 +18,6 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [showModal, setShowMdoal] = useState(false);
-  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
@@ -30,7 +28,7 @@ function App() {
   const handleLogin = (user) => {
     setUsername(user);
     setIsLoggedIn(true);
-    navigate(-1);
+    navigate('/main');
   };
 
   const handleLogout = () => {
@@ -46,8 +44,8 @@ function App() {
         <Route path="/" element={<Landing/>}/>
         <Route path="/main" element={<Main/>}/>
         <Route path="/guide" element={<Guide/>}/>
-        <Route path="/mypage" element={<Mypage/>}/>
-        {/* <Route path="/mypage" element={<Mypage2/>}/> */}
+        {/* <Route path="/mypage" element={<Mypage/>}/> */}
+        <Route path="/mypage" element={<Mypage2/>}/>
         <Route path="/login" element={<Login onLogin={handleLogin}/>}/>
         <Route path="/signup" element={<Signup/>}/>
       </Routes>

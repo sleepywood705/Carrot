@@ -1,15 +1,47 @@
 import "./Mypage2.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "../api/axios.js";
+
 
 export function Mypage2() {
+  const [user, setUser] = useState(null);  // Store user data
+  const [loading, setLoading] = useState(true);  // For loading state
+  const [error, setError] = useState(null);  // For error handling
   const [selectedMenu, setSelectedMenu] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');  // Get token from local storage if needed
+        const response = await axios.get('/users/me', {
+          headers: {
+            Authorization: token  // Ensure token is sent
+          }
+        });
+        // console.log(response.data.data)
+        setUser(response.data.data);  // Set the fetched user data
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load user data.');
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!user) return <p>No user data available.</p>;
+
 
   const renderContent = () => {
     switch (selectedMenu) {
       case "changeInfo":
-        return <ChangeInfo />;
+        return <ChangeInfo user={user} />;
       case "myPoint":
-        return <MyPoint />;
+        return <MyPoint point={user.point} />;
       case "withdrawal":
         return <Withdrawal />;
       default:
@@ -41,7 +73,7 @@ export function Mypage2() {
           <details>
             <summary>이용 관리</summary>
             <ul>
-              <li>이용기록</li>
+              <li>이용 기록</li>
             </ul>
           </details>
         </div>
@@ -51,49 +83,47 @@ export function Mypage2() {
   );
 }
 
-function ChangeInfo() {
+function ChangeInfo({ user }) {
   return (
     <div id="ChangeInfo">
       <h2>회원정보변경</h2>
-      <form>
+      <div className="userInfo">
         <div>
-          <label>닉네임</label>
-          <input type="text" />
+          <span>닉네임</span>
+          <div></div>
         </div>
         <div>
-          <label>이름</label>
-          <input type="text" />
+          <span>이름</span>
+          <div>{user.name}</div>
         </div>
         <div>
-          <label>이메일</label>
-          <input type="mail" />
+          <span>이메일</span>
+          <div>{user.email}</div>
         </div>
         <div>
-          <label>비밀번호</label>
-          <input type="password" />
+          <span>비밀번호</span>
+          <div></div>
         </div>
         <div>
-          <label>비밀번호 확인</label>
-          <input type="password" />
+          <span>비밀번호 확인</span>
+          <div></div>
         </div>
-        <div className="wrap">
+        <div className="wrap_btn">
           <button className="btn_cancel">취소</button>
           <button className="btn_change">변경</button>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
 
-function MyPoint() {
+function MyPoint({ point }) {
   return (
     <div id="MyPoint">
       <h2>내 포인트</h2>
-      <div className="currentPoint">1500 포인트</div>
+      <div className="currentPoint">{point}</div>
       <h3>포인트 내역</h3>
       <ul>
-        <li className="pointList">2024-09-10 100포인트 적립</li>
-        <li className="pointList">2024-09-10 100포인트 적립</li>
         <li className="pointList">2024-09-10 100포인트 적립</li>
         <li className="pointList">2024-09-10 100포인트 적립</li>
       </ul>

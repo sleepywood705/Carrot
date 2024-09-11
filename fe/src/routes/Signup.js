@@ -1,10 +1,11 @@
 import './Login.css';
 import React, { useState, useEffect } from 'react';
 import axios from "../api/axios.js"
+import { Navigate } from 'react-router-dom';
 
 
 export function Signup() {
-
+  const [usernickname, setUsernickname] = useState('');
   const [usermail, setUsermail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
@@ -27,6 +28,7 @@ export function Signup() {
       // 회원가입 성공 시 처리
       alert('회원가입 성공:', response.data);
       console.log('회원가입 성공:', response.data);
+      Navigate('/main');
     } catch (err) {
       console.log(err)
       alert('회원가입에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
@@ -38,8 +40,14 @@ export function Signup() {
       <h2>회원가입</h2>
       <form onSubmit={handleSubmit} >
         <input
-
           type="text"
+          value={usernickname}
+          onChange={(e) => setUsernickname(e.target.value)}
+          placeholder="닉네임을 입력해 주세요"
+          required
+        />
+        <input
+          type="email"
           value={usermail}
           onChange={(e) => setUsermail(e.target.value)}
           placeholder="이메일을 입력해 주세요"

@@ -97,12 +97,19 @@ function PostingForm({
     onClose();
   };
 
+  const handleCloseModal = () => {
+    onClose();
+  }
+
   const isAuthor =
     currentUser && editData && currentUser.name === editData.authorName;
 
   return (
     <form onSubmit={handleSubmit} className="form_posting">
-      <h2>게시물 수정</h2>
+      <h2>
+        게시물 수정
+        <button onClick={handleCloseModal}></button>
+      </h2>
       <select value={type} onChange={(e) => setType(e.target.value)}>
         <option value="탑승자">탑승자</option>
         <option value="운전자">운전자</option>
@@ -170,6 +177,9 @@ function PostingForm({
         </button>
         <button type="submit" onClick={handleSubmit}>
           수정하기
+        </button>
+        <button type="submit" onClick={handleDelete}>
+          취소하기
         </button>
       </div>
     </form>
