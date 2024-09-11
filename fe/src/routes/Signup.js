@@ -25,6 +25,7 @@ export function Signup() {
         name: usermail,
       });
       // 회원가입 성공 시 처리
+      alert('회원가입 성공:', response.data);
       console.log('회원가입 성공:', response.data);
     } catch (err) {
       console.log(err)
