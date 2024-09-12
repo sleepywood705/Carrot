@@ -17,7 +17,7 @@ export class ReservationsController {
 
     getReservationById = async (req, res, next) => {
         try {
-            const id = req.params;
+            const { id } = req.params;
             const reservation = await this.reservationsService.getReservationById(id);
             res.status(200).json(reservation);
         } catch (error) {
@@ -38,7 +38,7 @@ export class ReservationsController {
 
     updateReservation = async (req, res, next) => {
         try {
-            const id = parseInt(req.param);
+            const { id } = req.params;
             const data = req.body;
             const updatedReservation = await this.reservationsService.updateReservation(id, data);
             res.status(200).json(updatedReservation);
@@ -50,7 +50,7 @@ export class ReservationsController {
 
     deleteReservation = async (req, res, next) => {
         try {
-            const id = req.params;
+            const { id } = req.params;
             await this.reservationsService.deleteReservation(id);
             res.status(204).send();
         } catch (error) {
