@@ -19,14 +19,6 @@
   place-items: center;
   cursor: pointer;
 }
-#ModalPosting h2,
-#ModalPosting h3 {
-  color: #333;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 .form_posting {
   position: relative;
   width: 480px; height: fit-content;
@@ -38,7 +30,12 @@
   flex-direction: column;
 }
 .form_posting > h2 {
+  color: #333;
   font-size: 24px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .form_posting > h2 > button {
   height: 20px; aspect-ratio: 1;
@@ -148,4 +145,23 @@
 .form_posting > .wrap_btn button[type="submit"]:hover {
   color: #fff;
   background-color: #FF6F0F;
+}
+
+
+
+
+#Chatting {
+  position: fixed;
+  right: 200px; top: 50%;
+  transform: translate(0, -50%);
+  padding: 10px;
+  width: 440px; height: calc(100vh - 80px);
+  border: 1px solid #fff;
+  background-color: #fff;
+  display: grid;
+  grid-template-rows: auto 70px;
+
+}
+#Chatting > div{
+  border: 1px solid #000;
 }

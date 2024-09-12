@@ -7,7 +7,7 @@ export function Mypage2() {
   const [user, setUser] = useState(null);  // Store user data
   const [loading, setLoading] = useState(true);  // For loading state
   const [error, setError] = useState(null);  // For error handling
-  const [selectedMenu, setSelectedMenu] = useState(null);
+  const [selectedMenu, setSelectedMenu] = useState("changeInfo");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -56,16 +56,14 @@ export function Mypage2() {
           <img src="/img/leaf.png" alt="leaf" />
           <div className="img_profile"></div>
         </div>
-        <div className="nickname">닉네임</div>
+        <div className="nickname">{user.nickname}</div>
       </div>
       <div className="bot">
         <div id="SNB">
-          <details>
+          <details open>
             <summary>내 정보 관리</summary>
             <ul>
-              <li onClick={() => setSelectedMenu("changeInfo")}>
-                회원정보변경
-              </li>
+              <li onClick={() => setSelectedMenu("changeInfo")}>회원정보변경</li>
               <li onClick={() => setSelectedMenu("myPoint")}>내 포인트</li>
               <li onClick={() => setSelectedMenu("withdrawal")}>회원 탈퇴</li>
             </ul>
@@ -90,11 +88,15 @@ function ChangeInfo({ user }) {
       <div className="userInfo">
         <div>
           <span>닉네임</span>
-          <div></div>
+          <div>{user.nickname}</div>
         </div>
         <div>
           <span>이름</span>
           <div>{user.name}</div>
+        </div>
+        <div>
+          <span>성별</span>
+          <div>{user.gender}</div>
         </div>
         <div>
           <span>이메일</span>
@@ -102,11 +104,11 @@ function ChangeInfo({ user }) {
         </div>
         <div>
           <span>비밀번호</span>
-          <div></div>
+          <input placeholder="******"/>
         </div>
         <div>
           <span>비밀번호 확인</span>
-          <div></div>
+          <input placeholder="******"/>
         </div>
         <div className="wrap_btn">
           <button className="btn_cancel">취소</button>

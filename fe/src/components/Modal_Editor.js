@@ -1,4 +1,5 @@
 import "./Modal_Posting.css";
+import { KakaoMap } from "./Modal_Posting";
 import { useState, useEffect } from "react";
 
 const { kakao } = window;
@@ -21,10 +22,12 @@ export function ModalEditor({
 
     if (isOpen) {
       window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";  // 스크롤 비활성화
     }
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";  // 스크롤 활성화
     };
   }, [isOpen, onClose]);
 
@@ -156,7 +159,7 @@ function PostingForm({
             name="gender"
             value="성별무관"
             checked={gender === "성별무관"}
-            onChange={(e) => setGender(e.target.value)} // 성별 선택 처리
+            onChange={(e) => setGender(e.target.value)}
           />
           성별무관
         </label>
@@ -166,7 +169,7 @@ function PostingForm({
             name="gender"
             value="동성끼리 탑승"
             checked={gender === "동성끼리 탑승"}
-            onChange={(e) => setGender(e.target.value)} // 성별 선택 처리
+            onChange={(e) => setGender(e.target.value)}
           />
           동성끼리 탑승
         </label>
@@ -182,22 +185,16 @@ function PostingForm({
           취소하기
         </button>
       </div>
+      <Chatting />
     </form>
   );
 }
 
-function KakaoMap() {
-  useEffect(() => {
-    if (window.kakao && window.kakao.maps) {
-      const container = document.getElementById("map");
-      const option = {
-        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-        level: 3,
-      };
-      const map = new window.kakao.maps.Map(container, option);
-    } else {
-      console.error("Kakao 객체가 정의되지 않았습니다.");
-    }
-  }, []);
-  return <div id="map"></div>;
+function Chatting() {
+  return (
+    <div id="Chatting">
+      <div className="top"></div>
+      <div className="bot"></div>
+    </div>
+  )
 }

@@ -54,6 +54,7 @@
 #SNB details,
 #ChangeInfo,
 #ChangeInfo .userInfo > div > div,
+#ChangeInfo .userInfo > div > input,
 #ChangeInfo button,
 #MyPoint,
 #MyPoint .currentPoint,
@@ -135,7 +136,8 @@
     grid-template-columns: 1fr 3fr;
     align-items: center;   
 }
-#ChangeInfo .userInfo > div > div {
+#ChangeInfo .userInfo > div > div,
+#ChangeInfo .userInfo > div > input {
     padding: 16px 20px;
     width: 100%; height: fit-content;
     border: 1px solid #ddd;
