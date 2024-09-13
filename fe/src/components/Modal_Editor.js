@@ -1,5 +1,5 @@
 import "./Modal_Posting.css";
-import { KakaoMap } from "./Modal_Posting";
+import { Map } from "./Modal_Posting";
 import { useState, useEffect } from "react";
 
 const { kakao } = window;
@@ -133,7 +133,7 @@ function PostingForm({
           required
         />
       </div>
-      <KakaoMap />
+  
       <h2>몇 시에 출발하시나요?</h2>
       <input
         type="time"
