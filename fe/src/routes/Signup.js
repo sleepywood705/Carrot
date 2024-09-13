@@ -22,7 +22,6 @@ export function Signup() {
     }
     try {
       const response = await axios.post('/users/signup', {
-        nick: userNick,
         name: userName,
         email: userMail,
         password,
@@ -42,13 +41,6 @@ export function Signup() {
     <div id="Login">
       <h2>회원가입</h2>
       <form onSubmit={handleSubmit} >
-        <input
-          type="text"
-          value={userNick}
-          onChange={(e) => setUserNick(e.target.value)}
-          placeholder="닉네임을 입력해 주세요"
-          required
-        />
         <input
           type="text"
           value={userName}
@@ -79,21 +71,21 @@ export function Signup() {
         />
         <div className='wrap radio'>
           <label htmlFor="man">
-            <input 
-              type="radio" 
-              id="man" 
-              name="gender" 
-              value="male" 
+            <input
+              type="radio"
+              id="man"
+              name="gender"
+              value="MALE"
               onChange={(e) => setUserGender(e.target.value)}
             />
             남성
           </label>
           <label htmlFor="woman">
-            <input 
-              type="radio" 
-              id="woman" 
-              name="gender" 
-              value="female" 
+            <input
+              type="radio"
+              id="woman"
+              name="gender"
+              value="FEMALE"
               onChange={(e) => setUserGender(e.target.value)}
             />
             여성

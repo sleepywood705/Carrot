@@ -87,10 +87,6 @@ function ChangeInfo({ user }) {
       <h2>회원정보변경</h2>
       <div className="userInfo">
         <div>
-          <span>닉네임</span>
-          <div>{user.nickname}</div>
-        </div>
-        <div>
           <span>이름</span>
           <div>{user.name}</div>
         </div>
@@ -104,11 +100,11 @@ function ChangeInfo({ user }) {
         </div>
         <div>
           <span>비밀번호</span>
-          <input placeholder="******"/>
+          <input placeholder="******" />
         </div>
         <div>
           <span>비밀번호 확인</span>
-          <input placeholder="******"/>
+          <input placeholder="******" />
         </div>
         <button className="btn_change">변경</button>
       </div>
