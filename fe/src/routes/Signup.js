@@ -74,7 +74,7 @@ export function Signup() {
               type="radio" 
               id="man" 
               name="gender" 
-              value="male" 
+              value="MALE" 
               onChange={(e) => setUserGender(e.target.value)}
             />
             남성
@@ -84,7 +84,7 @@ export function Signup() {
               type="radio" 
               id="woman" 
               name="gender" 
-              value="female" 
+              value="FEMALE" 
               onChange={(e) => setUserGender(e.target.value)}
             />
             여성
