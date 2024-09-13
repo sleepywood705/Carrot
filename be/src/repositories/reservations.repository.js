@@ -22,6 +22,7 @@ export class ReservationsRepository {
                         id: true,
                         email: true,
                         name: true,
+                        gender: true,
                         role: true,
                     }
                 }
@@ -40,6 +41,7 @@ export class ReservationsRepository {
                         id: true,
                         email: true,
                         name: true,
+                        gender: true,
                         role: true,
                     }
                 }
@@ -52,7 +54,15 @@ export class ReservationsRepository {
         const Reservations = await prisma.reservation.findMany({
             include: {
                 post: true,
-                booker: true,
+                booker: {
+                    select: {
+                        id: true,
+                        email: true,
+                        name: true,
+                        gender: true,
+                        role: true,
+                    }
+                }
             },
         });
         return Reservations

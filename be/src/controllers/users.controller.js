@@ -7,9 +7,10 @@ export class UsersController {
         try {
             const users = await this.usersService.findAllUsers();
             return res.status(200).json({ data: users });
-        } catch (err) {
+        } catch (error) {
             // next(err);
-            console.log("error : ", err)
+            console.log("error : ", error)
+            return res.status(500).json({ error, message: '서버 오류' });
         }
     };
 
@@ -18,9 +19,10 @@ export class UsersController {
             const { id } = req.params;
             const user = await this.usersService.findUserById(id);
             return res.status(200).json({ data: user });
-        } catch (err) {
+        } catch (error) {
             // next(err);
-            console.log("error : ", err)
+            console.log("error : ", error)
+            return res.status(500).json({ error, message: '서버 오류' });
         }
     };
 
@@ -29,9 +31,10 @@ export class UsersController {
             const { email } = req.params;
             const user = await this.usersService.findUserByEmail(email);
             return res.status(200).json({ data: user });
-        } catch (err) {
+        } catch (error) {
             // next(err);
             console.log("error : ", err)
+            return res.status(500).json({ error, message: '서버 오류' });
         }
     };
 
@@ -39,17 +42,18 @@ export class UsersController {
         try {
             const user = await this.usersService.getCurrentUser(req.user);
             return res.status(200).json({ data: user });
-        } catch (err) {
-            // next(error);  
-            console.log("error : ", err)
+        } catch (error) {
+            // next(error); 
+            console.log("error : ", error)
+            return res.status(500).json({ error, message: '서버 오류' });
         }
     }
 
     createUser = async (req, res, next) => {
         try {
-            const { email, password, name } = req.body;
-            if (!email || !password || !name) {
-                return res.status(400).json({ error: '이메일, 비밀번호, 이름이 필요합니다.' });
+            const { email, password, name, gender } = req.body;
+            if (!email || !password || !name || !gender) {
+                return res.status(400).json({ error: '이메일, 비밀번호, 이름, 성별이 필요합니다.' });
             }
             // // 이메일 유효성 검사(example@example.com) 형태
             // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -67,11 +71,12 @@ export class UsersController {
             // if (!name) {
             //     return res.status(400).json({ error: '이름을 입력하세요.' });
             // }
-            const createdUser = await this.usersService.createUser(email, password, name);
+            const createdUser = await this.usersService.createUser(email, password, name, gender);
             return res.status(201).json({ data: createdUser });
-        } catch (err) {
+        } catch (error) {
             // next(err);
-            console.log("error : ", err);
+            console.log("error : ", error)
+            return res.status(500).json({ error, message: '서버 오류' });
         }
     };
 
@@ -80,9 +85,10 @@ export class UsersController {
             const { id } = req.params;
             const updatedUser = await this.usersService.updateUser(id, req.body);
             return res.status(200).json({ data: updatedUser });
-        } catch (err) {
+        } catch (error) {
             // next(err);
-            console.log("error : ", err)
+            console.log("error : ", error)
+            return res.status(500).json({ error, message: '서버 오류' });
         }
     };
 
@@ -91,9 +97,10 @@ export class UsersController {
             const { id } = req.params;
             await this.usersService.deleteUser(id);
             return res.status(204).json({ message: 'Completely Deleted' });
-        } catch (err) {
+        } catch (error) {
             // next(err);
-            console.log("error : ", err)
+            console.log("error : ", error)
+            return res.status(500).json({ error, message: '서버 오류' });
         }
     };
 
@@ -103,9 +110,10 @@ export class UsersController {
             const token = await this.usersService.loginUser(email, password);
             // console.log('Bearer ' + token)
             return res.status(200).setHeader('authorization', `Bearer ${token}`).json({ message: 'Token logged in console' });
-        } catch (err) {
+        } catch (error) {
             // next(err);
-            console.log("error : ", err)
+            console.log("error : ", error)
+            return res.status(500).json({ error, message: '서버 오류' });
         }
     };
 }

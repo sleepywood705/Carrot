@@ -14,8 +14,10 @@ export class UsersRepository {
                 id: true,
                 email: true,
                 name: true,
+                gender: true,
                 point: true,
                 role: true
+
             }
         });
         return user;
@@ -28,9 +30,9 @@ export class UsersRepository {
         return user;
     };
 
-    createUser = async (email, password, name, role) => {
+    createUser = async (email, password, name, gender, role) => {
         const createdUser = await prisma.user.create({
-            data: { email, password, name, role },
+            data: { email, password, name, gender, role },
         });
         return createdUser;
     };
