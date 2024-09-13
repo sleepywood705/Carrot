@@ -32,7 +32,7 @@ export class ReservationsRepository {
 
     getReservationById = async (id) => {
         const findedIdReservation = await prisma.reservation.findUnique({
-            where: { id: id },
+            where: { id: parseInt(id) },
             include: {
                 post: true,
                 booker: {
@@ -60,7 +60,7 @@ export class ReservationsRepository {
 
     updateReservation = async (id, data) => {
         const updatedReservation = await prisma.reservation.update({
-            where: { id: id },
+            where: { id: parseInt(id) },
             data: data,
         });
         return updatedReservation;
@@ -68,7 +68,7 @@ export class ReservationsRepository {
 
     deleteReservation = async (id) => {
         const deletedReservation = await prisma.reservation.delete({
-            where: { id: id },
+            where: { id: parseInt(id) },
         });
         return deletedReservation;
     };
