@@ -18,7 +18,7 @@
   width: 100%;
 }
 .content {
-  padding: 0 480px 100px;
+  padding: 0 500px 100px;
   /* border: 1px solid #000; */
   gap: 20px;
   display: flex;
@@ -99,6 +99,7 @@
 }
 .sct_board {
   padding: 30px;
+  width: 100%;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -153,7 +154,7 @@
   margin-left: auto;
 }
 .row2 .route {
-  padding: 20px;
+  /* padding: 12px; */
   font-size: 18px;
   text-align: center;
 }

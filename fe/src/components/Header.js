@@ -1,50 +1,39 @@
 import "./Header.css";
-import { Link, useLocation } from "react-router-dom";
+import { Nav } from "./Nav";
 import { useState } from "react";
-import { PersonalNav } from "./Nav_Personal";
+import { Link, useLocation } from "react-router-dom";
 
-export function Header({ isLoggedIn, username, onLogout }) {
+
+export function Header({ isLoggedIn, onLogout, userName }) {
   const location = useLocation();
-  const onBoarding = location.pathname === "/";
-  const [showPersonalNav, setShowPersonalNav] = useState(false);
+  const inMainPage = location.pathname === "/";
+  const [showNav, setShowNav] = useState(false);
 
-  const togglePersonalNav = () => {
-    setShowPersonalNav(!showPersonalNav);
+  const toggleNav = () => {
+    setShowNav(!showNav);
   };
+
+  const invert = inMainPage ? "invert" : "";
 
   return (
     <header>
-      <Link to="/" id="logo" className={onBoarding ? "invert" : ""}>
-        당근마차
-      </Link>
-      <Link to="/guide" className={onBoarding ? "invert" : ""}>
-        이용가이드
-      </Link>
+      <Link to="/" id="logo" className={invert}>당근마차</Link>
+      <Link to="/guide" className={invert}>이용가이드</Link>
       {isLoggedIn && (
-        <button
-          className={onBoarding ? "invert" : ""}
-          onClick={togglePersonalNav}
-        >
-          {username}님 ㅎㅇ
+        <button className={invert} onClick={toggleNav}>
+          {userName}님 ㅎㅇ
         </button>
       )}
       {isLoggedIn ? (
-        <button onClick={onLogout} className={onBoarding ? "invert" : ""}>
-          로그아웃
-        </button>
+        <button onClick={onLogout} className={invert}>로그아웃</button>
       ) : (
-        <Link to="/login" className={onBoarding ? "invert" : ""}>
-          로그인
-        </Link>
+        <Link to="/login" className={invert}>로그인</Link>
       )}
-      {
-        !isLoggedIn &&
-        <Link to="/signup" className={onBoarding ? "invert" : ""}>
-          회원가입
-        </Link>
+      {!isLoggedIn &&
+        <Link to="/signup" className={invert}>회원가입</Link>
       }
-      {showPersonalNav && (
-        <PersonalNav onClose={togglePersonalNav} username={username} />
+      {showNav && (
+        <Nav onClose={toggleNav} userName={userName} />
       )}
     </header>
   );

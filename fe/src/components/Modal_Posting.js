@@ -11,11 +11,13 @@ export function ModalPosting({ isOpen, onClose, onSubmit }) {
     };
 
     if (isOpen) {
-      window.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("keydown", handleKeyDown); 
+      document.body.style.overflow = "hidden";  // 스크롤 비활성화
     }
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";  // 스크롤 활성화
     };
   }, [isOpen, onClose]);
 
@@ -63,6 +65,10 @@ export function PostingForm({ onSubmit, onClose }) {
     });
     onClose();
   };
+
+  const handleCloseModal = () => {
+    onClose();
+  }
 
   return (
     

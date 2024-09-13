@@ -1,4 +1,5 @@
 import "./Modal_Posting.css";
+import { Map } from "./Modal_Posting";
 import { useState, useEffect } from "react";
 
 const { kakao } = window;
@@ -21,10 +22,12 @@ export function ModalEditor({
 
     if (isOpen) {
       window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";  // 스크롤 비활성화
     }
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";  // 스크롤 활성화
     };
   }, [isOpen, onClose]);
 
@@ -97,12 +100,19 @@ function PostingForm({
     onClose();
   };
 
+  const handleCloseModal = () => {
+    onClose();
+  }
+
   const isAuthor =
     currentUser && editData && currentUser.name === editData.authorName;
 
   return (
     <form onSubmit={handleSubmit} className="form_posting">
-      <h2>게시물 수정</h2>
+      <h2>
+        게시물 수정
+        <button onClick={handleCloseModal}></button>
+      </h2>
       <select value={type} onChange={(e) => setType(e.target.value)}>
         <option value="탑승자">탑승자</option>
         <option value="운전자">운전자</option>
@@ -125,7 +135,7 @@ function PostingForm({
           required
         />
       </div>
-      <KakaoMap />
+  
       <h2>몇 시에 출발하시나요?</h2>
       <input
         type="time"
@@ -149,7 +159,7 @@ function PostingForm({
             name="gender"
             value="성별무관"
             checked={gender === "성별무관"}
-            onChange={(e) => setGender(e.target.value)} // 성별 선택 처리
+            onChange={(e) => setGender(e.target.value)}
           />
           성별무관
         </label>
@@ -159,7 +169,7 @@ function PostingForm({
             name="gender"
             value="동성끼리 탑승"
             checked={gender === "동성끼리 탑승"}
-            onChange={(e) => setGender(e.target.value)} // 성별 선택 처리
+            onChange={(e) => setGender(e.target.value)}
           />
           동성끼리 탑승
         </label>
@@ -171,23 +181,20 @@ function PostingForm({
         <button type="submit" onClick={handleSubmit}>
           수정하기
         </button>
+        <button type="submit" onClick={handleDelete}>
+          취소하기
+        </button>
       </div>
+      <Chatting />
     </form>
   );
 }
 
-function KakaoMap() {
-  useEffect(() => {
-    if (window.kakao && window.kakao.maps) {
-      const container = document.getElementById("map");
-      const option = {
-        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-        level: 3,
-      };
-      const map = new window.kakao.maps.Map(container, option);
-    } else {
-      console.error("Kakao 객체가 정의되지 않았습니다.");
-    }
-  }, []);
-  return <div id="map"></div>;
+function Chatting() {
+  return (
+    <div id="Chatting">
+      <div className="top"></div>
+      <div className="bot"></div>
+    </div>
+  )
 }

@@ -28,6 +28,7 @@
 #Login input[type="text"],
 #Login input[type="email"],
 #Login input[type="password"],
+#Login label,
 #Login button[type="submit"] {
   padding-left: 10px;
   width: 100%; height: 40px;
@@ -49,11 +50,13 @@
   display: flex;
 }
 #Login .wrap.radio label {
-  width: 100%; height: 40px;
+  padding: 40px;
+  width: 100%;
   border: 1px solid #ddd;
   border-radius: 4px;
   gap: 8px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -68,4 +71,8 @@
 #Login > div:nth-last-child(3) span {
   padding: 0 10px;
   background-color: #fff;
+}
+.login,
+.signup {
+  padding: 0;
 }

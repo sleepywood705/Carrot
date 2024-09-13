@@ -1,6 +1,6 @@
 import './Login.css';
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from '../api/axios.js'
 
 
@@ -8,7 +8,6 @@ export function Login({ onLogin }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,15 +30,6 @@ export function Login({ onLogin }) {
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (email == '11' && password == '1') {
-  //     console.log('로그인 성공');
-  //     onLogin(email);
-  //     navigate('/main');
-  //   } 
-  // }
-
   return (
     <div id="Login">
       <form onSubmit={handleSubmit}>
@@ -58,8 +48,8 @@ export function Login({ onLogin }) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">로그인</button>
-        <Link to="/Signup">회원가입</Link>
+        <button type="submit" className="login">로그인</button>
+        <Link to="/signup" className="signup">회원가입</Link>
       </form>
     </div>
   );

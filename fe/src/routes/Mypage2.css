@@ -6,12 +6,14 @@
     gap: 60px;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
 }
 #Mypage2 > div {
     width: 100%; height: 100%;
     /* border: 1px solid #000; */
 }
 #Mypage2 > .top {
+    height: 250px;
     gap: 20px;
     display: flex;
     flex-direction: column;
@@ -23,6 +25,7 @@
     display: grid;
     grid-template-columns: 290px auto;
 }
+
 
 .cnt_img {
     position: relative;
@@ -37,21 +40,20 @@
 }
 .img_profile {
     width: 120px; aspect-ratio: 1;
-    border: 1px solid #ddd;
-    border-radius: 50%;
+    border-radius: 50% !important;
 }
 .nickname {
     padding: 8px 16px;
     background-color: #fff;
-    border: 1px solid #ddd;
 }
 
 
-
+.img_profile,
 .nickname,
 #SNB details,
 #ChangeInfo,
-#ChangeInfo input,
+#ChangeInfo .userInfo > div > div,
+#ChangeInfo .userInfo > div > input,
 #ChangeInfo button,
 #MyPoint,
 #MyPoint .currentPoint,
@@ -59,6 +61,19 @@
 #Withdrawal,
 #Withdrawal .wrap > button {
     border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+#ChangeInfo,
+#MyPoint,
+#Withdrawal {
+    min-width: 618px;
+    padding: 30px;
+    /* border: 1px solid #000; */
+    background-color: #fff;
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
 }
 
 #SNB details,
@@ -78,24 +93,10 @@
     font-size: 19px;
 }
 
-#ChangeInfo,
-#MyPoint,
-#Withdrawal {
-    min-width: 618px;
-    padding: 30px;
-    /* border: 1px solid #000; */
-    background-color: #fff;
-    border: 1px solid #ddd;
-    gap: 30px;
-    display: flex;
-    flex-direction: column;
-}
-
 #SNB > details > ul,
 #Withdrawal > div p {
     color: #666;
 }
-
 
 
 #SNB {
@@ -105,7 +106,6 @@
 }
 #SNB > details {
     padding: 20px;
-    border: 1px solid #ddd;
     background-color: #fff;
 }
 #SNB > details > summary {
@@ -121,36 +121,23 @@
 }
 
 
-#ChangeInfo form {
+#ChangeInfo .userInfo {
     height: 100%;
     background-color: #fff;
     gap: 20px;
     display: flex;
     flex-direction: column;
 }
-#ChangeInfo form > div {
+#ChangeInfo .userInfo > div {
     display: grid;
     grid-template-columns: 1fr 3fr;
     align-items: center;   
 }
-#ChangeInfo input {
+#ChangeInfo .userInfo > div > div,
+#ChangeInfo .userInfo > div > input {
     padding: 16px 20px;
-    width: 100%; height: fit-content;
-    border: 1px solid #ddd;
+    width: 100%; height: fit-content;    
 }
-#ChangeInfo .wrap,
-#Withdrawal .wrap {
-    width: 100%;
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-}
-#ChangeInfo .wrap > button,
-#Withdrawal .wrap > button {
-    padding: 6px 16px;
-}
-
 
 
 #MyPoint > h3 {
@@ -167,11 +154,9 @@
     width: 100%; height: 60px;
     color: #666;
     font-size: 14px;
-    border: 1px solid #ddd;
     display: flex;
     align-items: center;
 }
-
 
 
 #Withdrawal {
@@ -189,8 +174,16 @@
 }
 
 
-
-.btn_cancel,
+.btn_confirm, 
+.btn_change {
+    margin-left: auto;
+    padding: 6px 16px;
+    width: fit-content;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 .btn_confirm {
     background-color: #F2F2F2;
 }
