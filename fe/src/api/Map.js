@@ -12,8 +12,8 @@ const KakaoMap = ({ onMapSubmit, editData }) => {
   const [fuelCost, setFuelCost] = useState('');
   const [taxiCost, setTaxiCost] = useState('');
 
-  const [startName, setStartName] = useState('');
-  const [endName, setEndName] = useState('');
+  const [startName, setStartName] = useState(''); // 출발지 상태
+  const [endName, setEndName] = useState(''); // 도착지 상태
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -200,8 +200,24 @@ const KakaoMap = ({ onMapSubmit, editData }) => {
       </div>
       <div className="a">
         <div className="c">
-          <input type="text" id="startName" name="startName" placeholder="출발지 이름을 입력하세요" required />
-          <input type="text" id="endName" name="endName" placeholder="도착지 이름을 입력하세요" required />
+          <input 
+            type="text" 
+            id="startName" 
+            name="startName" 
+            placeholder="출발지 이름을 입력하세요" 
+            value={startName} // 상태를 입력 필드에 연결
+            onChange={(e) => setStartName(e.target.value)} // 상태 업데이트
+            required 
+          />
+          <input 
+            type="text" 
+            id="endName" 
+            name="endName" 
+            placeholder="도착지 이름을 입력하세요" 
+            value={endName} // 상태를 입력 필드에 연결
+            onChange={(e) => setEndName(e.target.value)} // 상태 업데이트
+            required 
+          />
         </div>
       </div>
       <button type="submit">경로 검색</button>

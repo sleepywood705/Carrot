@@ -38,7 +38,9 @@ export function Signup() {
 
   return (
     <div id="Login">
-      <h2>회원가입</h2>
+      <img src="/img/logo.svg" alt="logo" />
+      <h2>당신 근처의 마차</h2>
+      <p>동네라서 가능한 모든 것<br/>지금 내 동네에서 카풀을 시작해 보세요</p>
       <form onSubmit={handleSubmit} >
         <input
           type="text"

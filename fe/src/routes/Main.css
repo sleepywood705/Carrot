@@ -50,15 +50,15 @@
   display: flex;
   gap: 10px;
 }
-.sct_search > div input[type="text"],
-.sct_search > div input[type="date"] {
+.sct_search input[type="text"],
+.sct_search input[type="date"] {
   flex: 1;
   padding: 0 0 0 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
 }
-.sct_search > div button[type="submit"] {
+.sct_search button[type="submit"] {
   padding: 10px 20px;
   background-color: #FF6F0F;
   color: white;
@@ -66,7 +66,7 @@
   border-radius: 4px;
   font-size: 16px;
 }
-.sct_search > div button[type="submit"]:hover {
+.sct_search button[type="submit"]:hover {
   background-color: #FF6F0F;
 }
 .sct_search > div .wrap {
@@ -102,11 +102,14 @@
   width: 100%;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
 }
 .sct_board > h3 {
-  font-size: 20px;
-  margin-bottom: 15px;
   color: #333;
+  font-size: 20px;
+  font-weight: 500;
 }
 .sct_board > div {
   display: grid;

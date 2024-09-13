@@ -9,8 +9,6 @@
   place-items: center;
   overflow-y: scroll;
 }
-
-
 #Modal {
   border-radius: 8px;
   gap: 20px;
@@ -32,12 +30,6 @@
   gap: 30px;
   display: flex;
   flex-direction: column;
-}
-#Modal button[type="submit"] {
-  color: #fff;
-  height: 60px;
-  border-radius: 8px;
-  background-color: #ff6f0f;
 }
 #Modal .a {
   gap: 16px;
@@ -90,8 +82,13 @@
 #Modal .b > button {
   flex: 1 1 calc(50% - 10px);
 }
-
-
+#Modal button[type="submit"] {
+  margin-top: auto;
+  color: #fff;
+  height: 60px;
+  border-radius: 8px;
+  background-color: #ff6f0f;
+}
 #Chatting {
   position: fixed;
   PostingForm: 200px; top: 50%;

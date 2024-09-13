@@ -42,48 +42,6 @@ export function Main() {
         date: "2024-09-04",
         gender: "성별무관"
       },
-      {
-        type: "운전자",
-        route: "부산 → 서울",
-        time: "오전 6:00 출발",
-        date: "2024-09-03",
-        gender: "성별무관"
-      },
-      {
-        type: "운전자",
-        route: "대전 → 인천",
-        time: "오후 1:00 출발",
-        date: "2024-09-04",
-        gender: "성별무관"
-      },
-      {
-        type: "운전자",
-        route: "광 → 대구",
-        time: "오후 4:00 출발",
-        date: "2024-09-03",
-        gender: "성별무관"
-      },
-      {
-        type: "운전자",
-        route: "천안 → 수원",
-        time: "오전 10:00 출발",
-        date: "2024-09-04",
-        gender: "성별무관"
-      },
-      {
-        type: "택시",
-        route: "서울 시내",
-        time: "저녁 8:00 출발",
-        date: "2024-09-03",
-        gender: "성별무관"
-      },
-      {
-        type: "택시",
-        route: "인천 국제공항 → 서울",
-        time: "오전 7:00 출발",
-        date: "2024-09-03",
-        gender: "성별무관"
-      },
     ];
     setTrips(initialTrips);
     setFilteredTrips(initialTrips);

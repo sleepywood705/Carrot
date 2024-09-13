@@ -1,24 +1,32 @@
 #Login {
   margin-top: 80px;
-  padding-top: 160px;
+  padding-top: 40px;
   width: 100%; height: calc(100vh - 80px);
-  gap: 10px;
+  text-align: center;
+  gap: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#Login form {
+#Login > img {
+  width: 50px;
+}
+#Login > h2 {
+  color: #FF6F0F;
+  font-size: 30px;
+  font-weight: 800;
+}
+#Login > p {
+  color: #555;
+  gap: 10px;
+  display: grid;
+}
+#Login > form {
+  margin-top: 10px;
   width: 340px;
   gap: 10px;
   display: flex;
   flex-direction: column;
-}
-#Login h2 {
-  height: 60px;
-  color: #FF6F0F;
-  font-size: 30px;
-  font-weight: 800;
-  text-align: center;
 }
 #Login a {
   display: grid;
@@ -59,18 +67,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-#Login > div:nth-last-child(3) {
-  margin-bottom: 20px;
-  height: 1px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ddd;
-}
-#Login > div:nth-last-child(3) span {
-  padding: 0 10px;
-  background-color: #fff;
 }
 .login,
 .signup {
