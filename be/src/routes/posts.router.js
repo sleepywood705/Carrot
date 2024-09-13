@@ -8,7 +8,7 @@ const postsController = new PostsController();
 
 router.post('/post', authMiddleware, postsController.createPost);
 router.get('/get/:id', authMiddleware, postsController.getPostById);
-router.get('/gets', authMiddleware, postsController.getAllPosts);
+router.get('/gets', postsController.getAllPosts);
 router.patch('/patch/:id', authMiddleware, postsController.updatePost);
 router.delete('/delete/:id', authMiddleware, postsController.deletePost);
 

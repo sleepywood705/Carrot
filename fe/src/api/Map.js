@@ -1,7 +1,7 @@
 import './Map.css';
 import { useEffect, useRef, useState, useCallback } from 'react';
 
-const KakaoMap = ({ onMapSubmit }) => {
+const KakaoMap = ({ onMapSubmit, editData }) => {
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);
   const [kakaoLoaded, setKakaoLoaded] = useState(false);
@@ -11,6 +11,9 @@ const KakaoMap = ({ onMapSubmit }) => {
   const [distance, setDistance] = useState(0);
   const [fuelCost, setFuelCost] = useState('');
   const [taxiCost, setTaxiCost] = useState('');
+
+  const [startName, setStartName] = useState('');
+  const [endName, setEndName] = useState('');
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -151,24 +154,33 @@ const KakaoMap = ({ onMapSubmit }) => {
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
-    const startName = event.target.startName.value.trim();
-    const endName = event.target.endName.value.trim();
+    const start = startName.trim();
+    const end = endName.trim();
 
-    if (!startName || !endName) {
+    if (!start || !end) {
       alert('출발지와 도착지 이름을 모두 입력해 주세요.');
       return;
     }
 
-    searchPlaceByName(startName, 'S', (startCoords) => {
-      searchPlaceByName(endName, 'E', (endCoords) => {
+    searchPlaceByName(start, 'S', (startCoords) => {
+      searchPlaceByName(end, 'E', (endCoords) => {
         drawRoute(startCoords, endCoords);
         if (onMapSubmit) {
-          onMapSubmit({ startName, endName, distance, fuelCost, taxiCost });
+          onMapSubmit({ startName: start, endName: end, distance, fuelCost, taxiCost });
         }
       });
     });
-  }, [searchPlaceByName, drawRoute, distance, fuelCost, taxiCost, onMapSubmit]);
-  
+  }, [searchPlaceByName, drawRoute, distance, fuelCost, taxiCost, onMapSubmit, startName, endName]);
+
+  useEffect(() => {
+    if (editData && editData.route) {
+      const [start, end] = editData.route.split("→").map(s => s.trim());
+      setStartName(start);
+      setEndName(end);
+      // 여기서 지도 초기화 및 경로 표시 로직을 추가할 수 있습니다.
+    }
+  }, [editData]);
+
   if (!kakaoLoaded) {
     return <div>카카오맵을 로딩 중입니다...</div>;
   }

@@ -58,7 +58,7 @@ export function Main() {
       },
       {
         type: "운전자",
-        route: "광주 → 대구",
+        route: "광 → 대구",
         time: "오후 4:00 출발",
         date: "2024-09-03",
         gender: "성별무관"
@@ -138,6 +138,12 @@ export function Main() {
     setTrips(updatedTrips);
     setFilteredTrips(updatedTrips);
   };
+
+  const handleEditClick = (trip) => {
+    setSelectedTrip(trip);
+    setIsEditModalOpen(true);
+  };
+
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
     setSelectedTrip(null);
@@ -214,10 +220,7 @@ export function Main() {
               <div
                 key={index}
                 className="card"
-                onClick={() => {
-                  setSelectedTrip(trip);
-                  setIsEditModalOpen(true);
-                }}
+                onClick={() => handleEditClick(trip)}
               >
                 <div className="row1">
                   <div className="profile"></div>
