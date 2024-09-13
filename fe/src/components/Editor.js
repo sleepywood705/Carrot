@@ -31,6 +31,7 @@ export function Editor({
   return (
     <div id="Post">
       <PostingForm
+        isOpen={isOpen}  // isOpen을 PostingForm에 전달
         onEdit={onEdit}
         onDelete={onDelete}
         onClose={onClose}
@@ -43,6 +44,7 @@ export function Editor({
 }
 
 function PostingForm({
+  isOpen,  // isOpen을 props로 받음
   onEdit,
   onDelete,
   onClose,
@@ -99,8 +101,7 @@ function PostingForm({
     onClose();
   }
 
-  const isAuthor =
-    currentUser && editData && currentUser.name === editData.authorName;
+  if (!isOpen) return null;
 
   return (
     <div id="Modal">
@@ -130,7 +131,7 @@ function PostingForm({
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required
-          />  
+          />
         </div>
         <div className="a">
           <h2>어떤 분과 탑승하시나요?</h2>
@@ -158,15 +159,9 @@ function PostingForm({
           </div>
         </div>
         <div className="b">
-          <button type="submit" onClick={handleReserve}>
-            예약하기
-          </button>
-          <button type="submit" onClick={handleSubmit}>
-            수정하기
-          </button>
-          <button type="submit" onClick={handleDelete}>
-            취소하기
-          </button>
+          <button type="submit" onClick={handleReserve}>예약하기</button>
+          <button type="submit" onClick={handleSubmit}>수정하기</button>
+          <button type="submit" onClick={handleDelete}>취소하기</button>
         </div>
         {/* <Chatthing /> */}
       </form>

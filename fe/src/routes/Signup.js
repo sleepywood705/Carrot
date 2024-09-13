@@ -8,7 +8,6 @@ export function Signup() {
   const navigate = useNavigate();
 
   const [userName, setUserName] = useState('');
-  const [userNick, setUserNick] = useState('');
   const [userMail, setUserMail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
@@ -22,7 +21,6 @@ export function Signup() {
     }
     try {
       const response = await axios.post('/users/signup', {
-        nick: userNick,
         name: userName,
         email: userMail,
         password,
@@ -42,13 +40,6 @@ export function Signup() {
     <div id="Login">
       <h2>회원가입</h2>
       <form onSubmit={handleSubmit} >
-        <input
-          type="text"
-          value={userNick}
-          onChange={(e) => setUserNick(e.target.value)}
-          placeholder="닉네임을 입력해 주세요"
-          required
-        />
         <input
           type="text"
           value={userName}

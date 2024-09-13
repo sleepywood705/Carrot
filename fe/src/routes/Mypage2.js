@@ -56,7 +56,7 @@ export function Mypage2() {
           <img src="/img/leaf.png" alt="leaf" />
           <div className="img_profile"></div>
         </div>
-        <div className="nickname">{user.name}</div>
+        <div className="username">{user.name}</div>
       </div>
       <div className="bot">
         <div id="SNB">
@@ -86,10 +86,6 @@ function ChangeInfo({ user }) {
     <div id="ChangeInfo">
       <h2>회원정보변경</h2>
       <div className="userInfo">
-        <div>
-          <span>닉네임</span>
-          <div>{user.nickname}</div>
-        </div>
         <div>
           <span>이름</span>
           <div>{user.name}</div>

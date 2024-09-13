@@ -42,14 +42,14 @@
     width: 120px; aspect-ratio: 1;
     border-radius: 50% !important;
 }
-.nickname {
+.username {
     padding: 8px 16px;
     background-color: #fff;
 }
 
 
 .img_profile,
-.nickname,
+.username,
 #SNB details,
 #ChangeInfo,
 #ChangeInfo .userInfo > div > div,
