@@ -15,9 +15,7 @@ export function ModalEditor({
 }) {
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
+      if (event.key === "Escape") { onClose(); }
     };
 
     if (isOpen) {
@@ -185,16 +183,7 @@ function PostingForm({
           취소하기
         </button>
       </div>
-      <Chatting />
+      {/* <Chatthing /> */}
     </form>
   );
-}
-
-function Chatting() {
-  return (
-    <div id="Chatting">
-      <div className="top"></div>
-      <div className="bot"></div>
-    </div>
-  )
 }

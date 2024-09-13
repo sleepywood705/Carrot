@@ -6,9 +6,7 @@ const { kakao } = window;
 export function ModalPosting({ isOpen, onClose, onSubmit }) {
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
+      if (event.key === "Escape") { onClose(); }
     };
 
     if (isOpen) {
