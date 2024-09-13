@@ -100,11 +100,11 @@ function ChangeInfo({ user }) {
         </div>
         <div>
           <span>비밀번호</span>
-          <input placeholder="******"/>
+          <input placeholder="******" />
         </div>
         <div>
           <span>비밀번호 확인</span>
-          <input placeholder="******"/>
+          <input placeholder="******" />
         </div>
         <button className="btn_change">변경</button>
       </div>

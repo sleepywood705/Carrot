@@ -80,11 +80,11 @@ export function Signup() {
             남성
           </label>
           <label htmlFor="woman">
-            <input 
-              type="radio" 
-              id="woman" 
-              name="gender" 
-              value="FEMALE" 
+            <input
+              type="radio"
+              id="woman"
+              name="gender"
+              value="FEMALE"
               onChange={(e) => setUserGender(e.target.value)}
             />
             여성
