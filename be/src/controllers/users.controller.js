@@ -51,6 +51,22 @@ export class UsersController {
             if (!email || !password || !name) {
                 return res.status(400).json({ error: '이메일, 비밀번호, 이름이 필요합니다.' });
             }
+            // // 이메일 유효성 검사(example@example.com) 형태
+            // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            // if (!email || !emailRegex.test(email)) {
+            //     return res.status(400).json({ error: '유효한 이메일 주소를 입력하세요.' });
+            // }
+
+            // // 비밀번호 유효성 검사 (영어 숫자 포함 8자 이상)
+            // const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            // if (!password || !passwordRegex.test(password)) {
+            //     return res.status(400).json({ error: '비밀번호는 영어와 숫자를 포함해 8자 이상이어야 합니다.' });
+            // }
+
+            // // 이름 검사
+            // if (!name) {
+            //     return res.status(400).json({ error: '이름을 입력하세요.' });
+            // }
             const createdUser = await this.usersService.createUser(email, password, name);
             return res.status(201).json({ data: createdUser });
         } catch (err) {
