@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
 import './Map.css';
+import { useEffect, useRef, useState, useCallback } from 'react';
+
 const KakaoMap = ({ onMapSubmit }) => {
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);
@@ -173,21 +174,26 @@ const KakaoMap = ({ onMapSubmit }) => {
   }
 
   return (
-    <div className="map-container">
-      <h2>출발지와 도착지 검색</h2>
-      <form onSubmit={handleSubmit} className="map-form">
-        <input type="text" id="startName" name="startName" placeholder="출발지 이름을 입력하세요" required />
-        <input type="text" id="endName" name="endName" placeholder="도착지 이름을 입력하세요" required />
-        <button type="submit" className="map-submit-button">경로 검색</button>
-      </form>
-
-      <div className="map-view" ref={mapRef}></div>
-      <div className="cost-result">
-        <h3>비용 계산 결과</h3>
-        <p>{fuelCost}</p>
-        <p>{taxiCost}</p>
+    <form onSubmit={handleSubmit} className="right PostingForm">
+      <div className="a">
+        <h2>경로 검색</h2>
+        <div className="map-view" ref={mapRef}></div>
       </div>
-    </div>
+      <div className="a">
+        <h2>비용 계산 결과</h2>
+        <div className="cost-result">
+          <p>{fuelCost}</p>
+          <p>{taxiCost}</p>
+        </div>
+      </div>
+      <div className="a">
+        <div className="c">
+          <input type="text" id="startName" name="startName" placeholder="출발지 이름을 입력하세요" required />
+          <input type="text" id="endName" name="endName" placeholder="도착지 이름을 입력하세요" required />
+        </div>
+      </div>
+      <button type="submit">경로 검색</button>
+    </form>
   );
 };
 

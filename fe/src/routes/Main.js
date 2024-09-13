@@ -1,6 +1,6 @@
 import "./Main.css";
-import { ModalPosting } from "../components/Modal_Posting";
-import { ModalEditor } from "../components/Modal_Editor";
+import { Post } from "../components/Posting";
+import { Editor } from "../components/Editor";
 import { useState, useEffect } from "react";
 
 export function Main() {
@@ -245,12 +245,12 @@ export function Main() {
           </div>
         </section>
       </div>
-      <ModalPosting
+      <Post
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
         onSubmit={handleWriteSubmit}
       />
-      <ModalEditor
+      <Editor
         isOpen={isEditModalOpen}
         onClose={handleCloseEditModal}
         editData={selectedTrip}

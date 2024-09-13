@@ -1,0 +1,109 @@
+#Post {
+  z-index: 999;
+  position: fixed;
+  left: 0; top: 0;
+  padding: 40px 0;
+  width: 100%; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
+  overflow-y: scroll;
+}
+
+
+#Modal {
+  border-radius: 8px;
+  gap: 20px;
+  display: flex;
+}
+#Modal > div,
+#Modal > form {
+  padding: 20px;
+  flex-basis: 440px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+#Modal .left {
+  min-width: 440px;
+}
+#Modal .right {
+  position: relative;
+  min-width: 440px;
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+}
+#Modal button[type="submit"] {
+  color: #fff;
+  height: 60px;
+  border-radius: 8px;
+  background-color: #ff6f0f;
+}
+#Modal .a {
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+}
+#Modal .a > h2 {
+  color: #333;
+  font-size: 21px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#Modal .a > h2 > button {
+  height: 18px; aspect-ratio: 1;
+  background: url(/public/img/close_blk.png) center/cover no-repeat;
+  cursor: pointer;
+}
+#Modal .a > select,
+#Modal .a > input {
+  padding: 20px;
+  height: 65px;
+  color: #444;
+  font-size: 17px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+}
+#Modal .a  > div {
+  gap: 20px;
+  width: 100%;
+  display: flex;
+}
+#Modal .a  > div label {
+  flex: 1;
+  height: 80px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#Modal .b {
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+#Modal .b > button {
+  flex: 1 1 calc(50% - 10px);
+}
+
+
+#Chatting {
+  position: fixed;
+  PostingForm: 200px; top: 50%;
+  transform: translate(0, -50%);
+  padding: 8px;
+  width: 440px; height: calc(100vh - 80px);
+  border: 1px solid #fff;
+  background-color: #fff;
+  display: grid;
+  grid-template-rows: auto 70px;
+
+}
+#Chatting > div{
+  border: 1px solid #000;
+}
