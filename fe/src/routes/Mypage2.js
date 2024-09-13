@@ -56,7 +56,7 @@ export function Mypage2() {
           <img src="/img/leaf.png" alt="leaf" />
           <div className="img_profile"></div>
         </div>
-        <div className="nickname">{user.nickname}</div>
+        <div className="nickname">{user.name}</div>
       </div>
       <div className="bot">
         <div id="SNB">
@@ -68,7 +68,7 @@ export function Mypage2() {
               <li onClick={() => setSelectedMenu("withdrawal")}>회원 탈퇴</li>
             </ul>
           </details>
-          <details>
+          <details open>
             <summary>이용 관리</summary>
             <ul>
               <li>이용 기록</li>
@@ -110,10 +110,7 @@ function ChangeInfo({ user }) {
           <span>비밀번호 확인</span>
           <input placeholder="******"/>
         </div>
-        <div className="wrap_btn">
-          <button className="btn_cancel">취소</button>
-          <button className="btn_change">변경</button>
-        </div>
+        <button className="btn_change">변경</button>
       </div>
     </div>
   );
@@ -145,7 +142,6 @@ function Withdrawal() {
         </p>
       </div>
       <div className="wrap">
-        <button className="btn_cancel">취소</button>
         <button className="btn_confirm">탈퇴</button>
       </div>
     </div>

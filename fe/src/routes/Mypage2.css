@@ -26,6 +26,7 @@
     grid-template-columns: 290px auto;
 }
 
+
 .cnt_img {
     position: relative;
     gap: 20px;
@@ -39,17 +40,15 @@
 }
 .img_profile {
     width: 120px; aspect-ratio: 1;
-    border: 1px solid #ddd;
-    border-radius: 50%;
+    border-radius: 50% !important;
 }
 .nickname {
     padding: 8px 16px;
     background-color: #fff;
-    border: 1px solid #ddd;
 }
 
 
-
+.img_profile,
 .nickname,
 #SNB details,
 #ChangeInfo,
@@ -62,6 +61,19 @@
 #Withdrawal,
 #Withdrawal .wrap > button {
     border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+#ChangeInfo,
+#MyPoint,
+#Withdrawal {
+    min-width: 618px;
+    padding: 30px;
+    /* border: 1px solid #000; */
+    background-color: #fff;
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
 }
 
 #SNB details,
@@ -81,24 +93,10 @@
     font-size: 19px;
 }
 
-#ChangeInfo,
-#MyPoint,
-#Withdrawal {
-    min-width: 618px;
-    padding: 30px;
-    /* border: 1px solid #000; */
-    background-color: #fff;
-    border: 1px solid #ddd;
-    gap: 30px;
-    display: flex;
-    flex-direction: column;
-}
-
 #SNB > details > ul,
 #Withdrawal > div p {
     color: #666;
 }
-
 
 
 #SNB {
@@ -108,7 +106,6 @@
 }
 #SNB > details {
     padding: 20px;
-    border: 1px solid #ddd;
     background-color: #fff;
 }
 #SNB > details > summary {
@@ -131,7 +128,7 @@
     display: flex;
     flex-direction: column;
 }
-#ChangeInfo .userInfo > div:not(.wrap_btn) {
+#ChangeInfo .userInfo > div {
     display: grid;
     grid-template-columns: 1fr 3fr;
     align-items: center;   
@@ -139,23 +136,8 @@
 #ChangeInfo .userInfo > div > div,
 #ChangeInfo .userInfo > div > input {
     padding: 16px 20px;
-    width: 100%; height: fit-content;
-    border: 1px solid #ddd;
+    width: 100%; height: fit-content;    
 }
-#ChangeInfo .wrap_btn,
-#Withdrawal .wrap_btn {
-    width: 100%;
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-#ChangeInfo .wrap_btn > button,
-#Withdrawal .wrap_btn > button {
-    padding: 6px 16px;
-    width: fit-content;
-}
-
 
 
 #MyPoint > h3 {
@@ -172,11 +154,9 @@
     width: 100%; height: 60px;
     color: #666;
     font-size: 14px;
-    border: 1px solid #ddd;
     display: flex;
     align-items: center;
 }
-
 
 
 #Withdrawal {
@@ -194,8 +174,16 @@
 }
 
 
-
-.btn_cancel,
+.btn_confirm, 
+.btn_change {
+    margin-left: auto;
+    padding: 6px 16px;
+    width: fit-content;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 .btn_confirm {
     background-color: #F2F2F2;
 }
