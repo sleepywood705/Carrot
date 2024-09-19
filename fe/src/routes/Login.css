@@ -68,6 +68,11 @@
   align-items: center;
   justify-content: center;
 }
+#man,
+#woman {
+  width: 20px; height: 20px;
+  border: 1px solid #000;
+}
 .login,
 .signup {
   padding: 0;

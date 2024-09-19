@@ -53,8 +53,10 @@ form.right input[type="text"]::placeholder {
   height: 65px;
   border: 2px solid #ddd;
   border-radius: 10px;
-  display: grid;
+  gap: 20px;
+  display: flex;
   align-items: center;
+  justify-content: center;
 }
 .cost-result p {
   color: #666;

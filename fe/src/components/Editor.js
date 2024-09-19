@@ -1,4 +1,5 @@
 import "./Post.css";
+import { Chat } from "./Chat";
 import { useState, useEffect } from "react";
 
 export function Editor({
@@ -31,7 +32,7 @@ export function Editor({
   return (
     <div id="Post">
       <PostingForm
-        isOpen={isOpen}  // isOpen을 PostingForm에 전달
+        isOpen={isOpen}
         onEdit={onEdit}
         onDelete={onDelete}
         onClose={onClose}
@@ -139,6 +140,7 @@ function PostingForm({
             <label>
               <input
                 type="radio"
+                id="anyone"
                 name="gender"
                 value="성별무관"
                 checked={gender === "성별무관"}
@@ -149,6 +151,7 @@ function PostingForm({
             <label>
               <input
                 type="radio"
+                id="same"
                 name="gender"
                 value="동성끼리 탑승"
                 checked={gender === "동성끼리 탑승"}
@@ -158,13 +161,13 @@ function PostingForm({
             </label>
           </div>
         </div>
-        <div className="b">
+        <div className="cont_btn">
           <button type="submit" onClick={handleReserve}>예약하기</button>
           <button type="submit" onClick={handleSubmit}>수정하기</button>
           <button type="submit" onClick={handleDelete}>취소하기</button>
         </div>
-        {/* <Chatthing /> */}
       </form>
+      <Chat />
     </div>
   );
 }

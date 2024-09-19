@@ -101,10 +101,11 @@ export function PostingForm({ onSubmit, onClose }) {
         </div>
         <div className="a">
           <h2>어떤 분과 탑승하시나요?</h2>
-          <div>
+          <div className="wrap">
             <label>
               <input
                 type="radio"
+                id="anyone"
                 name="gender"
                 value="성별무관"
                 checked={gender === "성별무관"}
@@ -115,6 +116,7 @@ export function PostingForm({ onSubmit, onClose }) {
             <label>
               <input
                 type="radio"
+                id="same"
                 name="gender"
                 value="동성끼리 탑승"
                 checked={gender === "동성끼리 탑승"}
