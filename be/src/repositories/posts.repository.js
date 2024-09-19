@@ -13,7 +13,14 @@ export class PostsRepository {
                 title: true,
                 createdAt: true,
                 updatedAt: true,
-                authorId: true
+                author: {
+                    select: {
+                        email: true,
+                        name: true,
+                        gender: true,
+                        role: true,
+                    }
+                }
             }
         });
         return createdPost;
@@ -22,14 +29,56 @@ export class PostsRepository {
     getPostById = async (id) => {
         const findedIdPost = await prisma.post.findUnique({
             where: { id: id },
-            include: { reservations: true },
+            include: {
+                author: {
+                    select: {
+                        email: true,
+                        name: true,
+                        gender: true,
+                        role: true,
+                    }
+                },
+                reservations: {
+                    include: {
+                        booker: {
+                            select: {
+                                email: true,
+                                name: true,
+                                gender: true,
+                                role: true,
+                            }
+                        }
+                    }
+                }
+            },
         });
         return findedIdPost;
     };
 
     getAllPosts = async () => {
         const posts = await prisma.post.findMany({
-            include: { reservations: true },
+            include: {
+                author: {
+                    select: {
+                        email: true,
+                        name: true,
+                        gender: true,
+                        role: true,
+                    }
+                },
+                reservations: {
+                    include: {
+                        booker: {
+                            select: {
+                                email: true,
+                                name: true,
+                                gender: true,
+                                role: true,
+                            }
+                        }
+                    }
+                }
+            },
         });
         return posts
     }
