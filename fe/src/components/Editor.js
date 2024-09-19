@@ -9,8 +9,11 @@ export function Editor({
   onReserve,
   onDelete,
   editData,
-  currentUser,
 }) {
+
+  const [user, setUser] = useState(null);
+  const [messageList, setMessageList] = useState([]);
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") { onClose(); }
@@ -19,6 +22,7 @@ export function Editor({
     if (isOpen) {
       window.addEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "hidden";  // 스크롤 비활성화
+      askUserName(); // Editor가 열릴 때 한 번만 호출
     }
 
     return () => {
@@ -26,6 +30,12 @@ export function Editor({
       document.body.style.overflow = "";  // 스크롤 활성화
     };
   }, [isOpen, onClose]);
+
+  const askUserName = () => {
+    const userName = prompt("당신의 이름을 입력하세요");
+    console.log("received user name", userName);
+    setUser(userName); // 사용자 이름 설정
+  };
 
   if (!isOpen) return null;
 
@@ -40,6 +50,7 @@ export function Editor({
         editData={editData}
         currentUser={currentUser}
       />
+      <Chat user={user} messageList={messageList} setMessageList={setMessageList} />
     </div>
   );
 }
@@ -59,7 +70,7 @@ function PostingForm({
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
-  const [gender, setGender] = useState("성별무관");  // 성별 상태 추가
+  const [gender, setGender] = useState("성별무관");
 
   useEffect(() => {
     if (editData) {
@@ -105,69 +116,66 @@ function PostingForm({
   if (!isOpen) return null;
 
   return (
-    <div id="Modal">
-      <form onSubmit={handleSubmit} className="right PostingForm">
-        <div className="a">
-          <h2>유형을 선택해 주세요<button onClick={handleCloseModal}></button></h2>
-          <select value={type} onChange={(e) => setType(e.target.value)}>
-            <option value="탑승자">탑승자</option>
-            <option value="운전자">운전자</option>
-            <option value="택시">택시</option>
-          </select>
+    <form onSubmit={handleSubmit} className="PostingForm">
+      <div className="a">
+        <h2>유형을 선택해 주세요<button onClick={handleCloseModal}></button></h2>
+        <select value={type} onChange={(e) => setType(e.target.value)}>
+          <option value="탑승자">탑승자</option>
+          <option value="운전자">운전자</option>
+          <option value="택시">택시</option>
+        </select>
+      </div>
+      <div className="a">
+        <h2>몇 시에 출발하시나요?</h2>
+        <input
+          type="time"
+          className="cnt_time"
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
+          required
+        />
+      </div>
+      <div className="a">
+        <h2>언제 출발하시나요?</h2>
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          required
+        />
+      </div>
+      <div className="a">
+        <h2>어떤 분과 탑승하시나요?</h2>
+        <div className="wrap">
+          <label>
+            <input
+              type="radio"
+              id="anyone"
+              name="gender"
+              value="성별무관"
+              checked={gender === "성별무관"}
+              onChange={(e) => setGender(e.target.value)}
+            />
+            성별무관
+          </label>
+          <label>
+            <input
+              type="radio"
+              id="same"
+              name="gender"
+              value="동성끼리 탑승"
+              checked={gender === "동성끼리 탑승"}
+              onChange={(e) => setGender(e.target.value)}
+            />
+            동성끼리 탑승
+          </label>
         </div>
-        <div className="a">
-          <h2>몇 시에 출발하시나요?</h2>
-          <input
-            type="time"
-            className="cnt_time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            required
-          />
-        </div>
-        <div className="a">
-          <h2>언제 출발하시나요?</h2>
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-          />
-        </div>
-        <div className="a">
-          <h2>어떤 분과 탑승하시나요?</h2>
-          <div className="wrap">
-            <label>
-              <input
-                type="radio"
-                id="anyone"
-                name="gender"
-                value="성별무관"
-                checked={gender === "성별무관"}
-                onChange={(e) => setGender(e.target.value)}
-              />
-              성별무관
-            </label>
-            <label>
-              <input
-                type="radio"
-                id="same"
-                name="gender"
-                value="동성끼리 탑승"
-                checked={gender === "동성끼리 탑승"}
-                onChange={(e) => setGender(e.target.value)}
-              />
-              동성끼리 탑승
-            </label>
-          </div>
-        </div>
-        <div className="cont_btn">
-          <button type="submit" onClick={handleReserve}>예약하기</button>
-          <button type="submit" onClick={handleSubmit}>수정하기</button>
-          <button type="submit" onClick={handleDelete}>취소하기</button>
-        </div>
-      </form>
-      <Chat />
-    </div>
+      </div>
+      <div className="cont_btn">
+        <button type="submit" onClick={handleSubmit}>수정하기</button>
+        <button type="submit" onClick={handleReserve}>채팅하기</button>
+        <button type="submit" onClick={handleDelete}>취소하기</button>
+      </div>
+    </form>
   );
 }

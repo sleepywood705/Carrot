@@ -1,44 +1,71 @@
-#Chat {
-    width: 440px; height: 857px;
-    background-color: #fff;
-    border-radius: 10px;
-    display: grid;
-    grid-template-rows: auto 50px;
+.Chat {
+  display: grid;
+  grid-template-rows: auto 50px;
 }
-#Chat > div {
-    overflow-y: auto; /* 스크롤 가능하도록 설정 */
+.input-container {
+  gap: 8px;
+  width: 100%; height: 100%;
+  display: grid;
+  grid-template-columns: auto 70px;
 }
-#Chat > div input[type="text"] {
-    border-radius: 8px;
-    padding-left: 20px;
-    border: 1px solid #ddd;
+.input-container input {
+  padding-left: 20px;
+  width: 100%; height: 100%;
+  border: 1px solid #ddd;
+  border-radius: 6px;
 }
-#Chat > div input[type="submit"] {
-    border-radius: 8px;
-    background-color: #f2f2f2;
+.MuiInput-root {
+  width: 100%; height: 100%;
 }
-.chattingbox::-webkit-scrollbar {
-    width: 1px; /* 스크롤바 너비 */
+.send-button {
+  color: #fff;
+  border-radius: 6px;
+  background-color: #ff6f0f;
 }
-.chattingbox > div {
-    /* width: fit-content; */
+
+
+
+.system-message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.cont_input {
-    gap: 8px;
-    display: grid;
-    grid-template-columns: auto 60px;
+.system-message {
+  background-color: #55667758;
+  border-radius: 100px;
+  text-align: center;
+  color: white;
+  padding: 2px 15px;
+  font-size: 14px;
 }
-.user-message {
-    text-align: right;
-    background-color: #d1e7dd;
-    padding: 10px;
-    border-radius: 8px;
-    margin: 10px 0;
+.my-message-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
 }
-.other-message {
-    text-align: left;
-    background-color: #f8d7da;
-    padding: 10px;
-    border-radius: 8px;
-    margin: 10px 0;
+.my-message {
+  background-color: #f7e600;
+  border-radius: 8px;
+  padding: 8px;
+  max-width: 200px;
+  font-size: 12px;
+}
+.your-message-container {
+  display: flex;
+  justify-content: flex-start;
+  /* margin-bottom: 5px; */
+  align-items: center;
+}
+.your-message {
+  background-color: white;
+  border-radius: 8px;
+  padding: 8px;
+  max-width: 200px;
+  font-size: 12px;
+}
+.profile-image {
+  width: 38px;
+  height: 38px;
+  border-radius: 100px;
+  margin-right: 10px;
 }
