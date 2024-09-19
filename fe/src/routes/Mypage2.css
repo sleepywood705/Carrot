@@ -3,39 +3,29 @@
     margin-top: 80px;
     width: 100%; height: calc(100vh - 80px);
     background-color: #FBFBFF;
-    gap: 60px;
-    display: flex;
-    flex-direction: column;
+    gap: 10px;
+    display: grid;
+    grid-template-columns: 290px auto;
     overflow-y: scroll;
 }
 #Mypage2 > div {
     width: 100%; height: 100%;
     /* border: 1px solid #000; */
 }
-#Mypage2 > .top {
-    height: 250px;
-    gap: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
 #Mypage2 .bot {
-    gap: 10px;
-    display: grid;
-    grid-template-columns: 290px auto;
+
 }
 
 
-.cnt_img {
+.wrap_img {
     position: relative;
-    gap: 20px;
+    gap: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.cnt_img > img {
+.wrap_img > img {
     width: 55px; height: 50px;
 }
 .img_profile {
@@ -48,9 +38,10 @@
 }
 
 
-.img_profile,
-.username,
 #SNB details,
+#SNB .profile,
+#SNB .img_profile,
+#SNB .username,
 #ChangeInfo,
 #ChangeInfo .userInfo > div > div,
 #ChangeInfo .userInfo > div > input,
@@ -62,6 +53,10 @@
 #Withdrawal .wrap > button {
     border-radius: 8px;
     border: 1px solid #ddd;
+}
+#ChangeInfo button,
+#Withdrawal .wrap > button {
+    border: none;
 }
 
 #ChangeInfo,
@@ -103,6 +98,15 @@
     gap: 10px;
     display: flex;
     flex-direction: column;
+}
+#SNB .profile {
+    padding: 20px;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
 }
 #SNB > details {
     padding: 20px;

@@ -3,7 +3,7 @@
     background-color: #fff;
     border-radius: 10px;
     display: grid;
-    grid-template-rows: auto 60px;
+    grid-template-rows: auto 50px;
 }
 #Chat > div {
     overflow-y: auto; /* 스크롤 가능하도록 설정 */

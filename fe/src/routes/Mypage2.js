@@ -35,7 +35,6 @@ export function Mypage2() {
   if (error) return <p>Error: {error}</p>;
   if (!user) return <p>No user data available.</p>;
 
-
   const renderContent = () => {
     switch (selectedMenu) {
       case "changeInfo":
@@ -51,32 +50,30 @@ export function Mypage2() {
 
   return (
     <div id="Mypage2">
-      <div className="top">
-        <div className="cnt_img">
-          <img src="/img/leaf.png" alt="leaf" />
-          <div className="img_profile"></div>
+      <div id="SNB" className="left">
+        <div className="profile">
+          <div className="wrap_img">
+            <img src="/img/leaf.png" alt="leaf" />
+            <div className="img_profile"></div>
+          </div>
+          <div className="username">{user.name}</div>
         </div>
-        <div className="username">{user.name}</div>
-      </div>
-      <div className="bot">
-        <div id="SNB">
-          <details open>
+        <details open>
             <summary>내 정보 관리</summary>
             <ul>
               <li onClick={() => setSelectedMenu("changeInfo")}>회원정보변경</li>
               <li onClick={() => setSelectedMenu("myPoint")}>내 포인트</li>
               <li onClick={() => setSelectedMenu("withdrawal")}>회원 탈퇴</li>
             </ul>
-          </details>
-          <details open>
+        </details>
+        <details open>
             <summary>이용 관리</summary>
             <ul>
               <li>이용 기록</li>
             </ul>
-          </details>
-        </div>
-        <div>{renderContent()}</div>
+        </details>
       </div>
+      <div className="right">{renderContent()}</div>
     </div>
   );
 }
