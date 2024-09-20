@@ -1,13 +1,14 @@
 import "./Header.css";
 import { Nav } from "./Nav";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-
 
 export function Header({ isLoggedIn, onLogout, userName }) {
   const location = useLocation();
   const inMainPage = location.pathname === "/";
   const [showNav, setShowNav] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const toggleNav = () => {
     setShowNav(!showNav);
@@ -15,8 +16,31 @@ export function Header({ isLoggedIn, onLogout, userName }) {
 
   const invert = inMainPage ? "invert" : "";
 
+  useEffect(() => {
+    const controlNavbar = () => {
+      if (typeof window !== 'undefined') { 
+        if (window.scrollY > lastScrollY) { // 스크롤 내릴 때
+          setVisible(false); 
+        } else { // 스크롤 올릴 때
+          setVisible(true);  
+        }
+        // 현재 스크롤 위치 업데이트
+        setLastScrollY(window.scrollY); 
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', controlNavbar);
+
+      // 클린업 함수
+      return () => {
+        window.removeEventListener('scroll', controlNavbar);
+      };
+    }
+  }, [lastScrollY]);
+
   return (
-    <header>
+    <header className={`${visible ? 'visible' : 'hidden'}`}>
       <Link to="/" id="logo" className={invert}>당근마차</Link>
       <Link to="/guide" className={invert}>이용가이드</Link>
       {isLoggedIn && (

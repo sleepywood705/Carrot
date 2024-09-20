@@ -12,7 +12,6 @@ export function Main() {
   const [selectedTrip, setSelectedTrip] = useState(null);
 
   useEffect(() => {
-    // 초기 데이터 설정
     const initialTrips = [
       {
         type: "탑승자",

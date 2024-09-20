@@ -24,8 +24,8 @@ function App() {
   const [userName, setUserName] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLogin = (user) => {
-    setUserName(user);
+  const handleLogin = (userName) => {
+    setUserName(userName);
     setIsLoggedIn(true);
     navigate("/main");
   };
@@ -53,7 +53,7 @@ function App() {
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
-      {/* <Footer/> */}
+      <Footer/>
     </div>
   );
 }

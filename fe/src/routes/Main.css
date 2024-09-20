@@ -1,5 +1,5 @@
 #Main {
-  /* border: 1px solid #000; */
+  padding-bottom: 40px;
   gap: 40px;
   display: flex;
   flex-direction: column;
