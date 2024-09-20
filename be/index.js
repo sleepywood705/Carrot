@@ -15,7 +15,7 @@ const io = new Server(httpServer, {
 import ioUtils from "./src/utils/io/io.js";
 ioUtils(io);
 
-const port = process.env.PORT || 5001;
+const port = process.env.SOCKET_PORT || 5001;
 httpServer.listen(port, () => {
   console.log("server listening on port", port);
 });
