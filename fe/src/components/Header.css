@@ -3,7 +3,6 @@ header {
   position: fixed;
   padding: 0 160px;
   width: 100vw; height: 80px;
-  background-color: #fff;
   display: flex;
   align-items: center;
 }
