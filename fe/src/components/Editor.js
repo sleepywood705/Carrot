@@ -9,6 +9,7 @@ export function Editor({
   onReserve,
   onDelete,
   editData,
+  currentUser,
 }) {
 
   const [user, setUser] = useState(null);
@@ -34,7 +35,7 @@ export function Editor({
   const askUserName = () => {
     const userName = prompt("당신의 이름을 입력하세요");
     console.log("received user name", userName);
-    setUser(userName); // 사용자 이름 설정
+    setUser(userName);
   };
 
   if (!isOpen) return null;
@@ -56,7 +57,7 @@ export function Editor({
 }
 
 function PostingForm({
-  isOpen,  // isOpen을 props로 받음
+  isOpen,
   onEdit,
   onDelete,
   onClose,
