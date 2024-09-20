@@ -13,7 +13,7 @@ const ioUtils = function (io) {
       try {
         const user = await userController.saveUser(userName, socket.id);
         const welcomeMessage = {
-          chat: `${user.name} has joined the room.`,
+          chat: `${user.name} 님이 입장하셨습니다.`,
           user: { id: null, name: "system" },
         };
         io.emit("message", welcomeMessage);
@@ -24,20 +24,20 @@ const ioUtils = function (io) {
     });
 
     socket.on("sendMessage", async (message, cb) => {
-      console.log("Message received:", message); // 추가된 로그
+      console.log("Message received:", message);
       try {
         const user = await userController.checkUser(socket.id);
         const newMessage = await chatController.saveChat(message, user);
         io.emit("message", newMessage);
         cb({ ok: true });
       } catch (error) {
-        console.error("Error sending message:", error); // 오류 로그
+        console.error("Error sending message:", error);
         cb({ ok: false, error: error.message });
       }
     });
 
     socket.on("disconnect", () => {
-      console.log("user is disconnected");
+      console.log("client is disconnected");
     });
   });
 };

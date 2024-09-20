@@ -11,7 +11,7 @@ export function Editor({
   editData,
   currentUser,
 }) {
-
+  const [showChat, setShowChat] = useState(false);
   const [user, setUser] = useState(null);
   const [messageList, setMessageList] = useState([]);
 
@@ -22,21 +22,14 @@ export function Editor({
 
     if (isOpen) {
       window.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";  // 스크롤 비활성화
-      askUserName(); // Editor가 열릴 때 한 번만 호출
+      document.body.style.overflow = "hidden";
     }
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";  // 스크롤 활성화
+      document.body.style.overflow = "";
     };
   }, [isOpen, onClose]);
-
-  const askUserName = () => {
-    const userName = prompt("당신의 이름을 입력하세요");
-    console.log("received user name", userName);
-    setUser(userName);
-  };
 
   if (!isOpen) return null;
 
@@ -47,11 +40,11 @@ export function Editor({
         onEdit={onEdit}
         onDelete={onDelete}
         onClose={onClose}
-        onReserve={onReserve}
+        onReserve={() => setShowChat(true)}
         editData={editData}
         currentUser={currentUser}
       />
-      <Chat user={user} messageList={messageList} setMessageList={setMessageList} />
+      {showChat && <Chat user={user} messageList={messageList} setMessageList={setMessageList} />}
     </div>
   );
 }
@@ -107,7 +100,6 @@ function PostingForm({
     if (onReserve) {
       onReserve(editData);
     }
-    onClose();
   };
 
   const handleCloseModal = () => {
