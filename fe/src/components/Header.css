@@ -31,11 +31,11 @@ header > a:nth-child(1)::before {
   background: url(../../public/img/logo.svg) center/contain no-repeat;
 }
 .invert {
-  color: #fff; /* Landing 페이지에서만 흰색 적용 */
+  color: #fff;
 }
 header.visible {
   top: 0;
 }
 header.hidden {
-  top: -80px; /* 헤더의 높이에 따라 조정 */
+  top: -80px;
 }

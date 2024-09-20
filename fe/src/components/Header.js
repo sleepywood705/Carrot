@@ -32,7 +32,6 @@ export function Header({ isLoggedIn, onLogout, userName }) {
     if (typeof window !== 'undefined') {
       window.addEventListener('scroll', controlNavbar);
 
-      // 클린업 함수
       return () => {
         window.removeEventListener('scroll', controlNavbar);
       };

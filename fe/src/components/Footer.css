@@ -1,16 +1,19 @@
 #Footer {
-	width: 100vw; height: 300px;
+	width: 100vw; height: 80px;
+	color: #fff;
 	background-color: #222;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 }
-#Footer>ul {
-	margin-top: auto;
-	color: #fff;
-	font-size: 14px;
-	gap: 20px;
+#Footer > h4 {
 	display: flex;
-	/* border: 1px solid #fff; */
+	align-items: center;
+}
+#Footer > h4 img {
+	width: 20px;
+}
+#Footer > h5 {
+	font-weight: 400;
 }

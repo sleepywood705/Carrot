@@ -3,23 +3,18 @@ import './Chat.css'
 
 export function MessageContainer({ messageList, user }) {
   return (
-    <div>
+    <div id="MessageContainer">
       {messageList.map((message, index) => {
         return (
-          <div key={message._id} className="message-container">
+          <div key={message._id}>
             {message.user.name === "system" ? (
-              <div className="system-message-container">
-                <p className="system-message">{message.chat}</p>
-              </div>
+              <p className="message system">{message.chat}</p>
             ) : message.user.name === user.name ? (
-              <div className="my-message-container">
-                <div className="my-message">{message.chat}</div>
-              </div>
+              <p className="message my">{message.chat}</p>
             ) : (
-              <div className="your-message-container">
-                <img
-                  src="/img/profile.jpeg"
-                  className="profile-image"
+              <div className="z">
+                {/* <img
+                  src="/img/person.png"
                   style={
                     (index === 0
                       ? { visibility: "visible" }
@@ -28,8 +23,11 @@ export function MessageContainer({ messageList, user }) {
                       ? { visibility: "visible" }
                       : { visibility: "hidden" }
                   }
-                />
-                <div className="your-message">{message.chat}</div>
+                /> */}
+                <span>
+                  <p className="name user">{user.name}</p>
+                  <p className="message other">{message.chat}</p>
+                </span>
               </div>
             )}
           </div>
