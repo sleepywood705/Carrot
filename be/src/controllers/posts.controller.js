@@ -8,7 +8,7 @@ export class PostsController {
             const { title } = req.body
             const authorId = req.user.id;
             const post = await this.postsService.createPost(title, authorId);
-            res.status(201).json(post);
+            res.status(201).json({ data: post });
         } catch (error) {
             res.status(400).json({ error: error.message });
             console.log(error)
@@ -19,7 +19,7 @@ export class PostsController {
         try {
             const id = parseInt(req.params.id);
             const post = await this.postsService.getPostById(id);
-            res.status(200).json(post);
+            res.status(200).json({ data: post });
         } catch (error) {
             res.status(404).json({ error: error.message });
             console.log(error)
@@ -29,7 +29,7 @@ export class PostsController {
     getAllPosts = async (req, res, next) => {
         try {
             const posts = await this.postsService.getAllPosts();
-            res.status(200).json(posts);
+            res.status(200).json({ data: posts });
         } catch (error) {
             res.status(500).json({ error: error.message });
             console.log(error)
@@ -41,7 +41,7 @@ export class PostsController {
             const id = parseInt(req.params.id);
             const data = req.body;
             const updatedPost = await this.postsService.updatePost(id, data);
-            res.status(200).json(updatedPost);
+            res.status(200).json({ data: updatedPost });
         } catch (error) {
             res.status(400).json({ error: error.message });
             console.log(error)
@@ -52,7 +52,7 @@ export class PostsController {
         try {
             const id = parseInt(req.params.id);
             await this.postsService.deletePost(id);
-            res.status(204).send();
+            res.status(204).json({ message: 'Completely Deleted' })
         } catch (error) {
             res.status(400).json({ error: error.message });
             console.log(error)

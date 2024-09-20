@@ -34,6 +34,9 @@ model Reservation {
   from                  String
   to                    String
   date                  DateTime       
+  // type                  Role
+  // date                  DateTime       @db.Date  
+  // time                  DateTime       @db.Time    
   post                  Post           @relation(fields: [postId], references: [id])
   postId                Int            @map("postId")
   booker                User           @relation("ReservationsMade", fields: [bookerId], references: [id])
