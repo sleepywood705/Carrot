@@ -11,126 +11,77 @@ export function Main() {
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedTrip, setSelectedTrip] = useState(null);
-  const [users, setUsers] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchTrips();
-    fetchUsers();
   }, []);
 
   const fetchTrips = async () => {
+    setIsLoading(true);
+    setError(null);
     try {
-      const response = await axios.get('/posts/gets');
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+      }
+
+      const config = {
+        headers: { 'Authorization': `${token}` }
+      };
+
+      const response = await axios.get('/reserve/gets', config);
       console.log('서버에서 받은 데이터:', response.data);
       
       if (response.data && Array.isArray(response.data.data)) {
         setTrips(response.data.data);
         setFilteredTrips(response.data.data);
       } else {
-        console.error('서버에서 받은 데이터 구조가 예상과 다릅니다:', response.data);
-        setTrips([]);
-        setFilteredTrips([]);
+        throw new Error('서버에서 받은 데이터 구조가 예상과 다릅니다.');
       }
     } catch (error) {
       console.error('포스팅 데이터를 가져오는 데 실패했습니다:', error);
-      if (error.response) {
-        console.error('에러 응답:', error.response.data);
-        console.error('에러 상태:', error.response.status);
-        console.error('에러 헤더:', error.response.headers);
-      } else if (error.request) {
-        console.error('요청이 이루어졌으나 응답을 받지 못했습니다.');
-      } else {
-        console.error('에러 메시지:', error.message);
-      }
-      setTrips([]);
-      setFilteredTrips([]);
+      setError(error.message || '데이터를 불러오는 데 실패했습니다.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const fetchUsers = async () => {
+  const handleWriteSubmit = async (newTrip) => {
     try {
-      const response = await axios.get('users/users');
-      console.log('서버에서 받은 사용자 데이터:', response.data);
-
-      const usersData = {};
-      if (response.data && Array.isArray(response.data.data)) {
-        response.data.data.forEach(user => {
-          usersData[user.id] = user.name;
-        });
-      } else if (Array.isArray(response.data)) {
-        response.data.forEach(user => {
-          usersData[user.id] = user.name;
-        });
-      } else {
-        console.error('서버에서 받은 사용자 데이터 구조가 예상과 다릅니다:', response.data);
-      }
-      setUsers(usersData);
+      await axios.post('/posts/post', newTrip, {
+        headers: { 'Authorization': `${localStorage.getItem('token')}` }
+      });
+      fetchTrips(); // 새 게시물 추가 후 전체 목록을 다시 불러옵니다.
     } catch (error) {
-      console.error('사용자 데이터를 가져오는 데 실패했습니다:', error);
-      if (error.response) {
-        console.error('에러 응답:', error.response.data);
-        console.error('에러 상태:', error.response.status);
-        console.error('에러 헤더:', error.response.headers);
-      } else if (error.request) {
-        console.error('요청이 이루어졌으나 응답을 받지 못했습니다.');
-      } else {
-        console.error('에러 메시지:', error.message);
-      }
+      console.error('새 게시물 추가 중 오류 발생:', error);
+      alert('게시물을 추가하는 데 실패했습니다.');
     }
   };
 
-  const searchTrips = (event) => {
-    event.preventDefault();
-    const departure = document.getElementById("departure").value.toLowerCase();
-    const arrival = document.getElementById("arrival").value.toLowerCase();
-    const date = document.getElementById("tripDate").value;
-
-    const filtered = trips.filter((trip) => {
-      const [from, to] = trip.route.toLowerCase().split("→");
-      const dateMatch = date === "" || trip.date === date;
-      const departureMatch =
-        departure === "" || from.trim().includes(departure);
-      const arrivalMatch =
-        arrival === "" ||
-        (to ? to.trim().includes(arrival) : from.includes(arrival));
-
-      return dateMatch && departureMatch && arrivalMatch;
-    });
-
-    setFilteredTrips(filtered);
-  };
-
-  const filterTrips = (filterType) => {
-    setActiveFilter(filterType);
-    if (filterType === "전체") {
-      setFilteredTrips(trips);
-    } else {
-      const filtered = trips.filter((trip) => trip.type === filterType);
-      setFilteredTrips(filtered);
+  const handleEdit = async (editedTrip) => {
+    try {
+      await axios.put(`/posts/update/${editedTrip.id}`, editedTrip, {
+        headers: { 'Authorization': `${localStorage.getItem('token')}` }
+      });
+      fetchTrips(); // 게시물 수정 후 전체 목록을 다시 불러옵니다.
+    } catch (error) {
+      console.error('게시물 수정 중 오류 발생:', error);
+      alert('게시물을 수정하는 데 실패했습니다.');
     }
   };
 
-  const handleWriteSubmit = (newTrip) => {
-    console.log('새로운 여행 데이터:', newTrip);
-    // 새로운 여행 데이터를 기존 데이터 배열의 맨 앞에 추가
-    setTrips(prevTrips => [newTrip, ...prevTrips]);
-    setFilteredTrips(prevFilteredTrips => [newTrip, ...prevFilteredTrips]);
-    
-    // 필요한 경우 여기에서 서버로 데이터를 다시 전송하거나 추가 처리를 할 수 있습니다.
-  };
-
-  const handleEdit = (editedTrip) => {
-    const updatedTrips = trips.map((trip) =>
-      trip === selectedTrip ? editedTrip : trip
-    );
-    setTrips(updatedTrips);
-    setFilteredTrips(updatedTrips);
-  };
-
-  const handleDelete = (tripToDelete) => {
-    const updatedTrips = trips.filter((trip) => trip !== tripToDelete);
-    setTrips(updatedTrips);
-    setFilteredTrips(updatedTrips);
+  const handleDelete = async (tripToDelete) => {
+    try {
+      await axios.delete(`/posts/delete/${tripToDelete.id}`, {
+        headers: { 'Authorization': `${localStorage.getItem('token')}` }
+      });
+      fetchTrips(); // 게시물 삭제 후 전체 목록을 다시 불러옵니다.
+    } catch (error) {
+      console.error('게시물 삭제 중 오류 발생:', error);
+      alert('게시물을 삭제하는 데 실패했습니다.');
+    }
   };
 
   const handleEditClick = (trip) => {
@@ -141,6 +92,33 @@ export function Main() {
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
     setSelectedTrip(null);
+  };
+
+  const searchTrips = (event) => {
+    event.preventDefault();
+    const departure = document.getElementById("departure").value.toLowerCase();
+    const arrival = document.getElementById("arrival").value.toLowerCase();
+    const date = document.getElementById("tripDate").value;
+
+    const filtered = trips.filter((trip) => {
+      const fromMatch = trip.from.toLowerCase().includes(departure);
+      const toMatch = trip.to.toLowerCase().includes(arrival);
+      const dateMatch = date === "" || trip.date === date;
+
+      return fromMatch && toMatch && dateMatch;
+    });
+
+    setFilteredTrips(filtered);
+  };
+
+  const filterTrips = (filterType) => {
+    setActiveFilter(filterType);
+    if (filterType === "전체") {
+      setFilteredTrips(trips);
+    } else {
+      const filtered = trips.filter((trip) => trip.role === filterType);
+      setFilteredTrips(filtered);
+    }
   };
 
   return (
@@ -209,39 +187,43 @@ export function Main() {
         </section>
         <section className="sct_board">
           <h3>최근 게시물</h3>
-          <div className="cnt_board">
-            {filteredTrips && filteredTrips.map((trip, index) => (
-              <div
-                key={trip.id || index}
-                className="card"
-                onClick={() => handleEditClick(trip)}
-              >
-                <div className="row1">
-                  <div className="profile"></div>
-                  <div className="wrap">
-                    <div className="user">{trip.author?.name || '알 수 없음'}</div>
-                    <div className="type">
-                      {trip.type} · {trip.date} {trip.time} 출발
+          {isLoading ? (
+            <p>데이터를 불러오는 중...</p>
+          ) : error ? (
+            <p>에러: {error}</p>
+          ) : (
+            <div className="cnt_board">
+              {filteredTrips.map((trip, index) => (
+                <div
+                  key={trip.id || index}
+                  className="card"
+                  onClick={() => handleEditClick(trip)}
+                >
+                  <div className="row1">
+                    <div className="profile"></div>
+                    <div className="wrap">
+                      <div className="user">{trip.author?.name || '알 수 없음'}</div>
+                      <div className="type">{trip.type} · {trip.date} {trip.time} 출발</div>
+                    </div>
+                    <div className="manner">{trip.manner}</div>
+                  </div>
+                  <div className="row2">
+                    <div className="route">{trip.title || `${trip.from} → ${trip.to}`}</div>
+                  </div>
+                  <div className="row3">
+                    <div className="time">
+                      <img src="/img/clock.png" alt="clock" />
+                      {trip.date} {trip.time} 출발
+                    </div>
+                    <div className="genderType">
+                      <img src="/img/person.png" alt="person" />
+                      {trip.type} {/* gender를 type으로 변경 */}
                     </div>
                   </div>
-                  <div className="manner">{trip.manner}</div>
                 </div>
-                <div className="row2">
-                  <div className="route">{trip.title || `${trip.from} → ${trip.to}`}</div>
-                </div>
-                <div className="row3">
-                  <div className="time">
-                    <img src="/img/clock.png" alt="clock" />
-                    {trip.date} {trip.time} 출발
-                  </div>
-                  <div className="genderType">
-                    <img src="/img/person.png" alt="person" />
-                    {trip.gender}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </section>
       </div>
       <Post
