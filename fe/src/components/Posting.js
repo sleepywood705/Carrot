@@ -1,28 +1,13 @@
 import "./Post.css";
 import Map from "../api/Map";
 import React, { useState, useEffect } from "react";
+import axios from "../api/axios.js"
 
 export function Post({ isOpen, onClose, onSubmit }) {
-  const [mapSearched, setMapSearched] = useState(false);
+  const [mapData, setMapData] = useState(null);
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") { onClose(); }
-    };
-
-    if (isOpen) {
-      window.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";  // 스크롤 비활성화
-    }
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";  // 스크롤 활성화
-    };
-  }, [isOpen, onClose]);
-
-  const handleMapSubmit = (mapData) => {
-    setMapSearched(true);
+  const handleMapSubmit = (data) => {
+    setMapData(data);
   };
 
   if (!isOpen) return null;
@@ -30,12 +15,12 @@ export function Post({ isOpen, onClose, onSubmit }) {
   return (
     <div id="Post">
       <Map onMapSubmit={handleMapSubmit} />
-      <PostingForm onSubmit={onSubmit} onClose={onClose} mapSearched={mapSearched} />
+      <PostingForm onSubmit={onSubmit} onClose={onClose} mapData={mapData} />
     </div>
   );
 }
 
-export function PostingForm({ onSubmit, onClose, mapSearched }) {
+export function PostingForm({ onSubmit, onClose, mapData }) {
   const [type, setType] = useState("탑승자");
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
@@ -50,19 +35,67 @@ export function PostingForm({ onSubmit, onClose, mapSearched }) {
     setTime(formattedTime);
   }, []);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    console.log('mapData 변경됨:', mapData);
+  }, [mapData]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!mapSearched) {
+
+    if (!mapData || !mapData.from || !mapData.to) {
       alert("지도에서 경로를 먼저 검색해주세요.");
       return;
     }
-    onSubmit({
-      type,
-      time,
-      date,
-      gender,
-    });
-    onClose();
+
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+        // 로그인 페이지로 리다이렉트하는 로직을 여기에 추가하세요
+        return;
+      }
+
+      const config = {
+        headers: {
+          'Authorization': `${token}`,
+          'Content-Type': 'application/json'
+        }
+      };
+
+      const title = `${mapData.from} -> ${mapData.to}`;
+      const content = `${type}님이 ${date} ${time}에 ${mapData.from}에서 ${mapData.to}로 가는 여정을 공유합니다. 성별: ${gender}`
+    
+      const postData = {
+        title: title,
+        content: content,
+        from: mapData.from,
+        to: mapData.to,
+        date: date,
+        time: time,
+        type: type,
+        gender: gender,
+      };
+      console.log('Sending post data:', postData);
+      
+      const postResponse = await axios.post('/posts/post', postData, config);
+      console.log('Post가 성공적으로 생성되었습니다:', postResponse.data);
+
+      // 서버 응답 데이터와 함께 선택한 데이터를 포함하여 전달
+      onSubmit({...postResponse.data, ...postData});
+      onClose();
+    } catch (error) {
+      console.error('데이터 저장 중 오류 발생:', error);
+      if (error.response) {
+        console.error('에러 응답 데이터:', error.response.data);
+        console.error('에러 상태 코드:', error.response.status);
+        console.error('에러 헤더:', error.response.headers);
+        alert(`데이터 저장에 실패했습니다: ${error.response.data.error || '알 수 없는 오류'}`);
+      } else if (error.request) {
+        alert('서버로부터 응답이 없습니다. 네트워크 연결을 확인해 주세요.');
+      } else {
+        alert('요청 중 오류가 발생했습니다.');
+      }
+    }
   };
 
   const handleCloseModal = () => {
