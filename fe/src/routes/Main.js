@@ -2,6 +2,7 @@ import "./Main.css";
 import { Post } from "../components/Posting";
 import { Editor } from "../components/Editor";
 import { useState, useEffect } from "react";
+import axios from "../api/axios.js";
 
 export function Main() {
   const [trips, setTrips] = useState([]);
@@ -10,41 +11,73 @@ export function Main() {
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedTrip, setSelectedTrip] = useState(null);
+  const [users, setUsers] = useState({});
 
   useEffect(() => {
-    const initialTrips = [
-      {
-        type: "탑승자",
-        route: "서울 → 부산",
-        time: "오후 2:00 출발",
-        date: "2024-09-03",
-        gender: "성별무관"
-      },
-      {
-        type: "탑승자",
-        route: "인천 → 대전",
-        time: "오전 9:00 출발",
-        date: "2024-09-04",
-        gender: "성별무관"
-      },
-      {
-        type: "탑승자",
-        route: "대구 → 광주",
-        time: "오후 3:00 출발",
-        date: "2024-09-03",
-        gender: "성별무관"
-      },
-      {
-        type: "탑승자",
-        route: "수원 → 천안",
-        time: "저녁 7:00 출발",
-        date: "2024-09-04",
-        gender: "성별무관"
-      },
-    ];
-    setTrips(initialTrips);
-    setFilteredTrips(initialTrips);
+    fetchTrips();
+    fetchUsers();
   }, []);
+
+  const fetchTrips = async () => {
+    try {
+      const response = await axios.get('/posts/gets');
+      console.log('서버에서 받은 데이터:', response.data);
+      
+      if (response.data && Array.isArray(response.data.data)) {
+        setTrips(response.data.data);
+        setFilteredTrips(response.data.data);
+      } else {
+        console.error('서버에서 받은 데이터 구조가 예상과 다릅니다:', response.data);
+        setTrips([]);
+        setFilteredTrips([]);
+      }
+    } catch (error) {
+      console.error('포스팅 데이터를 가져오는 데 실패했습니다:', error);
+      if (error.response) {
+        console.error('에러 응답:', error.response.data);
+        console.error('에러 상태:', error.response.status);
+        console.error('에러 헤더:', error.response.headers);
+      } else if (error.request) {
+        console.error('요청이 이루어졌으나 응답을 받지 못했습니다.');
+      } else {
+        console.error('에러 메시지:', error.message);
+      }
+      setTrips([]);
+      setFilteredTrips([]);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('users/users');
+      console.log('서버에서 받은 사용자 데이터:', response.data);
+
+      const usersData = {};
+      if (response.data && Array.isArray(response.data.data)) {
+        response.data.data.forEach(user => {
+          usersData[user.id] = user.name;
+        });
+      } else if (Array.isArray(response.data)) {
+        response.data.forEach(user => {
+          usersData[user.id] = user.name;
+        });
+      } else {
+        console.error('서버에서 받은 사용자 데이터 구조가 예상과 다릅니다:', response.data);
+      }
+      setUsers(usersData);
+    } catch (error) {
+      console.error('사용자 데이터를 가져오는 데 실패했습니다:', error);
+      if (error.response) {
+        console.error('에러 응답:', error.response.data);
+        console.error('에러 상태:', error.response.status);
+        console.error('에러 헤더:', error.response.headers);
+      } else if (error.request) {
+        console.error('요청이 이루어졌으나 응답을 받지 못했습니다.');
+      } else {
+        console.error('에러 메시지:', error.message);
+      }
+    }
+  };
 
   const searchTrips = (event) => {
     event.preventDefault();
@@ -78,8 +111,12 @@ export function Main() {
   };
 
   const handleWriteSubmit = (newTrip) => {
-    setTrips([newTrip, ...trips]);
-    setFilteredTrips([newTrip, ...filteredTrips]);
+    console.log('새로운 여행 데이터:', newTrip);
+    // 새로운 여행 데이터를 기존 데이터 배열의 맨 앞에 추가
+    setTrips(prevTrips => [newTrip, ...prevTrips]);
+    setFilteredTrips(prevFilteredTrips => [newTrip, ...prevFilteredTrips]);
+    
+    // 필요한 경우 여기에서 서버로 데이터를 다시 전송하거나 추가 처리를 할 수 있습니다.
   };
 
   const handleEdit = (editedTrip) => {
@@ -173,27 +210,29 @@ export function Main() {
         <section className="sct_board">
           <h3>최근 게시물</h3>
           <div className="cnt_board">
-            {filteredTrips.map((trip, index) => (
+            {filteredTrips && filteredTrips.map((trip, index) => (
               <div
-                key={index}
+                key={trip.id || index}
                 className="card"
                 onClick={() => handleEditClick(trip)}
               >
                 <div className="row1">
                   <div className="profile"></div>
                   <div className="wrap">
-                    <div className="user">가나다</div>
-                    <div className="type">{trip.type} · 30분 전</div>
+                    <div className="user">{trip.author?.name || '알 수 없음'}</div>
+                    <div className="type">
+                      {trip.type} · {trip.date} {trip.time} 출발
+                    </div>
                   </div>
                   <div className="manner">{trip.manner}</div>
                 </div>
                 <div className="row2">
-                  <div className="route">{trip.route}</div>
+                  <div className="route">{trip.title || `${trip.from} → ${trip.to}`}</div>
                 </div>
                 <div className="row3">
                   <div className="time">
                     <img src="/img/clock.png" alt="clock" />
-                    {trip.time}
+                    {trip.date} {trip.time} 출발
                   </div>
                   <div className="genderType">
                     <img src="/img/person.png" alt="person" />
