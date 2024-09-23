@@ -1,8 +1,53 @@
 import './Landing.css'
 import { Link } from 'react-router-dom';
-
+import { useEffect, useState } from 'react';
 
 export function Landing() {
+	const [texts, setTexts] = useState(['', '', '']);
+	const [isTypingComplete, setIsTypingComplete] = useState([false, false, false]);
+	const fullTexts = [
+		'오늘도 내 앞을 지나는 택시와 만원 버스, 지하철',
+		'우리는 언제쯤 목적지에 도착할 수 있을까요?',
+		'서로 바빠 보이는데 같이 타고 갈 수는 없는 걸까요 ?|이럴 땐 하늘에서 차가 뚝 떨어졌으면 좋겠다니까요 🥲'
+	];
+
+	const typeText = (index, speed = 50) => {
+		if (isTypingComplete[index]) return;
+
+		let textIndex = 0;
+		const timer = setInterval(() => {
+			if (textIndex < fullTexts[index].length) {
+				setTexts(prev => {
+					const newTexts = [...prev];
+					newTexts[index] = fullTexts[index].slice(0, textIndex + 1);
+					return newTexts;
+				});
+				textIndex++;
+			} else {
+				clearInterval(timer);
+				setIsTypingComplete(prev => {
+					const newComplete = [...prev];
+					newComplete[index] = true;
+					return newComplete;
+				});
+			}
+		}, speed);
+
+		return () => clearInterval(timer);
+	};
+
+	useEffect(() => {
+		const cleanup1 = typeText(0);
+		const cleanup2 = typeText(1);
+		const cleanup3 = typeText(2);
+
+		return () => {
+			cleanup1();
+			cleanup2();
+			cleanup3();
+		};
+	}, []);
+
 	return (
 		<div id="Landing">
 			<section className="sect1">
@@ -13,54 +58,24 @@ export function Landing() {
 				<p><span>당근마차</span>에서 시작됩니다</p>
 				<Link to="/main" className="btn-trial">체험해보기</Link>
 			</section>
-			{/* <section className="sect2">
-				<p>오늘도 나를 지나치는 <span>택시</span></p>
-			</section>
-			<section className="sect3">
-				<p>
-					서로 바빠 보이는데...<br />
-					같이 타면 안 되나?
-				</p>
-			</section>
+			<section className="sect2"></section>
+			<section className="sect3"></section>
 			<section className="sect4">
-				<p>
-					버스보다 빠르고<br />
-					택시보다 저렴하게
-				</p>
+				<p className={`typing-text ${isTypingComplete[0] ? 'completed' : ''}`}>{texts[0]}</p>
 			</section>
 			<section className="sect5">
-				<div className="left">
-					<span>헤맬 필요 없이 !</span>
-					<p>내 주변에서<br />당근마차 찾기</p>
-					<p>
-						출퇴근 상관없이<br />
-						24시간 매칭이 가능한<br />
-						1회성 서비스를 제공하는<br />
-						클린하고 유용한 당근마차<br />
-						지금 내 주변 지도를 확인해 보세요!
-					</p>
-				</div>
-				<div className="right">
-					<img src="/img/mockup.png" alt="mockup" />
-					<img src="/img/mockup.png" alt="mockup" />
-				</div>
+				<p className={`typing-text ${isTypingComplete[1] ? 'completed' : ''}`}>{texts[1]}</p>
 			</section>
 			<section className="sect6">
-				<div className="left">
-					<img src="/img/mockup.png" alt="mockup" />
-					<img src="/img/mockup.png" alt="mockup" />
-				</div>
-				<div className="right">
-					<span>빠르게 접선 !</span>
-					<p>채팅으로<br />장소 정하기</p>
-					<p>
-						매칭이 완료되면<br />
-						사전 채팅을 통해<br />
-						만날 장소와 시간을<br />
-						정확하게 공유할 수 있어요
-					</p>
-				</div>
-			</section> */}
+				<p className={`typing-text ${isTypingComplete[2] ? 'completed' : ''}`}>
+					{texts[2].split('|').map((line, index) => (
+						<span key={index} className="line">{line}</span>
+					))}
+				</p>
+			</section>
+      <section className="sect7">
+        <p>그런 여러분들을 위해서 <span>당근</span>이 <span>마차</span>를 준비했습니다 😉</p>
+      </section>
 		</div>
 	);
 }
