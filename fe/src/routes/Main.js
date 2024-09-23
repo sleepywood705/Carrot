@@ -168,14 +168,14 @@ export function Main() {
               >
                 운전자
               </button>
-              <button
+              {/* <button
                 className={`btn_filter ${
                   activeFilter === "택시" ? "active" : ""
                 }`}
                 onClick={() => filterTrips("택시")}
               >
                 택시
-              </button>
+              </button> */}
             </div>
           </div>
           <button

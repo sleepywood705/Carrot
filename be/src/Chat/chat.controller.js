@@ -1,4 +1,4 @@
-import Chat from "../models/chat.js"
+import Chat from "./chat.js"
 const chatController = {}
 
 chatController.saveChat = async (message, user) => {

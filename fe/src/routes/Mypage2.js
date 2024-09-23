@@ -4,22 +4,21 @@ import axios from "../api/axios.js";
 
 
 export function Mypage2() {
-  const [user, setUser] = useState(null);  // Store user data
-  const [loading, setLoading] = useState(true);  // For loading state
-  const [error, setError] = useState(null);  // For error handling
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selectedMenu, setSelectedMenu] = useState("changeInfo");
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem('token');  // Get token from local storage if needed
+        const token = localStorage.getItem('token');
         const response = await axios.get('/users/me', {
           headers: {
-            Authorization: token  // Ensure token is sent
+            Authorization: token
           }
         });
-        // console.log(response.data.data)
-        setUser(response.data.data);  // Set the fetched user data
+        setUser(response.data.data);
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -43,6 +42,8 @@ export function Mypage2() {
         return <MyPoint point={user.point} />;
       case "withdrawal":
         return <Withdrawal />;
+      case "myhistory":
+        return <MyHistory />;
       default:
         return null;
     }
@@ -69,7 +70,7 @@ export function Mypage2() {
         <details open>
             <summary>이용 관리</summary>
             <ul>
-              <li>이용 기록</li>
+              <li onClick={() => setSelectedMenu("myhistory")}>이용 내역</li>
             </ul>
         </details>
       </div>
@@ -79,6 +80,17 @@ export function Mypage2() {
 }
 
 function ChangeInfo({ user }) {
+  const displayGender = (gender) => {
+    switch(gender) {
+      case 'MALE':
+        return '남성';
+      case 'WOMAN':
+        return '여성';
+      default:
+        return gender;
+    }
+  };
+
   return (
     <div id="ChangeInfo">
       <h2>회원정보변경</h2>
@@ -89,7 +101,7 @@ function ChangeInfo({ user }) {
         </div>
         <div>
           <span>성별</span>
-          <div>{user.gender}</div>
+          <div>{displayGender(user.gender)}</div>
         </div>
         <div>
           <span>이메일</span>
@@ -137,6 +149,15 @@ function Withdrawal() {
       <div className="wrap">
         <button className="btn_confirm">탈퇴</button>
       </div>
+    </div>
+  );
+}
+
+
+function MyHistory() {
+  return (
+    <div id="MyHistory">
+      <h2>이용 내역</h2>
     </div>
   );
 }
