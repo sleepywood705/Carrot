@@ -184,7 +184,7 @@ export function Main() {
             <p>에러: {error}</p>
           ) : (
             <div className="cnt_board">
-              {filteredTrips.map((trip, index) => (
+              {filteredTrips.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((trip, index) => (
                 <div
                   key={trip.id || index}
                   className="card"
@@ -193,7 +193,7 @@ export function Main() {
                   <div className="row1">
                     <div className="profile"></div>
                     <div className="wrap">
-                      <div className="user">{trip.author?.name || '알 수 없음'}</div>
+                      <div className="user">{trip.author?.name || '알 수 없음'} </div>
                       <div className="type">{trip.type} · {trip.date} {trip.time} 출발</div>
                     </div>
                     <div className="manner">{trip.manner}</div>
