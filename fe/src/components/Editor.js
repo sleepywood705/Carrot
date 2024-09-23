@@ -230,9 +230,7 @@ function PostingForm({
         <button type="button" onClick={handleReserve}>채팅하기</button>
         <button type="button" onClick={handleDelete}>취소하기</button>
       </div>
-      <div>
-        <p>현재 사용자 이메일: {userEmail}</p> {/* 현재 사용자 이메일 표시 */}
-      </div>
+      
     </form>
   );
 }
