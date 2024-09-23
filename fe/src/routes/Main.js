@@ -1,158 +1,234 @@
-import "./Post.css";
-import Map from "../api/Map";
-import React, { useState, useEffect } from "react";
-import axios from "../api/axios.js"
+import "./Main.css";
+import { Post } from "../components/Posting";
+import { Editor } from "../components/Editor";
+import { useState, useEffect } from "react";
+import axios from "../api/axios.js";
 
-export function Post({ isOpen, onClose, onSubmit }) {
-  const [mapData, setMapData] = useState(null);
-
-  const handleMapSubmit = (data) => {
-    console.log('Map data received:', data);
-    if (!mapData || mapData.from !== data.startName || mapData.to !== data.endName) {
-      setMapData({
-        from: data.startName,
-        to: data.endName,
-      });
-    }
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <div id="Post">
-      <Map onMapSubmit={handleMapSubmit} />
-      <PostingForm onSubmit={onSubmit} onClose={onClose} mapData={mapData} />
-    </div>
-  );
-}
-
-export function PostingForm({ onSubmit, onClose, mapData }) {
-  const [type, setType] = useState("탑승자");
-  const [time, setTime] = useState("");
-  const [date, setDate] = useState("");
-  const [gender, setGender] = useState("성별무관");
-  const [isSubmitting, setIsSubmitting] = useState(false); // 중복 제출 방지 상태 추가
+export function Main() {
+  const [trips, setTrips] = useState([]);
+  const [filteredTrips, setFilteredTrips] = useState([]);
+  const [activeFilter, setActiveFilter] = useState("전체");
+  const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedTrip, setSelectedTrip] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const currentDate = new Date();
-    const formattedDate = currentDate.toISOString().split("T")[0];
-    const formattedTime = currentDate.toTimeString().slice(0, 5);
-
-    setDate(formattedDate);
-    setTime(formattedTime);
+    fetchTrips();
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!mapData || !mapData.from || !mapData.to) {
-      alert("지도에서 경로를 먼저 검색해주세요.");
-      return;
-    }
-
-    // 중복 제출 방지
-    if (isSubmitting) return; // 이미 제출 중이면 함수 종료
-    setIsSubmitting(true); // 제출 시작
-
+  const fetchTrips = async () => {
+    setIsLoading(true);
+    setError(null);
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-        return;
+        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
       }
 
       const config = {
-        headers: {
-          'Authorization': `${token}`,
-          'Content-Type': 'application/json'
-        }
+        headers: { 'Authorization': `${token}` }
       };
 
-      const title = `${mapData.from}->${mapData.to} ${type} ${date} ${time} 일정 모집중`;
+      const response = await axios.get('/posts/gets', config);
+      console.log('서버에서 받은 데이터:', response.data);
       
-      const postData = {
-        title: title,
-        from: mapData.from,
-        to: mapData.to,
-        date: date,
-        time: time,
-        type: type,
-        gender: gender,
-      };
-      console.log('Sending post data:', postData);
-      
-      const postResponse = await axios.post('/posts/post', postData, config);
-      console.log('Post가 성공적으로 생성되었습니다:', postResponse.data);
-
-      // 서버 응답 데이터와 함께 선택한 데이터를 포함하여 전달
-      if (typeof onSubmit === 'function') {
-        onSubmit({...postResponse.data, ...postData}); // Main으로 데이터 전달
+      if (response.data && Array.isArray(response.data.data)) {
+        setTrips(response.data.data);
+        setFilteredTrips(response.data.data);
+      } else {
+        throw new Error('서버에서 받은 데이터 구조가 예상과 다릅니다.');
       }
-      onClose(); // 모달 닫기
     } catch (error) {
-      console.error('데이터 저장 중 오류 발생:', error);
+      console.error('포스팅 데이터를 가져오는 데 실패했습니다:', error);
+      setError(error.message || '데이터를 불러오는 데 실패했습니다.');
     } finally {
-      setIsSubmitting(false); // 제출 완료
+      setIsLoading(false);
+    }
+  };
+
+  const handleWriteSubmit = (newTrip) => {
+    setTrips((prevTrips) => [newTrip, ...prevTrips]);
+    setFilteredTrips((prevFilteredTrips) => [newTrip, ...prevFilteredTrips]);
+  };
+
+  const handleEdit = async (editedTrip) => {
+    try {
+      await axios.put(`/posts/update/${editedTrip.id}`, editedTrip, {
+        headers: { 'Authorization': `${localStorage.getItem('token')}` }
+      });
+    } catch (error) {
+      console.error('게시물 수정 중 오류 발생:', error);
+      alert('게시물을 수정하는 데 실패했습니다.');
+    }
+  };
+
+  const handleDelete = async (tripToDelete) => {
+    try {
+      await axios.delete(`/posts/delete/${tripToDelete.id}`, {
+        headers: { 'Authorization': `${localStorage.getItem('token')}` }
+      });
+    } catch (error) {
+      console.error('게시물 삭제 중 오류 발생:', error);
+      alert('게시물을 삭제하는 데 실패했습니다.');
+    }
+  };
+
+  const handleEditClick = (trip) => {
+    setSelectedTrip(trip);
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setSelectedTrip(null);
+  };
+
+  const searchTrips = (event) => {
+    event.preventDefault();
+    const departure = document.getElementById("departure").value.toLowerCase();
+    const arrival = document.getElementById("arrival").value.toLowerCase();
+    const date = document.getElementById("tripDate").value;
+
+    const filtered = trips.filter((trip) => {
+      const fromMatch = trip.from.toLowerCase().includes(departure);
+      const toMatch = trip.to.toLowerCase().includes(arrival);
+      const dateMatch = date === "" || trip.date === date;
+
+      return fromMatch && toMatch && dateMatch;
+    });
+
+    setFilteredTrips(filtered);
+  };
+
+  const filterTrips = (filterType) => {
+    setActiveFilter(filterType);
+    if (filterType === "전체") {
+      setFilteredTrips(trips);
+    } else {
+      const filtered = trips.filter((trip) => trip.role === filterType);
+      setFilteredTrips(filtered);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="PostingForm">
-      <div className="a">
-        <h2>유형을 선택해 주세요</h2>
-        <select value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="탑승자">탑승자</option>
-          <option value="운전자">운전자</option>
-          <option value="택시">택시</option>
-        </select>
+    <div id="Main">
+      <div className="banner">
+        <video autoPlay muted loop>
+          <source src="/vid/vid2.mp4" />
+        </video>
       </div>
-      <div className="a">
-        <h2>몇 시에 출발하시나요?</h2>
-        <input
-          type="time"
-          className="cnt_time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-          required
-        />
+      <div className="content">
+        <section className="sct_search">
+          <div className="cnt_form">
+            <h2>카풀/택시팟을 찾아볼까요?</h2>
+            <form onSubmit={searchTrips}>
+              <input type="text" id="departure" placeholder="출발지" />
+              <input
+                type="text"
+                id="arrival"
+                className="search-input"
+                placeholder="도착지"
+              />
+              <input type="date" id="tripDate" />
+              <button type="submit">검색</button>
+            </form>
+            <div className="wrap">
+              <button
+                className={`btn_filter ${
+                  activeFilter === "전체" ? "active" : ""
+                }`}
+                onClick={() => filterTrips("전체")}
+              >
+                전체
+              </button>
+              <button
+                className={`btn_filter ${
+                  activeFilter === "탑승자" ? "active" : ""
+                }`}
+                onClick={() => filterTrips("탑승자")}
+              >
+                탑승자
+              </button>
+              <button
+                className={`btn_filter ${
+                  activeFilter === "운전자" ? "active" : ""
+                }`}
+                onClick={() => filterTrips("운전자")}
+              >
+                운전자
+              </button>
+              <button
+                className={`btn_filter ${
+                  activeFilter === "택시" ? "active" : ""
+                }`}
+                onClick={() => filterTrips("택시")}
+              >
+                택시
+              </button>
+            </div>
+          </div>
+          <button
+            onClick={() => setIsWriteModalOpen(true)}
+            className="btn_write"
+          >
+            카풀 요청하기
+          </button>
+        </section>
+        <section className="sct_board">
+          <h3>최근 게시물</h3>
+          {isLoading ? (
+            <p>데이터를 불러오는 중...</p>
+          ) : error ? (
+            <p>에러: {error}</p>
+          ) : (
+            <div className="cnt_board">
+              {filteredTrips.map((trip, index) => (
+                <div
+                  key={trip.id || index}
+                  className="card"
+                  onClick={() => handleEditClick(trip)}
+                >
+                  <div className="row1">
+                    <div className="profile"></div>
+                    <div className="wrap">
+                      <div className="user">{trip.author?.name || '알 수 없음'}</div>
+                      <div className="type">{trip.type} · {trip.date} {trip.time} 출발</div>
+                    </div>
+                    <div className="manner">{trip.manner}</div>
+                  </div>
+                  <div className="row2">
+                    <div className="route">{trip.title.split(" ")[0]}</div>
+                  </div>
+                  <div className="row3">
+                    <div className="time">
+                      <img src="/img/clock.png" alt="clock" />
+                      {trip.title.split(" ")[2]} 출발
+                    </div>
+                    <div className="genderType">
+                      <img src="/img/person.png" alt="person" />
+                      {trip.title.split(" ")[1]} {/* gender를 type으로 변경 */}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
       </div>
-      <div className="a">
-        <h2>언제 출발하시나요?</h2>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
-      </div>
-      <div className="a">
-        <h2>어떤 분과 탑승하시나요?</h2>
-        <div className="wrap">
-          <label>
-            <input
-              type="radio"
-              id="anyone"
-              name="type"
-              value="성별무관"
-              checked={gender === "성별무관"}
-              onChange={(e) => setGender(e.target.value)}
-            />
-            성별무관
-          </label>
-          <label>
-            <input
-              type="radio"
-              id="same"
-              name="type"
-              value="동성끼리 탑승"
-              checked={gender === "동성끼리 탑승"}
-              onChange={(e) => setGender(e.target.value)}
-            />
-            동성끼리 탑승
-          </label>
-        </div>
-      </div>
-      <button type="submit">작성</button>
-    </form>
+      <Post
+        isOpen={isWriteModalOpen}
+        onClose={() => setIsWriteModalOpen(false)}
+        onSubmit={handleWriteSubmit} // onSubmit prop 전달
+      />
+      <Editor
+        isOpen={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        editData={selectedTrip}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
+    </div>
   );
 }
