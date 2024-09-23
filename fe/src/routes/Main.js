@@ -31,7 +31,7 @@ export function Main() {
         headers: { 'Authorization': `${token}` }
       };
 
-      const response = await axios.get('/reserve/gets', config);
+      const response = await axios.get('/posts/gets', config);
       console.log('서버에서 받은 데이터:', response.data);
       
       if (response.data && Array.isArray(response.data.data)) {
@@ -48,16 +48,12 @@ export function Main() {
     }
   };
 
-  const handleWriteSubmit = async (newTrip) => {
-    try {
-      await axios.post('/posts/post', newTrip, {
-        headers: { 'Authorization': `${localStorage.getItem('token')}` }
-      });
-      fetchTrips(); // 새 게시물 추가 후 전체 목록을 다시 불러옵니다.
-    } catch (error) {
-      console.error('새 게시물 추가 중 오류 발생:', error);
-      alert('게시물을 추가하는 데 실패했습니다.');
-    }
+  const handleWriteSubmit = (newTrip) => {
+    setTrips((prevTrips) => [newTrip, ...prevTrips]);
+    setFilteredTrips((prevFilteredTrips) => [newTrip, ...prevFilteredTrips]);
+
+    // 게시물 추가 후 페이지 새로고침
+    window.location.reload();
   };
 
   const handleEdit = async (editedTrip) => {
@@ -65,7 +61,6 @@ export function Main() {
       await axios.put(`/posts/update/${editedTrip.id}`, editedTrip, {
         headers: { 'Authorization': `${localStorage.getItem('token')}` }
       });
-      fetchTrips(); // 게시물 수정 후 전체 목록을 다시 불러옵니다.
     } catch (error) {
       console.error('게시물 수정 중 오류 발생:', error);
       alert('게시물을 수정하는 데 실패했습니다.');
@@ -77,7 +72,6 @@ export function Main() {
       await axios.delete(`/posts/delete/${tripToDelete.id}`, {
         headers: { 'Authorization': `${localStorage.getItem('token')}` }
       });
-      fetchTrips(); // 게시물 삭제 후 전체 목록을 다시 불러옵니다.
     } catch (error) {
       console.error('게시물 삭제 중 오류 발생:', error);
       alert('게시물을 삭제하는 데 실패했습니다.');
@@ -193,7 +187,7 @@ export function Main() {
             <p>에러: {error}</p>
           ) : (
             <div className="cnt_board">
-              {filteredTrips.map((trip, index) => (
+              {filteredTrips.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((trip, index) => (
                 <div
                   key={trip.id || index}
                   className="card"
@@ -202,22 +196,22 @@ export function Main() {
                   <div className="row1">
                     <div className="profile"></div>
                     <div className="wrap">
-                      <div className="user">{trip.author?.name || '알 수 없음'}</div>
+                      <div className="user">{trip.author?.name || '알 수 없음'} </div>
                       <div className="type">{trip.type} · {trip.date} {trip.time} 출발</div>
                     </div>
                     <div className="manner">{trip.manner}</div>
                   </div>
                   <div className="row2">
-                    <div className="route">{trip.title || `${trip.from} → ${trip.to}`}</div>
+                    <div className="route">{trip.title.split(" ")[0]}</div>
                   </div>
                   <div className="row3">
                     <div className="time">
                       <img src="/img/clock.png" alt="clock" />
-                      {trip.date} {trip.time} 출발
+                      {trip.title.split(" ")[2]} 출발
                     </div>
                     <div className="genderType">
                       <img src="/img/person.png" alt="person" />
-                      {trip.type} {/* gender를 type으로 변경 */}
+                      {trip.title.split(" ")[1]} {/* gender를 type으로 변경 */}
                     </div>
                   </div>
                 </div>
@@ -229,7 +223,7 @@ export function Main() {
       <Post
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
-        onSubmit={handleWriteSubmit}
+        onSubmit={handleWriteSubmit} // onSubmit prop 전달
       />
       <Editor
         isOpen={isEditModalOpen}

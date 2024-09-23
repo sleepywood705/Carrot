@@ -50,7 +50,8 @@
 #MyPoint .currentPoint,
 #MyPoint .pointList,
 #Withdrawal,
-#Withdrawal .wrap > button {
+#Withdrawal .wrap > button,
+#MyHistory {
     border-radius: 8px;
     border: 1px solid #ddd;
 }
@@ -61,7 +62,8 @@
 
 #ChangeInfo,
 #MyPoint,
-#Withdrawal {
+#Withdrawal,
+#MyHistory {
     min-width: 618px;
     padding: 30px;
     /* border: 1px solid #000; */
@@ -76,21 +78,17 @@
 #MyPoint > h2,
 #MyPoint > h3,
 #MyPoint .pointList,
-#Withdrawal {
-    color: #333;
-    font-weight: 500;
-}
-
-#ChangeInfo > h2,
-#MyPoint > h2,
-#Withdrawal > h2 {
+#Withdrawal > h2,
+#MyHistory > h2 {
     color: #333;
     font-size: 19px;
+    font-weight: 500;
 }
 
 #SNB > details > ul,
 #Withdrawal > div p {
     color: #666;
+    font-size: 17px;
 }
 
 

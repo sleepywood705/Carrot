@@ -12,7 +12,7 @@ const io = new Server(httpServer, {
   },
 });
 
-import ioUtils from "./src/utils/io/io.js";
+import ioUtils from "./src/Chat/io.js";
 ioUtils(io);
 
 const port = process.env.SOCKET_PORT || 5001;

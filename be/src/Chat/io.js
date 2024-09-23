@@ -1,5 +1,5 @@
-import userController from "../../controllers/user.controller.js";
-import chatController from "../../controllers/chat.controller.js";
+import userController from "./user.controller.js";
+import chatController from "./chat.controller.js";
 
 const ioUtils = function (io) {
   io.on("connection", async (socket) => {
