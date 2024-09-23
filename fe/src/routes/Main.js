@@ -51,6 +51,9 @@ export function Main() {
   const handleWriteSubmit = (newTrip) => {
     setTrips((prevTrips) => [newTrip, ...prevTrips]);
     setFilteredTrips((prevFilteredTrips) => [newTrip, ...prevFilteredTrips]);
+
+    // 게시물 추가 후 페이지 새로고침
+    window.location.reload();
   };
 
   const handleEdit = async (editedTrip) => {
@@ -159,14 +162,14 @@ export function Main() {
               >
                 운전자
               </button>
-              {/* <button
+              <button
                 className={`btn_filter ${
                   activeFilter === "택시" ? "active" : ""
                 }`}
                 onClick={() => filterTrips("택시")}
               >
                 택시
-              </button> */}
+              </button>
             </div>
           </div>
           <button
