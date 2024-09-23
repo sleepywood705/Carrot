@@ -1,4 +1,4 @@
-import mongoose from "mongoose"; // require 대신 import 사용
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -15,4 +15,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("User", userSchema); // module.exports 대신 export default 사용
+export default mongoose.model("User", userSchema);
