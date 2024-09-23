@@ -214,7 +214,6 @@ export function Main() {
                     <div className="profile"></div>
                     <div className="wrap">
                       <div className="user">{trip.author?.name || '알 수 없음'} </div>
-                      
                     </div>
                     <div className="manner">{trip.manner}</div>
                   </div>
@@ -228,7 +227,7 @@ export function Main() {
                     </div>
                     <div className="genderType">
                       <img src="/img/person.png" alt="person" />
-                      {trip.title.split(" ")[3]} {/* gender를 type으로 변경 */}
+                      {trip.title.split(" ")[3]}
                     </div>
                   </div>
                 </div>
