@@ -1,4 +1,4 @@
-import User from "../models/user.js"
+import User from "./user.js"
 const userController = {}
 
 userController.saveUser = async (userName, sid) => {
