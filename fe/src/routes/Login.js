@@ -3,9 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../api/axios.js'
 
-
 export function Login({ onLogin }) {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -15,11 +13,15 @@ export function Login({ onLogin }) {
       const response = await axios.post('/users/signin', { email, password });
 
       const token = response.headers['authorization']
-      // console.log('Token:', token);
-
+      
       if (token) {
         localStorage.setItem('token', token);
-        onLogin(email);
+        // 사용자 정보를 가져오는 추가 요청
+        const userResponse = await axios.get('/users/me', {
+          headers: { Authorization: token }
+        });
+        const userName = userResponse.data.data.name; // data.data.name으로 수정
+        onLogin(userName);  // 이메일 대신 이름을 전달
       } else {
         alert('No token received.');
       }

@@ -2,6 +2,7 @@ import "./Post.css";
 import { Chat } from "./Chat";
 import { useState, useEffect } from "react";
 
+
 export function Editor({
   isOpen,
   onClose,
@@ -115,7 +116,7 @@ function PostingForm({
         <select value={type} onChange={(e) => setType(e.target.value)}>
           <option value="탑승자">탑승자</option>
           <option value="운전자">운전자</option>
-          <option value="택시">택시</option>
+          {/* <option value="택시">택시</option> */}
         </select>
       </div>
       <div className="a">
@@ -167,7 +168,7 @@ function PostingForm({
       <div className="cont_btn">
         <button type="submit" onClick={handleSubmit}>수정하기</button>
         <button type="submit" onClick={handleReserve}>채팅하기</button>
-        <button type="submit" onClick={handleDelete}>취소하기</button>
+        <button type="submit" onClick={handleDelete}>삭제하기</button>
       </div>
     </form>
   );

@@ -44,7 +44,7 @@ export function Header({ isLoggedIn, onLogout, userName }) {
       <Link to="/guide" className={invert}>이용가이드</Link>
       {isLoggedIn && (
         <button className={invert} onClick={toggleNav}>
-          {userName}님 ㅎㅇ
+          {userName}님 안녕하세요
         </button>
       )}
       {isLoggedIn ? (
