@@ -1,173 +1,262 @@
-#Main {
-  padding-bottom: 40px;
-  gap: 40px;
-  display: flex;
-  flex-direction: column;
-}
-.banner {
-  position: relative;
-  margin-top: 80px;
-  height: 400px;
-  /* border: 1px solid #000; */
-  overflow: hidden;
-}
-.banner video {
-  position: absolute;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-}
-.content {
-  gap: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.content > section {
-  width: 960px;
-}
-.sct_search {
-  gap: 20px;
-  display: flex;
-  flex-direction: column;
-}
-.sct_search > div {
-  padding: 30px;
-  gap: 20px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.sct_search > div h2 {
-  color: #555;
-  font-size: 24px;
-  font-weight: 500;
-}
-.sct_search > div form {
-  display: flex;
-  gap: 10px;
-}
-.sct_search input[type="text"],
-.sct_search input[type="date"] {
-  flex: 1;
-  padding: 0 0 0 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-}
-.sct_search button[type="submit"] {
-  padding: 10px 20px;
-  background-color: #FF6F0F;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-}
-.sct_search button[type="submit"]:hover {
-  background-color: #FF6F0F;
-}
-.sct_search > div .wrap {
-  gap: 10px;
-  display: flex;
-}
-.sct_search button.btn_filter {
-  padding: 8px 16px;
-  font-size: 14px;
-  border-radius: 4px;
-  background-color: #F2F2F2;
-}
-.sct_search button.btn_filter.active {
-  background-color: #FF6F0F;
-  color: white;
-}
-.sct_search button.btn_write {
-  width: 100%; height: 60px;
-  color: #aaa;
-  font-size: 18px;
-  border-radius: 4px;
-  background-color: #F2F2F2;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.sct_search button.btn_write:hover {
-  color: #fff;
-  background-color: #FF6F0F;
-}
-.sct_board {
-  padding: 30px;
-  width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  gap: 20px;
-  display: flex;
-  flex-direction: column;
-}
-.sct_board > h3 {
-  color: #333;
-  font-size: 20px;
-  font-weight: 500;
-}
-.sct_board > div {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(250px, 1fr));
-  gap: 20px;
-}
-.sct_board .card {
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-}
-.sct_board .card:hover {
-  border: 1px solid #FF6F0F;
-}
-.card .row1 {
-  /* border: 1px solid #000; */
-  gap: 8px;
-  display: flex;
-}
-.card .row2 {
-  padding: 20px 0;
-}
-.card .row3 {
-  gap: 4px;
-  display: grid;
-}
-.row1 .profile {
-  width: 40px; aspect-ratio: 1;
-  border-radius: 50%;
-  border: 1px solid #ddd;
-}
-.row1 .wrap {
-  display: grid;
-}
-.row1 .user-name {
-  font-size: 20px;
-}
-.row1 .type {
-  color: #aaa;
-  font-size: 14px;
-}
-.row1 .manner {
-  margin-left: auto;
-}
-.row2 .route {
-  /* padding: 12px; */
-  font-size: 18px;
-  text-align: center;
-}
-.row3 .time,
-.row3 .genderType {
-  padding-left: 8px;
-  color: #999;
-  font-size: 14px;
-  gap: 8px;
-  display: flex;
-  align-items: center;
-}
-.row3 .time > img,
-.row3 .genderType > img {
-  height: 14px;
+import "./Main.css";
+import { Post } from "../components/Posting";
+import { Editor } from "../components/Editor";
+import { useState, useEffect } from "react";
+import axios from "../api/axios.js";
+
+export function Main() {
+  const [trips, setTrips] = useState([]);
+  const [filteredTrips, setFilteredTrips] = useState([]);
+  const [activeFilter, setActiveFilter] = useState("전체");
+  const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedTrip, setSelectedTrip] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchTrips();
+  }, []);
+
+  const fetchTrips = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // const token = localStorage.getItem('token');
+      // if (!token) {
+      //   throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+      // }
+
+      // const config = {
+      //   headers: { 'Authorization': `${token}` }
+      // };
+
+      const response = await axios.get('/posts/gets');
+      console.log('서버에서 받은 데이터:', response.data);
+      
+      if (response.data && Array.isArray(response.data.data)) {
+        setTrips(response.data.data);
+        setFilteredTrips(response.data.data);
+      } else {
+        throw new Error('서버에서 받은 데이터 구조가 예상과 다릅니다.');
+      }
+    } catch (error) {
+      console.error('포스팅 데이터를 가져오는 데 실패했습니다:', error);
+      setError(error.message || '데이터를 불러오는 데 실패했습니다.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleWriteSubmit = (newTrip) => {
+    setTrips((prevTrips) => [newTrip, ...prevTrips]);
+    setFilteredTrips((prevFilteredTrips) => [newTrip, ...prevFilteredTrips]);
+
+    // 게시물 추가 후 페이지 새로고침
+    window.location.reload();
+  };
+
+  const handleEdit = async (editedTrip) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+      }
+
+      const config = {
+        headers: { 'Authorization': `${token}` }
+      };
+      await axios.put(`/posts/update/${editedTrip.id}`, editedTrip, {
+        headers: { 'Authorization': `${localStorage.getItem('token')}` }
+      });
+    } catch (error) {
+      console.error('게시물 수정 중 오류 발생:', error);
+      alert('게시물을 수정하는 데 실패했습니다.');
+    }
+  };
+
+  const handleDelete = async (tripToDelete) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+      }
+
+      const config = {
+        headers: { 'Authorization': `${token}` }
+      };
+      await axios.delete(`/posts/delete/${tripToDelete.id}`, {
+        headers: { 'Authorization': `${localStorage.getItem('token')}` }
+      });
+    } catch (error) {
+      console.error('게시물 삭제 중 오류 발생:', error);
+      alert('게시물을 삭제하는 데 실패했습니다.');
+    }
+  };
+
+  const handleEditClick = (trip) => {
+
+    const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+      }
+
+      const config = {
+        headers: { 'Authorization': `${token}` }
+      };
+    setSelectedTrip(trip); // 선택한 trip 데이터를 설정
+    setIsEditModalOpen(true); // 에디터 모달 열기
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setSelectedTrip(null);
+  };
+
+  const searchTrips = (event) => {
+    event.preventDefault();
+    const departure = document.getElementById("departure").value.toLowerCase();
+    const arrival = document.getElementById("arrival").value.toLowerCase();
+    const date = document.getElementById("tripDate").value;
+
+    const filtered = trips.filter((trip) => {
+      const fromMatch = trip.from.toLowerCase().includes(departure);
+      const toMatch = trip.to.toLowerCase().includes(arrival);
+      const dateMatch = date === "" || trip.date === date;
+
+      return fromMatch && toMatch && dateMatch;
+    });
+
+    setFilteredTrips(filtered);
+  };
+
+  const filterTrips = (filterType) => {
+    setActiveFilter(filterType);
+    if (filterType === "전체") {
+      setFilteredTrips(trips);
+    } else {
+      const filtered = trips.filter((trip) => trip.role === filterType);
+      setFilteredTrips(filtered);
+    }
+  };
+
+  return (
+    <div id="Main">
+      <div className="banner">
+        <video autoPlay muted loop>
+          <source src="/vid/vid2.mp4" />
+        </video>
+      </div>
+      <div className="content">
+        <section className="sct_search">
+          <div className="cnt_form">
+            <h2>카풀/택시팟을 찾아볼까요?</h2>
+            <form onSubmit={searchTrips}>
+              <input type="text" id="departure" placeholder="출발지" />
+              <input
+                type="text"
+                id="arrival"
+                className="search-input"
+                placeholder="도착지"
+              />
+              <input type="date" id="tripDate" />
+              <button type="submit">검색</button>
+            </form>
+            <div className="wrap">
+              <button
+                className={`btn_filter ${
+                  activeFilter === "전체" ? "active" : ""
+                }`}
+                onClick={() => filterTrips("전체")}
+              >
+                전체
+              </button>
+              <button
+                className={`btn_filter ${
+                  activeFilter === "탑승자" ? "active" : ""
+                }`}
+                onClick={() => filterTrips("탑승자")}
+              >
+                탑승자
+              </button>
+              <button
+                className={`btn_filter ${
+                  activeFilter === "운전자" ? "active" : ""
+                }`}
+                onClick={() => filterTrips("운전자")}
+              >
+                운전자
+              </button>
+              <button
+                className={`btn_filter ${
+                  activeFilter === "택시" ? "active" : ""
+                }`}
+                onClick={() => filterTrips("택시")}
+              >
+                택시
+              </button>
+            </div>
+          </div>
+          <button
+            onClick={() => setIsWriteModalOpen(true)}
+            className="btn_write"
+          >
+            카풀 요청하기
+          </button>
+        </section>
+        <section className="sct_board">
+          <h3>최근 게시물</h3>
+          {isLoading ? (
+            <p>데이터를 불러오는 중...</p>
+          ) : error ? (
+            <p>에러: {error}</p>
+          ) : (
+            <div className="cnt_board">
+              {filteredTrips.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((trip, index) => (
+                <div
+                  key={trip.id || index}
+                  className="card"
+                  onClick={() => handleEditClick(trip)} // 클릭 시 handleEditClick 호출
+                >
+                  <div className="row1">
+                    <div className="profile"></div>
+                    <div className="wrap">
+                      <div className="user">{trip.author?.name || '알 수 없음'} </div>
+                      <div className="type">{trip.type} · {trip.date} {trip.time} 출발</div>
+                    </div>
+                    <div className="manner">{trip.manner}</div>
+                  </div>
+                  <div className="row2">
+                    <div className="route">{trip.title.split(" ")[0]} {"->"} {trip.title.split(" ")[2]}</div>
+                  </div>
+                  <div className="row3">
+                    <div className="time">
+                      <img src="/img/clock.png" alt="clock" />
+                      출발 : {trip.title.split(" ")[3]} 
+                    </div>
+                    <div className="genderType">
+                      <img src="/img/person.png" alt="person" />
+                      {trip.title.split(" ")[4]} {/* gender를 type으로 변경 */}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
+      <Post
+        isOpen={isWriteModalOpen}
+        onClose={() => setIsWriteModalOpen(false)}
+        onSubmit={handleWriteSubmit} // onSubmit prop 전달
+      />
+      <Editor
+        isOpen={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        editData={selectedTrip} // 선택한 trip을 editData로 전달
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
+    </div>
+  );
 }
