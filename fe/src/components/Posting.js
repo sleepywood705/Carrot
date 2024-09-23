@@ -6,8 +6,15 @@ import axios from "../api/axios.js"
 export function Post({ isOpen, onClose, onSubmit }) {
   const [mapData, setMapData] = useState(null);
 
+  // handleMapSubmit 함수 정의
   const handleMapSubmit = (data) => {
-    setMapData(data);
+    console.log('Map data received:', data); // 데이터 확인
+    if (!mapData || mapData.from !== data.startName || mapData.to !== data.endName) {
+      setMapData({
+        from: data.startName,
+        to: data.endName,
+      });
+    }
   };
 
   if (!isOpen) return null;
@@ -25,6 +32,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
   const [gender, setGender] = useState("성별무관");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const currentDate = new Date();
@@ -47,11 +55,14 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
       return;
     }
 
+    // 중복 제출 방지
+    if (isSubmitting) return; // 이미 제출 중이면 함수 종료
+    setIsSubmitting(true); // 제출 시작
+
     try {
       const token = localStorage.getItem('token');
       if (!token) {
         alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-        // 로그인 페이지로 리다이렉트하는 로직을 여기에 추가하세요
         return;
       }
 
@@ -62,12 +73,10 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         }
       };
 
-      const title = `${mapData.from} -> ${mapData.to}`;
-      const content = `${type}님이 ${date} ${time}에 ${mapData.from}에서 ${mapData.to}로 가는 여정을 공유합니다. 성별: ${gender}`
-    
+      const title = `${mapData.from}->${mapData.to} ${type} ${date} ${time} 일정 모집중`;
+      
       const postData = {
         title: title,
-        content: content,
         from: mapData.from,
         to: mapData.to,
         date: date,
@@ -85,16 +94,9 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
       onClose();
     } catch (error) {
       console.error('데이터 저장 중 오류 발생:', error);
-      if (error.response) {
-        console.error('에러 응답 데이터:', error.response.data);
-        console.error('에러 상태 코드:', error.response.status);
-        console.error('에러 헤더:', error.response.headers);
-        alert(`데이터 저장에 실패했습니다: ${error.response.data.error || '알 수 없는 오류'}`);
-      } else if (error.request) {
-        alert('서버로부터 응답이 없습니다. 네트워크 연결을 확인해 주세요.');
-      } else {
-        alert('요청 중 오류가 발생했습니다.');
-      }
+      // 에러 처리 로직
+    } finally {
+      setIsSubmitting(false); // 제출 완료
     }
   };
 
@@ -138,7 +140,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
             <input
               type="radio"
               id="anyone"
-              name="gender"
+              name="type"
               value="성별무관"
               checked={gender === "성별무관"}
               onChange={(e) => setGender(e.target.value)}
@@ -149,7 +151,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
             <input
               type="radio"
               id="same"
-              name="gender"
+              name="type"
               value="동성끼리 탑승"
               checked={gender === "동성끼리 탑승"}
               onChange={(e) => setGender(e.target.value)}
