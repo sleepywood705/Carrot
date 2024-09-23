@@ -74,7 +74,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
       };
 
       const title = `${mapData.from}->${mapData.to} ${type} ${date} ${time} 일정 모집중`;
-      
+
       const postData = {
         title: title,
         from: mapData.from,
@@ -85,12 +85,12 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         gender: gender,
       };
       console.log('Sending post data:', postData);
-      
+
       const postResponse = await axios.post('/posts/post', postData, config);
       console.log('Post가 성공적으로 생성되었습니다:', postResponse.data);
 
       // 서버 응답 데이터와 함께 선택한 데이터를 포함하여 전달
-      onSubmit({...postResponse.data, ...postData});
+      onSubmit({ ...postResponse.data, ...postData });
       onClose();
     } catch (error) {
       console.error('데이터 저장 중 오류 발생:', error);

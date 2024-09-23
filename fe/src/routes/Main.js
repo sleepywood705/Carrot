@@ -32,8 +32,8 @@ export function Main() {
       };
 
       const response = await axios.get('/posts/gets', config);
-      console.log('서버에서 받은 데이터:', response.data);
-      
+      // console.log('서버에서 받은 데이터:', response.data);
+
       if (response.data && Array.isArray(response.data.data)) {
         setTrips(response.data.data);
         setFilteredTrips(response.data.data);
@@ -139,33 +139,29 @@ export function Main() {
             </form>
             <div className="wrap">
               <button
-                className={`btn_filter ${
-                  activeFilter === "전체" ? "active" : ""
-                }`}
+                className={`btn_filter ${activeFilter === "전체" ? "active" : ""
+                  }`}
                 onClick={() => filterTrips("전체")}
               >
                 전체
               </button>
               <button
-                className={`btn_filter ${
-                  activeFilter === "탑승자" ? "active" : ""
-                }`}
+                className={`btn_filter ${activeFilter === "탑승자" ? "active" : ""
+                  }`}
                 onClick={() => filterTrips("탑승자")}
               >
                 탑승자
               </button>
               <button
-                className={`btn_filter ${
-                  activeFilter === "운전자" ? "active" : ""
-                }`}
+                className={`btn_filter ${activeFilter === "운전자" ? "active" : ""
+                  }`}
                 onClick={() => filterTrips("운전자")}
               >
                 운전자
               </button>
               <button
-                className={`btn_filter ${
-                  activeFilter === "택시" ? "active" : ""
-                }`}
+                className={`btn_filter ${activeFilter === "택시" ? "active" : ""
+                  }`}
                 onClick={() => filterTrips("택시")}
               >
                 택시

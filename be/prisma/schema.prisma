@@ -1,57 +1,53 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id                    Int            @id @default(autoincrement())
-  email                 String         @unique
-  password              String
-  name                  String?       
-  gender                Gender 
-  point                 Int            @default(10000)
-  role                  Role           @default(USER)
-  posts                 Post[]
-  reservationsMade      Reservation[] @relation("ReservationsMade")
+    id                    Int            @id @default(autoincrement())
+    email                 String         @unique
+    password              String
+    name                  String?       
+    gender                Gender         
+    point                 Int            @default(10000)
+    role                  Role           @default(USER)
+    posts                 Post[]         @relation("Author") 
+    reservationsMade      Reservation[]   @relation("ReservationsMade") 
 }
 
 model Post {
-  id                    Int            @id @default(autoincrement())
-  createdAt             DateTime       @default(now())
-  updatedAt             DateTime       @updatedAt
-  title                 String         
-  // type                  Role
-  author                User           @relation(fields: [authorId], references: [id])
-  authorId              Int            
-  reservations          Reservation[]
+    id                    Int            @id @default(autoincrement())
+    createdAt             DateTime       @default(now())
+    updatedAt             DateTime       @updatedAt
+    title                 String
+    author                User           @relation("Author", fields: [authorId], references: [id], onDelete: Cascade) // Add onDelete: Cascade
+    authorId              Int
+    reservations          Reservation[]
 }
 
 model Reservation {
-  id                    Int            @id @default(autoincrement())
-  from                  String
-  to                    String
-  date                  DateTime       
-  // type                  Role
-  // date                  DateTime       @db.Date  
-  // time                  DateTime       @db.Time    
-  post                  Post           @relation(fields: [postId], references: [id])
-  postId                Int            @map("postId")
-  booker                User           @relation("ReservationsMade", fields: [bookerId], references: [id])
-  bookerId              Int            @map("bookerId")
+    id                    Int            @id @default(autoincrement())
+    from                  String
+    to                    String
+    date                  DateTime
+    post                  Post           @relation(fields: [postId], references: [id], onDelete: Cascade) // Add onDelete: Cascade
+    postId                Int
+    booker                User           @relation("ReservationsMade", fields: [bookerId], references: [id], onDelete: Cascade) // Add onDelete: Cascade
+    bookerId              Int
 }
 
 enum Role {
-  USER
-  DRIVER
-  // TAXI
-  ADMIN
-} 
+    USER
+    DRIVER
+    // TAXI
+    ADMIN
+}
 
-enum Gender{
-  MALE
-  FEMALE
+enum Gender {
+    MALE
+    FEMALE
 }
