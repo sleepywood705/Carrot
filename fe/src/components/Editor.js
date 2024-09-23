@@ -1,7 +1,8 @@
 import "./Post.css";
 import { Chat } from "./Chat";
 import { useState, useEffect } from "react";
-
+import Map from "../api/Map"; // Map 컴포넌트 가져오기
+import axios from '../api/axios'; // axios 가져오기
 
 export function Editor({
   isOpen,
@@ -10,11 +11,12 @@ export function Editor({
   onReserve,
   onDelete,
   editData,
-  currentUser,
 }) {
   const [showChat, setShowChat] = useState(false);
-  const [user, setUser] = useState(null);
+  const [userEmail, setUserEmail] = useState(null); // 사용자 이메일 상태 추가
+  const [user, setUser] = useState(null); // 사용자 상태 추가
   const [messageList, setMessageList] = useState([]);
+  const [mapData, setMapData] = useState(null); // Map 데이터 상태 추가
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -24,6 +26,7 @@ export function Editor({
     if (isOpen) {
       window.addEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "hidden";
+      fetchUserEmail(); // 이메일 가져오기
     }
 
     return () => {
@@ -32,10 +35,55 @@ export function Editor({
     };
   }, [isOpen, onClose]);
 
+  const fetchUserEmail = async () => {
+    const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
+
+    try {
+      const response = await axios.get('/users/me', {
+        headers: {
+          Authorization: token,  
+        },
+      });
+      console.log('사용자 정보:', response.data);
+      const email = response.data.data.email; // 이메일 가져오기
+      setUserEmail(email); // 상태에 이메일 저장
+      setUser(response.data); // 사용자 정보 저장
+      console.log('현재 사용자 이메일:', email); // 콘솔에 이메일 출력
+    } catch (error) {
+      console.error('사용자 정보를 가져오는 데 실패했습니다:', error);
+    }
+  };
+
+  const handleMapSubmit = (data) => {
+    console.log('Map data received:', data);
+    setMapData(data); // Map 데이터 설정
+  };
+
   if (!isOpen) return null;
+
+  // title을 쪼개서 출발지와 도착지 설정
+  const titleParts = editData.title.split(" ");
+  const initialDeparture = titleParts[0]; // 출발지
+  const initialArrival = titleParts[2]; // 도착지
+
+  // 작성자 이메일 가져오기
+  const authorEmail = editData.author.email; // 작성자 이메일
+
+  // 이메일 비교
+  const isSameUser = userEmail === authorEmail; // 이메일 비교 결과
+
+  // 콘솔에 결과 출력
+  console.log('현재 사용자 이메일:', userEmail);
+  console.log('작성자 이메일:', authorEmail);
+  console.log('사용자는 작성자와 동일한가?', isSameUser);
 
   return (
     <div id="Post">
+      <Map 
+        onMapSubmit={handleMapSubmit} 
+        initialDeparture={initialDeparture} // 출발지 초기값
+        initialArrival={initialArrival} // 도착지 초기값
+      /> {/* Map 컴포넌트 추가 */}
       <PostingForm
         isOpen={isOpen}
         onEdit={onEdit}
@@ -43,7 +91,11 @@ export function Editor({
         onClose={onClose}
         onReserve={() => setShowChat(true)}
         editData={editData}
-        currentUser={currentUser}
+        userEmail={userEmail} // 사용자 이메일 전달
+        mapData={mapData} // Map 데이터 전달
+        initialDeparture={initialDeparture} // 출발지 초기값 전달
+        initialArrival={initialArrival} // 도착지 초기값 전달
+        isSameUser={isSameUser} // 이메일 비교 결과 전달
       />
       {showChat && <Chat user={user} messageList={messageList} setMessageList={setMessageList} />}
     </div>
@@ -57,25 +109,28 @@ function PostingForm({
   onClose,
   onReserve,
   editData,
-  currentUser,
+  userEmail,
+  initialDeparture,
+  initialArrival,
+  isSameUser, // 이메일 비교 결과
 }) {
   const [type, setType] = useState("탑승자");
-  const [departure, setDeparture] = useState("");
-  const [arrival, setArrival] = useState("");
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
-  const [description, setDescription] = useState("");
   const [gender, setGender] = useState("성별무관");
+  const [departure, setDeparture] = useState(initialDeparture); // 출발지 상태
+  const [arrival, setArrival] = useState(initialArrival); // 도착지 상태
 
   useEffect(() => {
     if (editData) {
-      setType(editData.type || "");
-      const [dep, arr] = (editData.route || "").split("→");
-      setDeparture(dep ? dep.trim() : "");
-      setArrival(arr ? arr.trim() : "");
-      setTime(editData.time || "");
-      setDate(editData.date || "");
-      setDescription(editData.description || "");
+      console.log('받은 데이터:', editData); // 받은 데이터 콘솔 출력
+      const titleParts = editData.title.split(" "); // title을 split하여 배열로 저장
+      console.log('titleParts:', titleParts); // titleParts 콘솔 출력
+      
+      setType(titleParts[3] || ""); // 타입 설정
+      setTime(titleParts[5] || ""); // 시간 설정
+      setDate(titleParts[4] || ""); // 날짜 설정
+      setGender(editData.gender || "성별무관"); // 성별 설정
     }
   }, [editData]);
 
@@ -83,10 +138,11 @@ function PostingForm({
     e.preventDefault();
     const editedTrip = {
       type,
-      route: `${departure} → ${arrival}`,
       time,
       date,
-      description,
+      gender,
+      departure,
+      arrival,
     };
     onEdit(editedTrip);
     onClose();
@@ -116,7 +172,7 @@ function PostingForm({
         <select value={type} onChange={(e) => setType(e.target.value)}>
           <option value="탑승자">탑승자</option>
           <option value="운전자">운전자</option>
-          {/* <option value="택시">택시</option> */}
+          <option value="택시">택시</option>
         </select>
       </div>
       <div className="a">
@@ -166,10 +222,15 @@ function PostingForm({
         </div>
       </div>
       <div className="cont_btn">
-        <button type="submit" onClick={handleSubmit}>수정하기</button>
-        <button type="submit" onClick={handleReserve}>채팅하기</button>
-        <button type="submit" onClick={handleDelete}>삭제하기</button>
+        {isSameUser ? (
+          <button type="submit">수정하기</button>
+        ) : (
+          <button type="button" onClick={handleReserve}>예약하기</button>
+        )}
+        <button type="button" onClick={handleReserve}>채팅하기</button>
+        <button type="button" onClick={handleDelete}>취소하기</button>
       </div>
+      
     </form>
   );
 }

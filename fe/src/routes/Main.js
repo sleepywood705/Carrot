@@ -22,16 +22,8 @@ export function Main() {
     setIsLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
-      }
 
-      const config = {
-        headers: { 'Authorization': `${token}` }
-      };
-
-      const response = await axios.get('/posts/gets', config);
+      const response = await axios.get('/posts/gets');
       console.log('서버에서 받은 데이터:', response.data);
       
       if (response.data && Array.isArray(response.data.data)) {
@@ -58,6 +50,14 @@ export function Main() {
 
   const handleEdit = async (editedTrip) => {
     try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+      }
+
+      const config = {
+        headers: { 'Authorization': `${token}` }
+      };
       await axios.put(`/posts/update/${editedTrip.id}`, editedTrip, {
         headers: { 'Authorization': `${localStorage.getItem('token')}` }
       });
@@ -69,6 +69,14 @@ export function Main() {
 
   const handleDelete = async (tripToDelete) => {
     try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+      }
+
+      const config = {
+        headers: { 'Authorization': `${token}` }
+      };
       await axios.delete(`/posts/delete/${tripToDelete.id}`, {
         headers: { 'Authorization': `${localStorage.getItem('token')}` }
       });
@@ -79,8 +87,17 @@ export function Main() {
   };
 
   const handleEditClick = (trip) => {
-    setSelectedTrip(trip);
-    setIsEditModalOpen(true);
+
+    const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+      }
+
+      const config = {
+        headers: { 'Authorization': `${token}` }
+      };
+    setSelectedTrip(trip); // 선택한 trip 데이터를 설정
+    setIsEditModalOpen(true); // 에디터 모달 열기
   };
 
   const handleCloseEditModal = () => {
@@ -191,27 +208,26 @@ export function Main() {
                 <div
                   key={trip.id || index}
                   className="card"
-                  onClick={() => handleEditClick(trip)}
+                  onClick={() => handleEditClick(trip)} // 클릭 시 handleEditClick 호출
                 >
                   <div className="row1">
                     <div className="profile"></div>
                     <div className="wrap">
                       <div className="user">{trip.author?.name || '알 수 없음'} </div>
-                      <div className="type">{trip.type} · {trip.date} {trip.time} 출발</div>
                     </div>
                     <div className="manner">{trip.manner}</div>
                   </div>
                   <div className="row2">
-                    <div className="route">{trip.title.split(" ")[0]}</div>
+                    <div className="route">{trip.title.split(" ")[0]} {"->"} {trip.title.split(" ")[2]}</div>
                   </div>
                   <div className="row3">
                     <div className="time">
                       <img src="/img/clock.png" alt="clock" />
-                      {trip.title.split(" ")[2]} 출발
+                      출발 : {trip.title.split(" ")[4]} , {trip.title.split(" ")[5]} 
                     </div>
                     <div className="genderType">
                       <img src="/img/person.png" alt="person" />
-                      {trip.title.split(" ")[1]} {/* gender를 type으로 변경 */}
+                      {trip.title.split(" ")[3]}
                     </div>
                   </div>
                 </div>
@@ -228,7 +244,7 @@ export function Main() {
       <Editor
         isOpen={isEditModalOpen}
         onClose={handleCloseEditModal}
-        editData={selectedTrip}
+        editData={selectedTrip} // 선택한 trip을 editData로 전달
         onEdit={handleEdit}
         onDelete={handleDelete}
       />
