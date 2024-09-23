@@ -31,6 +31,9 @@ import mongoose from "mongoose";
 
 mongoose
   .connect(process.env.DB, {
+    user: "admin",
+    pass: "admin",
+    authSource: "admin",
     // useNewUrlParser: true,
     // useUnifiedTopology: true,
   })
