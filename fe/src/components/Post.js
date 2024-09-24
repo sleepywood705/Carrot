@@ -1,10 +1,26 @@
 import "./Post.css";
-import Map from "../api/Map";
+import Map from "../api/Map.js";
 import React, { useState, useEffect } from "react";
 import axios from "../api/axios.js"
 
 export function Post({ isOpen, onClose, onSubmit }) {
   const [mapData, setMapData] = useState(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") { onClose(); }
+    };
+
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, onClose]);
 
   // handleMapSubmit 함수 정의
   const handleMapSubmit = (data) => {
@@ -20,7 +36,7 @@ export function Post({ isOpen, onClose, onSubmit }) {
   if (!isOpen) return null;
 
   return (
-    <div id="Post">
+    <div id="Posting">
       <Map onMapSubmit={handleMapSubmit} />
       <PostingForm onSubmit={onSubmit} onClose={onClose} mapData={mapData} />
     </div>
