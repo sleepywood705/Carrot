@@ -114,7 +114,7 @@ export function Editor({
   };
 
   return (
-    <div id="Post">
+    <div id="Editing">
       <Map
         onMapSubmit={handleMapSubmit}
         initialDeparture={initialDeparture}
