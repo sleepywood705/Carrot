@@ -142,7 +142,6 @@ export function Main() {
                     <div className="profile"></div>
                     <div className="wrap">
                       <div className="user">{trip.author?.name || '알 수 없음'} </div>
-                      
                     </div>
                     <div className="manner">{trip.manner}</div>
                   </div>
@@ -156,7 +155,11 @@ export function Main() {
                     </div>
                     <div className="genderType">
                       <img src="/img/person.png" alt="person" />
-                      {trip.title.split(" ")[3]} · {trip.title.split(" ")[6]}
+                      {trip.title.split(" ")[3]} · 
+                      {trip.title.split(" ")[3] === "택시" 
+                        ? trip.title.split(" ")[7] // 택시일 경우 인원수 표시
+                        : trip.title.split(" ")[6] // 택시가 아닐 경우 성별 표시
+                      }
                     </div>
                   </div>
                 </div>
