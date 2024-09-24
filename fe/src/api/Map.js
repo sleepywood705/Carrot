@@ -1,7 +1,7 @@
 import './Map.css';
 import { useEffect, useRef, useState, useCallback } from 'react';
 
-const KakaoMap = ({ onMapSubmit, editData }) => {
+const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);
   const [kakaoLoaded, setKakaoLoaded] = useState(false);
@@ -12,8 +12,8 @@ const KakaoMap = ({ onMapSubmit, editData }) => {
   const [fuelCost, setFuelCost] = useState('');
   const [taxiCost, setTaxiCost] = useState('');
 
-  const [startName, setStartName] = useState(''); // 출발지 상태
-  const [endName, setEndName] = useState(''); // 도착지 상태
+  const [startName, setStartName] = useState(initialDeparture); // 출발지 상태
+  const [endName, setEndName] = useState(initialArrival); // 도착지 상태
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -144,13 +144,17 @@ const KakaoMap = ({ onMapSubmit, editData }) => {
     const fuelPrice = 1800;
     const fuelEfficiency = 10;
     const fuelCost = (distanceKm / fuelEfficiency) * fuelPrice;
-    setFuelCost(`기름값: 약 ${fuelCost.toFixed(0)}원`);
+    setFuelCost(`기름값: 약 ${numberWithCommas(fuelCost.toFixed(0))}원`);
 
     const baseFare = 4000;
     const per100mFare = 132;
     const taxiCost = baseFare + (distance / 100 * per100mFare);
-    setTaxiCost(`택시비: 약 ${taxiCost.toFixed(0)}원`);
+    setTaxiCost(`택시비: 약 ${numberWithCommas(taxiCost.toFixed(0))}원`);
   }, []);
+
+  const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
@@ -173,13 +177,13 @@ const KakaoMap = ({ onMapSubmit, editData }) => {
   }, [searchPlaceByName, drawRoute, distance, fuelCost, taxiCost, onMapSubmit, startName, endName]);
 
   useEffect(() => {
-    if (editData && editData.route) {
-      const [start, end] = editData.route.split("→").map(s => s.trim());
-      setStartName(start);
-      setEndName(end);
-      // 여기서 지도 초기화 및 경로 표시 로직을 추가할 수 있습니다.
+    if (initialDeparture) {
+      setStartName(initialDeparture); // 초기 출발지 설정
     }
-  }, [editData]);
+    if (initialArrival) {
+      setEndName(initialArrival); // 초기 도착지 설정
+    }
+  }, [initialDeparture, initialArrival]);
 
   if (!kakaoLoaded) {
     return <div>카카오맵을 로딩 중입니다...</div>;
@@ -220,7 +224,9 @@ const KakaoMap = ({ onMapSubmit, editData }) => {
           />
         </div>
       </div>
-      <button type="submit">경로 검색</button>
+      <div className="cont_btn">
+        <button type="submit">경로 검색</button>
+      </div>
     </form>
   );
 };

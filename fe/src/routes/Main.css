@@ -19,6 +19,7 @@
   width: 100%;
 }
 .content {
+  padding: 0 480px;
   gap: 20px;
   display: flex;
   flex-direction: column;
@@ -26,7 +27,7 @@
   justify-content: center;
 }
 .content > section {
-  width: 960px;
+  width: 100%;
 }
 .sct_search {
   gap: 20px;
@@ -131,7 +132,7 @@
   display: flex;
 }
 .card .row2 {
-  padding: 20px 0;
+  padding: 40px 0;
 }
 .card .row3 {
   gap: 4px;

@@ -1,4 +1,4 @@
-import mongoose from "mongoose"; // require 대신 import 사용
+import mongoose from "mongoose";
 
 const chatSchema = new mongoose.Schema(
   {
@@ -14,4 +14,4 @@ const chatSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Chat", chatSchema); // module.exports 대신 export default 사용
+export default mongoose.model("Chat", chatSchema);

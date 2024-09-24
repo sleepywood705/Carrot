@@ -12,6 +12,7 @@ export function Editor({
   onReserve,
   onDelete,
   editData,
+  refreshPosts, // Main 컴포넌트에서 posts를 새로고침하는 함수
 }) {
   const [showChat, setShowChat] = useState(false);
   const [userEmail, setUserEmail] = useState(null); // 사용자 이메일 상태 추가
@@ -78,6 +79,52 @@ export function Editor({
   // console.log('작성자 이메일:', authorEmail);
   // console.log('사용자는 작성자와 동일한가?', isSameUser);
 
+  const handleEdit = async (editedTrip) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+      }
+
+      console.log('서버로 전송되는 데이터:', editedTrip);
+
+      const response = await axios.patch(`/posts/patch/${editData.id}`, editedTrip, {
+        headers: { 'Authorization': `${token}` }
+      });
+
+      if (response.status === 200) {
+        onClose();
+        refreshPosts(); // Main 컴포넌트의 posts 상태를 새로고침
+        console.log('서버 응답:', response.data);
+      }
+    } catch (error) {
+      console.error('게시물 수정 중 오류 발생:', error);
+      alert('게시물을 수정하는 데 실패했습니다.');
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+      }
+
+      const response = await axios.delete(`/posts/delete/${editData.id}`, {
+        headers: { 'Authorization': `${token}` }
+      });
+
+      if (response.status === 200) {
+        onClose();
+        refreshPosts(); // Main 컴포넌트의 posts 상태를 새로고침
+        console.log('삭제된 게시물 ID:', editData.id); // 삭제된 게시물 ID를 콘솔에 출력
+      }
+    } catch (error) {
+      console.error('게시물 삭제 중 오류 발생:', error);
+      alert('게시물을 삭제하는 데 실패했습니다.');
+    }
+  };
+
   return (
     <div id="Post">
       <Map
@@ -87,8 +134,8 @@ export function Editor({
       /> {/* Map 컴포넌트 추가 */}
       <PostingForm
         isOpen={isOpen}
-        onEdit={onEdit}
-        onDelete={onDelete}
+        onEdit={handleEdit} // handleEdit 함수로 변경
+        onDelete={handleDelete} // handleDelete 함수로 변경
         onClose={onClose}
         onReserve={() => setShowChat(true)}
         editData={editData}
@@ -113,20 +160,21 @@ function PostingForm({
   userEmail,
   initialDeparture,
   initialArrival,
-  isSameUser, // 이메일 비교 결과
+  isSameUser,
 }) {
   const [type, setType] = useState("탑승자");
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
+  const [departure, setDeparture] = useState(initialDeparture);
+  const [arrival, setArrival] = useState(initialArrival);
   const [gender, setGender] = useState("성별무관");
-  const [departure, setDeparture] = useState(initialDeparture); // 출발지 상태
-  const [arrival, setArrival] = useState(initialArrival); // 도착지 상태
+  const [taxiCapacity, setTaxiCapacity] = useState("2"); // 택시 인원 상태 추가
 
   useEffect(() => {
     if (editData) {
-      // console.log('받은 데이터:', editData); // 받은 데이터 콘솔 출력
+      console.log('받은 데이터:', editData); // 받은 데이터 콘솔 출력
       const titleParts = editData.title.split(" "); // title을 split하여 배열로 저장
-      // console.log('titleParts:', titleParts); // titleParts 콘솔 출력
+      console.log('titleParts:', titleParts); // titleParts 콘솔 출력
 
       setType(titleParts[3] || ""); // 타입 설정
       setTime(titleParts[5] || ""); // 시간 설정
@@ -138,20 +186,14 @@ function PostingForm({
   const handleSubmit = (e) => {
     e.preventDefault();
     const editedTrip = {
-      type,
-      time,
-      date,
-      gender,
-      departure,
-      arrival,
+      title: `${departure} -> ${arrival} ${type} ${date} ${time} ${type === '택시' ? `${taxiCapacity}인` : gender}`
     };
+    console.log('수정된 데이터 (서버로 전송 전):', editedTrip);
     onEdit(editedTrip);
-    onClose();
   };
 
   const handleDelete = () => {
-    onDelete(editData);
-    onClose();
+    onDelete();
   };
 
   const handleReserve = () => {
@@ -170,12 +212,30 @@ function PostingForm({
     <form onSubmit={handleSubmit} className="PostingForm">
       <div className="a">
         <h2>유형을 선택해 주세요<button onClick={handleCloseModal}></button></h2>
-        <select value={type} onChange={(e) => setType(e.target.value)}>
+        <select
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          disabled={!isSameUser}
+        >
           <option value="탑승자">탑승자</option>
           <option value="운전자">운전자</option>
           <option value="택시">택시</option>
         </select>
       </div>
+      {type === '택시' && (
+        <div className="a">
+          <h2>몇 명이 탑승하나요?</h2>
+          <select
+            value={taxiCapacity}
+            onChange={(e) => setTaxiCapacity(Number(e.target.value))}
+            disabled={!isSameUser}
+          >
+            <option value={2}>2인</option>
+            <option value={3}>3인</option>
+            <option value={4}>4인</option>
+          </select>
+        </div>
+      )}
       <div className="a">
         <h2>몇 시에 출발하시나요?</h2>
         <input
@@ -184,6 +244,7 @@ function PostingForm({
           value={time}
           onChange={(e) => setTime(e.target.value)}
           required
+          disabled={!isSameUser}
         />
       </div>
       <div className="a">
@@ -193,35 +254,41 @@ function PostingForm({
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
+          disabled={!isSameUser}
         />
       </div>
-      <div className="a">
-        <h2>어떤 분과 탑승하시나요?</h2>
-        <div className="wrap">
-          <label>
-            <input
-              type="radio"
-              id="anyone"
-              name="gender"
-              value="성별무관"
-              checked={gender === "성별무관"}
-              onChange={(e) => setGender(e.target.value)}
-            />
-            성별무관
-          </label>
-          <label>
-            <input
-              type="radio"
-              id="same"
-              name="gender"
-              value="동성끼리 탑승"
-              checked={gender === "동성끼리 탑승"}
-              onChange={(e) => setGender(e.target.value)}
-            />
-            동성끼리 탑승
-          </label>
+      {type !== '택시' && (
+        <div className="a">
+          <h2>어떤 분과 탑승하시나요?</h2>
+          <div className="wrap">
+            <label>
+              <input
+                type="radio"
+                id="anyone"
+                name="gender"
+                value="성별무관"
+                checked={gender === "성별무관"}
+                onChange={(e) => setGender(e.target.value)}
+                disabled={!isSameUser}
+              />
+              성별무관
+            </label>
+            <label>
+              <input
+                type="radio"
+                id="same"
+                name="gender"
+                value="동성"
+                checked={gender === "동성"}
+                onChange={(e) => setGender(e.target.value)}
+                disabled={!isSameUser}
+              />
+              동성
+            </label>
+          </div>
         </div>
-      </div>
+      )}
+
       <div className="cont_btn">
         {isSameUser ? (
           <button type="submit">수정하기</button>
@@ -229,7 +296,12 @@ function PostingForm({
           <button type="button" onClick={handleReserve}>예약하기</button>
         )}
         <button type="button" onClick={handleReserve}>채팅하기</button>
-        <button type="button" onClick={handleDelete}>취소하기</button>
+        {isSameUser ? (
+          <button type="button" onClick={handleDelete}>삭제하기</button>
+        ) : (
+          <button type="button" onClick={handleCloseModal}>취소하기</button>
+        )}
+
       </div>
 
     </form>
