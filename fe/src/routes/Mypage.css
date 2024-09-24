@@ -48,6 +48,8 @@
 #MyPoint,
 #MyPoint .currentPoint,
 #MyPoint .pointList,
+#MyPost,
+#MyPost > div,
 #Withdrawal,
 #Withdrawal .wrap > button,
 #MyHistory {
@@ -61,6 +63,7 @@
 
 #ChangeInfo,
 #MyPoint,
+#MyPost,
 #Withdrawal,
 #MyHistory {
     min-width: 618px;
@@ -76,6 +79,7 @@
 #ChangeInfo > h2,
 #MyPoint > h2,
 #MyPoint > h3,
+#MyPost > h2,
 #MyPoint .pointList,
 #Withdrawal > h2,
 #MyHistory > h2 {
@@ -87,7 +91,7 @@
 #SNB > details > ul,
 #Withdrawal > div p {
     color: #666;
-    font-size: 17px;
+    font-size: 15px;
 }
 
 
@@ -159,6 +163,15 @@
     align-items: center;
 }
 
+#MyPost > div {
+    padding: 16px 20px;
+    width: 100%; height: 60px;
+    color: #666;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
 
 #Withdrawal {
     height: fit-content;
@@ -192,3 +205,4 @@
     color: #fff;
     background-color: #FF6F0F;
 }
+

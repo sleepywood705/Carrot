@@ -40,7 +40,7 @@ export function Header({ isLoggedIn, onLogout, userName }) {
 
   return (
     <header className={`${visible ? 'visible' : 'hidden'}`}>
-      <Link to="/" id="logo" className={invert}>당근마차</Link>
+      <Link to="/main" id="logo" className={invert}>당근마차</Link>
       <Link to="/guide" className={invert}>이용가이드</Link>
       {isLoggedIn && (
         <button className={invert} onClick={()=>toggleNav()}>

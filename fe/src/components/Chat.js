@@ -46,7 +46,7 @@ export function Chat() {
   }
 
   if (!user) {
-    return <div>사용자 이름을 입력해주세요...</div>;
+    return <div>사용자 이름을 입력해주세요.</div>;
   }
 
   return (

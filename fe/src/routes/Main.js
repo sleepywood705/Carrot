@@ -141,7 +141,7 @@ export function Main() {
       </div>
       <div className="content">
         <section className="sct_search">
-          <div className="cnt_form">
+          <div className="cont_form">
             <h2>카풀/택시팟을 찾아볼까요?</h2>
             <form onSubmit={searchTrips}>
               <input type="text" id="departure" placeholder="출발지" />
@@ -203,7 +203,7 @@ export function Main() {
           ) : error ? (
             <p>에러: {error}</p>
           ) : (
-            <div className="cnt_board">
+            <div className="cont_board">
               {filteredTrips.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((trip, index) => (
                 <div
                   key={trip.id || index}
@@ -211,7 +211,7 @@ export function Main() {
                   onClick={() => handleEditClick(trip)} // 클릭 시 handleEditClick 호출
                 >
                   <div className="row1">
-                    <div className="profile"></div>
+                    <div className="img_profile"></div>
                     <div className="wrap">
                       <div className="user">{trip.author?.name || '알 수 없음'} </div>
                     </div>

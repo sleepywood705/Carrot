@@ -118,7 +118,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         <h2>몇 시에 출발하시나요?</h2>
         <input
           type="time"
-          className="cnt_time"
+          className="cont_time"
           value={time}
           onChange={(e) => setTime(e.target.value)}
           required
