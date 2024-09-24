@@ -40,7 +40,8 @@ export class PostsController {
         try {
             const id = parseInt(req.params.id);
             const data = req.body;
-            const updatedPost = await this.postsService.updatePost(id, data);
+            const userId = req.user.id;
+            const updatedPost = await this.postsService.updatePost(id, data, userId);
             res.status(200).json({ data: updatedPost });
         } catch (error) {
             res.status(400).json({ error: error.message });

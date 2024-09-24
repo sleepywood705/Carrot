@@ -18,14 +18,14 @@ export function Header({ isLoggedIn, onLogout, userName }) {
 
   useEffect(() => {
     const controlNavbar = () => {
-      if (typeof window !== 'undefined') { 
+      if (typeof window !== 'undefined') {
         if (window.scrollY > lastScrollY) { // 스크롤 내릴 때
-          setVisible(false); 
+          setVisible(false);
         } else { // 스크롤 올릴 때
-          setVisible(true);  
+          setVisible(true);
         }
         // 현재 스크롤 위치 업데이트
-        setLastScrollY(window.scrollY); 
+        setLastScrollY(window.scrollY);
       }
     };
 

@@ -46,22 +46,51 @@ export function Main() {
   const applyFiltersAndSearch = () => {
     let result = trips;
 
-    if (activeFilter !== "전체") {
-      // 검색 적용
-      if (searchParams.departure || searchParams.arrival || searchParams.date) {
-        result = result.filter(trip => {
-          const titleParts = trip.title.split(" ");
-          const fromMatch = titleParts[0].toLowerCase().includes(searchParams.departure.toLowerCase());
-          const toMatch = titleParts[2].toLowerCase().includes(searchParams.arrival.toLowerCase());
-          const dateMatch = !searchParams.date || titleParts[4] === searchParams.date;
-          return fromMatch && toMatch && dateMatch;
-        });
-      }
+    // 검색 적용
+    if (searchParams.departure || searchParams.arrival || searchParams.date) {
+      result = result.filter(trip => {
+        const titleParts = trip.title.split(" ");
+        const fromMatch = titleParts[0].toLowerCase().includes(searchParams.departure.toLowerCase());
+        const toMatch = titleParts[2].toLowerCase().includes(searchParams.arrival.toLowerCase());
+        const dateMatch = !searchParams.date || titleParts[4] === searchParams.date;
+        return fromMatch && toMatch && dateMatch;
+      });
+    }
 
-      // 필터 적용
+    // 필터 적용 (전체가 아닐 때만)
+    if (activeFilter !== "전체") {
       result = result.filter(trip => trip.title.split(" ")[3] === activeFilter);
     }
 
+    setFilteredTrips(result);
+  };
+
+  const searchTrips = (event) => {
+    event.preventDefault();
+    const newSearchParams = {
+      departure: document.getElementById("departure").value,
+      arrival: document.getElementById("arrival").value,
+      date: document.getElementById("tripDate").value
+    };
+    setSearchParams(newSearchParams);
+    
+    // 검색 후 필터링 적용
+    let result = trips;
+    if (newSearchParams.departure || newSearchParams.arrival || newSearchParams.date) {
+      result = result.filter(trip => {
+        const titleParts = trip.title.split(" ");
+        const fromMatch = titleParts[0].toLowerCase().includes(newSearchParams.departure.toLowerCase());
+        const toMatch = titleParts[2].toLowerCase().includes(newSearchParams.arrival.toLowerCase());
+        const dateMatch = !newSearchParams.date || titleParts[4] === newSearchParams.date;
+        return fromMatch && toMatch && dateMatch;
+      });
+    }
+    
+    // 현재 활성화된 필터 적용
+    if (activeFilter !== "전체") {
+      result = result.filter(trip => trip.title.split(" ")[3] === activeFilter);
+    }
+    
     setFilteredTrips(result);
   };
 
@@ -81,15 +110,6 @@ export function Main() {
     fetchTrips(); // 모달이 닫힐 때 목록 새로고침
   };
 
-  const searchTrips = (event) => {
-    event.preventDefault();
-    setSearchParams({
-      departure: document.getElementById("departure").value,
-      arrival: document.getElementById("arrival").value,
-      date: document.getElementById("tripDate").value
-    });
-  };
-
   const filterTrips = (filterType) => {
     setActiveFilter(filterType);
     if (filterType === "전체") {
@@ -99,6 +119,11 @@ export function Main() {
       document.getElementById("departure").value = '';
       document.getElementById("arrival").value = '';
       document.getElementById("tripDate").value = '';
+      setFilteredTrips(trips); // 모든 여행을 표시
+    } else {
+      // 필터 적용
+      const filtered = trips.filter(trip => trip.title.split(" ")[3] === filterType);
+      setFilteredTrips(filtered);
     }
   };
 
@@ -142,7 +167,6 @@ export function Main() {
                     <div className="img_profile"></div>
                     <div className="wrap">
                       <div className="user">{trip.author?.name || '알 수 없음'} </div>
-                      
                     </div>
                     <div className="manner">{trip.manner}</div>
                   </div>
@@ -156,7 +180,11 @@ export function Main() {
                     </div>
                     <div className="genderType">
                       <img src="/img/person.png" alt="person" />
-                      {trip.title.split(" ")[3]} · {trip.title.split(" ")[6]}
+                      {trip.title.split(" ")[3]} · 
+                      {trip.title.split(" ")[3] === "택시" 
+                        ? trip.title.split(" ")[6] // 택시일 경우 인원수 표시
+                        : trip.title.split(" ")[6] // 택시가 아닐 경우 성별 표시
+                      }
                     </div>
                   </div>
                 </div>

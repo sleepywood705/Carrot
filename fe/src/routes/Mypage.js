@@ -1,4 +1,4 @@
-import "./MyPage.css";
+import "./Mypage.css";
 import { ChangeInfo } from "../components/MyPage/ChangeInfo.js";
 import { MyPoint } from "../components/MyPage/MyPoint.js"; 
 import { Withdrawal } from "../components/MyPage/Withdrawal.js";
@@ -6,8 +6,9 @@ import { MyHistory } from "../components/MyPage/MyHistory.js";
 import { MyPost } from "../components/MyPage/MyPost.js";
 import { useState, useEffect } from "react";
 import axios from "../api/axios.js";
+import { useNavigate } from 'react-router-dom'
 
-export function MyPage() {
+export function Mypage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

@@ -8,6 +8,7 @@ export function Editor({
   isOpen,
   onClose,
   onEdit,
+  postId,
   onReserve,
   onDelete,
   editData,
@@ -42,21 +43,21 @@ export function Editor({
     try {
       const response = await axios.get('/users/me', {
         headers: {
-          Authorization: token,  
+          Authorization: token,
         },
       });
-      console.log('사용자 정보:', response.data);
+      // console.log('사용자 정보:', response.data);
       const email = response.data.data.email; // 이메일 가져오기
       setUserEmail(email); // 상태에 이메일 저장
       setUser(response.data); // 사용자 정보 저장
-      console.log('현재 사용자 이메일:', email); // 콘솔에 이메일 출력
+      // console.log('현재 사용자 이메일:', email); // 콘솔에 이메일 출력
     } catch (error) {
       console.error('사용자 정보를 가져오는 데 실패했습니다:', error);
     }
   };
 
   const handleMapSubmit = (data) => {
-    console.log('Map data received:', data);
+    // console.log('Map data received:', data);
     setMapData(data); // Map 데이터 설정
   };
 
@@ -74,9 +75,9 @@ export function Editor({
   const isSameUser = userEmail === authorEmail; // 이메일 비교 결과
 
   // 콘솔에 결과 출력
-  console.log('현재 사용자 이메일:', userEmail);
-  console.log('작성자 이메일:', authorEmail);
-  console.log('사용자는 작성자와 동일한가?', isSameUser);
+  // console.log('현재 사용자 이메일:', userEmail);
+  // console.log('작성자 이메일:', authorEmail);
+  // console.log('사용자는 작성자와 동일한가?', isSameUser);
 
   const handleEdit = async (editedTrip) => {
     try {
@@ -126,8 +127,8 @@ export function Editor({
 
   return (
     <div id="Post">
-      <Map 
-        onMapSubmit={handleMapSubmit} 
+      <Map
+        onMapSubmit={handleMapSubmit}
         initialDeparture={initialDeparture} // 출발지 초기값
         initialArrival={initialArrival} // 도착지 초기값
       /> {/* Map 컴포넌트 추가 */}
@@ -144,7 +145,7 @@ export function Editor({
         initialArrival={initialArrival} // 도착지 초기값 전달
         isSameUser={isSameUser} // 이메일 비교 결과 전달
       />
-      {showChat && <Chat user={user} messageList={messageList} setMessageList={setMessageList} />}
+      {showChat && <Chat postId={postId} user={user} messageList={messageList} setMessageList={setMessageList} />}
     </div>
   );
 }
@@ -166,24 +167,26 @@ function PostingForm({
   const [date, setDate] = useState("");
   const [departure, setDeparture] = useState(initialDeparture);
   const [arrival, setArrival] = useState(initialArrival);
-  const [gender, setGender] = useState("성별무관"); // gender 상태 추가
+  const [gender, setGender] = useState("성별무관");
+  const [taxiCapacity, setTaxiCapacity] = useState("2"); // 택시 인원 상태 추가
 
   useEffect(() => {
     if (editData) {
-      const titleParts = editData.title.split(" ");
-      setType(titleParts[3] || "");
-      setTime(titleParts[5] || "");
-      setDate(titleParts[4] || "");
-      setDeparture(titleParts[0] || "");
-      setArrival(titleParts[2] || "");
-      setGender(titleParts[6] || "성별무관"); // gender 설정 추가
+      console.log('받은 데이터:', editData); // 받은 데이터 콘솔 출력
+      const titleParts = editData.title.split(" "); // title을 split하여 배열로 저장
+      console.log('titleParts:', titleParts); // titleParts 콘솔 출력
+
+      setType(titleParts[3] || ""); // 타입 설정
+      setTime(titleParts[5] || ""); // 시간 설정
+      setDate(titleParts[4] || ""); // 날짜 설정
+      setGender(editData.gender || "성별무관"); // 성별 설정
     }
   }, [editData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const editedTrip = {
-      title: `${departure} -> ${arrival} ${type} ${date} ${time} ${gender}`,
+      title: `${departure} -> ${arrival} ${type} ${date} ${time} ${type === '택시' ? `${taxiCapacity}인` : gender}`
     };
     console.log('수정된 데이터 (서버로 전송 전):', editedTrip);
     onEdit(editedTrip);
@@ -209,8 +212,8 @@ function PostingForm({
     <form onSubmit={handleSubmit} className="PostingForm">
       <div className="a">
         <h2>유형을 선택해 주세요<button onClick={handleCloseModal}></button></h2>
-        <select 
-          value={type} 
+        <select
+          value={type}
           onChange={(e) => setType(e.target.value)}
           disabled={!isSameUser}
         >
@@ -219,6 +222,20 @@ function PostingForm({
           <option value="택시">택시</option>
         </select>
       </div>
+      {type === '택시' && (
+        <div className="a">
+          <h2>몇 명이 탑승하나요?</h2>
+          <select
+            value={taxiCapacity}
+            onChange={(e) => setTaxiCapacity(Number(e.target.value))}
+            disabled={!isSameUser}
+          >
+            <option value={2}>2인</option>
+            <option value={3}>3인</option>
+            <option value={4}>4인</option>
+          </select>
+        </div>
+      )}
       <div className="a">
         <h2>몇 시에 출발하시나요?</h2>
         <input
@@ -240,35 +257,38 @@ function PostingForm({
           disabled={!isSameUser}
         />
       </div>
-      <div className="a">
-        <h2>어떤 분과 탑승하시나요?</h2>
-        <div className="wrap">
-          <label>
-            <input
-              type="radio"
-              id="anyone"
-              name="gender"
-              value="성별무관"
-              checked={gender === "성별무관"}
-              onChange={(e) => setGender(e.target.value)}
-              disabled={!isSameUser}
-            />
-            성별무관
-          </label>
-          <label>
-            <input
-              type="radio"
-              id="same"
-              name="gender"
-              value="동성"
-              checked={gender === "동성"}
-              onChange={(e) => setGender(e.target.value)}
-              disabled={!isSameUser}
-            />
-            동성
-          </label>
+      {type !== '택시' && (
+        <div className="a">
+          <h2>어떤 분과 탑승하시나요?</h2>
+          <div className="wrap">
+            <label>
+              <input
+                type="radio"
+                id="anyone"
+                name="gender"
+                value="성별무관"
+                checked={gender === "성별무관"}
+                onChange={(e) => setGender(e.target.value)}
+                disabled={!isSameUser}
+              />
+              성별무관
+            </label>
+            <label>
+              <input
+                type="radio"
+                id="same"
+                name="gender"
+                value="동성"
+                checked={gender === "동성"}
+                onChange={(e) => setGender(e.target.value)}
+                disabled={!isSameUser}
+              />
+              동성
+            </label>
+          </div>
         </div>
-      </div>
+      )}
+
       <div className="cont_btn">
         {isSameUser ? (
           <button type="submit">수정하기</button>
@@ -281,9 +301,9 @@ function PostingForm({
         ) : (
           <button type="button" onClick={handleCloseModal}>취소하기</button>
         )}
-      
+
       </div>
-      
+
     </form>
   );
 }

@@ -23,8 +23,19 @@ export class PostsService {
         return posts
     }
 
-    updatePost = async (id, data) => {
+    updatePost = async (id, data, userId) => {
+        const post = await this.postsRepository.getPostById(id);
+
+        if (!post) {
+            throw new Error('Post not found');
+        }
+
+        if (post.authorId !== userId) {
+            throw new Error('You are not allowed to update this post.');
+        }
+
         const updatedPost = await this.postsRepository.updatePost(id, data);
+
         return updatedPost
     }
 

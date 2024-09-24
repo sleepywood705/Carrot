@@ -144,13 +144,17 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
     const fuelPrice = 1800;
     const fuelEfficiency = 10;
     const fuelCost = (distanceKm / fuelEfficiency) * fuelPrice;
-    setFuelCost(`기름값: 약 ${fuelCost.toFixed(0)}원`);
+    setFuelCost(`기름값: 약 ${numberWithCommas(fuelCost.toFixed(0))}원`);
 
     const baseFare = 4000;
     const per100mFare = 132;
     const taxiCost = baseFare + (distance / 100 * per100mFare);
-    setTaxiCost(`택시비: 약 ${taxiCost.toFixed(0)}원`);
+    setTaxiCost(`택시비: 약 ${numberWithCommas(taxiCost.toFixed(0))}원`);
   }, []);
+
+  const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();

@@ -8,7 +8,7 @@ import { Main } from "./routes/Main";
 import { Guide } from "./routes/Guide";
 import { Login } from "./routes/Login";
 import { Signup } from "./routes/Signup";
-import { MyPage } from "./routes/MyPage";
+import { Mypage } from "./routes/Mypage";
 import { useState, useEffect } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import axios from './api/axios';  // axios import 추가
@@ -70,7 +70,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/main" element={<Main />} />
         <Route path="/guide" element={<Guide />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage" element={<Mypage />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
