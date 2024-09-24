@@ -22,9 +22,8 @@
   background-color: #fff;
   border-radius: 10px;
   gap: 30px;
+  box-sizing: border-box;
 }
-
-
 
 .PostingForm {
   display: flex;

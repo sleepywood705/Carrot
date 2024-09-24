@@ -34,6 +34,17 @@ export function Mypage() {
   if (error) return <p>Error: {error}</p>;
   if (!user) return <p>No user data available.</p>;
 
+  const getProfileImage = (gender) => {
+    switch (gender) {
+      case 'MALE':
+        return 'url(/img/man.png)';
+      case 'FEMALE':
+        return 'url(/img/woman.png)';
+      default:
+        return 'url(/img/default.png)';
+    }
+  };
+
   const renderContent = () => {
     switch (selectedMenu) {
       case "changeInfo":
@@ -55,7 +66,10 @@ export function Mypage() {
         <div className="profile">
           <div className="wrap_img">
             <img src="/img/leaf.png" alt="leaf" />
-            <div className="img_profile"></div>
+            <div
+              className="img_profile"
+              style={{ background: `${getProfileImage(user.gender)} center/cover no-repeat` }}
+            ></div>
           </div>
           <div className="username">{user.name}</div>
         </div>

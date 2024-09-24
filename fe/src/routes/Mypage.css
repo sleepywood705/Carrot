@@ -26,7 +26,7 @@
     justify-content: center;
 }
 .wrap_img > img {
-    width: 55px; height: 50px;
+    width: 40px; height:35px;
 }
 .img_profile {
     width: 120px; aspect-ratio: 1;
@@ -40,7 +40,6 @@
 
 #SNB details,
 #SNB .profile,
-#SNB .img_profile,
 #SNB .username,
 #ChangeInfo,
 #ChangeInfo .userInfo > div > div,
