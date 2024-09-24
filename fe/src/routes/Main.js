@@ -197,4 +197,4 @@ export function Main() {
       <Editor isOpen={isEditModalOpen} onClose={handleCloseEditModal} editData={selectedTrip} refreshPosts={fetchTrips} />
     </div>
   );
-}
+}``
