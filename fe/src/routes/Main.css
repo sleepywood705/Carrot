@@ -135,7 +135,7 @@
   padding: 40px 0;
 }
 .card .row3 {
-  gap: 4px;
+  gap: 6px;
   display: grid;
 }
 .row1 .img_profile {
@@ -161,6 +161,7 @@
   font-size: 18px;
   text-align: center;
 }
+.row3 .calendar,
 .row3 .time,
 .row3 .genderType {
   padding-left: 8px;
@@ -170,6 +171,7 @@
   display: flex;
   align-items: center;
 }
+.row3 .calendar >  img,
 .row3 .time > img,
 .row3 .genderType > img {
   height: 14px;

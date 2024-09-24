@@ -25,6 +25,7 @@
   box-sizing: border-box;
 }
 
+
 .PostingForm {
   display: flex;
   flex-direction: column;
