@@ -188,7 +188,7 @@ function PostingForm({
   const handleSubmit = (e) => {
     e.preventDefault();
     const editedTrip = {
-      title: `${departure} -> ${arrival} ${type} ${date} ${time} ${gender} ${type === '택시' ? `${taxiCapacity}인` : ''} 일정 모집중`
+      title: `${departure} -> ${arrival} ${type} ${date} ${time} ${type === '택시' ? `${taxiCapacity}인` : gender}`
     };
     console.log('수정된 데이터 (서버로 전송 전):', editedTrip);
     onEdit(editedTrip);
@@ -224,6 +224,20 @@ function PostingForm({
           <option value="택시">택시</option>
         </select>
       </div>
+      {type === '택시' && (
+        <div className="a">
+          <h2>몇 명이 탑승하나요?</h2>
+          <select 
+            value={taxiCapacity} 
+            onChange={(e) => setTaxiCapacity(Number(e.target.value))}
+            disabled={!isSameUser}
+          >
+            <option value={2}>2인</option>
+            <option value={3}>3인</option>
+            <option value={4}>4인</option>
+          </select>
+        </div>
+      )} 
       <div className="a">
         <h2>몇 시에 출발하시나요?</h2>
         <input
@@ -245,52 +259,38 @@ function PostingForm({
           disabled={!isSameUser}
         />
       </div>
-      <div className="a">
-        {type === "택시" ? (
-          <>
-            <h2>몇 명이 탑승하나요?</h2>
-            <select
-              value={taxiCapacity}
-              onChange={(e) => setTaxiCapacity(e.target.value)}
-              disabled={!isSameUser}
-            >
-              <option value="2">2인</option>
-              <option value="3">3인</option>
-              <option value="4">4인</option>
-            </select>
-          </>
-        ) : (
-          <>
-            <h2>어떤 분과 탑승하시나요?</h2>
-            <div className="wrap">
-              <label>
-                <input
-                  type="radio"
-                  id="anyone"
-                  name="gender"
-                  value="성별무관"
-                  checked={gender === "성별무관"}
-                  onChange={(e) => setGender(e.target.value)}
-                  disabled={!isSameUser}
-                />
-                성별무관
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  id="same"
-                  name="gender"
-                  value="동성"
-                  checked={gender === "동성"}
-                  onChange={(e) => setGender(e.target.value)}
-                  disabled={!isSameUser}
-                />
-                동성
-              </label>
-            </div>
-          </>
-        )}
-      </div>
+      {type !== '택시' && (
+        <div className="a">
+          <h2>어떤 분과 탑승하시나요?</h2>
+          <div className="wrap">
+            <label>
+              <input
+                type="radio"
+                id="anyone"
+                name="gender"
+                value="성별무관"
+                checked={gender === "성별무관"}
+                onChange={(e) => setGender(e.target.value)}
+                disabled={!isSameUser}
+              />
+              성별무관
+            </label>
+            <label>
+              <input
+                type="radio"
+                id="same"
+                name="gender"
+                value="동성"
+                checked={gender === "동성"}
+                onChange={(e) => setGender(e.target.value)}
+                disabled={!isSameUser}
+              />
+              동성
+            </label>
+          </div>
+        </div>
+      )}
+      
       <div className="cont_btn">
         {isSameUser ? (
           <button type="submit">수정하기</button>
