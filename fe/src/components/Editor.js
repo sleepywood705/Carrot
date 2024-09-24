@@ -8,6 +8,7 @@ export function Editor({
   isOpen,
   onClose,
   onEdit,
+  postId,
   onReserve,
   onDelete,
   editData,
@@ -41,21 +42,21 @@ export function Editor({
     try {
       const response = await axios.get('/users/me', {
         headers: {
-          Authorization: token,  
+          Authorization: token,
         },
       });
-      console.log('사용자 정보:', response.data);
+      // console.log('사용자 정보:', response.data);
       const email = response.data.data.email; // 이메일 가져오기
       setUserEmail(email); // 상태에 이메일 저장
       setUser(response.data); // 사용자 정보 저장
-      console.log('현재 사용자 이메일:', email); // 콘솔에 이메일 출력
+      // console.log('현재 사용자 이메일:', email); // 콘솔에 이메일 출력
     } catch (error) {
       console.error('사용자 정보를 가져오는 데 실패했습니다:', error);
     }
   };
 
   const handleMapSubmit = (data) => {
-    console.log('Map data received:', data);
+    // console.log('Map data received:', data);
     setMapData(data); // Map 데이터 설정
   };
 
@@ -73,14 +74,14 @@ export function Editor({
   const isSameUser = userEmail === authorEmail; // 이메일 비교 결과
 
   // 콘솔에 결과 출력
-  console.log('현재 사용자 이메일:', userEmail);
-  console.log('작성자 이메일:', authorEmail);
-  console.log('사용자는 작성자와 동일한가?', isSameUser);
+  // console.log('현재 사용자 이메일:', userEmail);
+  // console.log('작성자 이메일:', authorEmail);
+  // console.log('사용자는 작성자와 동일한가?', isSameUser);
 
   return (
     <div id="Post">
-      <Map 
-        onMapSubmit={handleMapSubmit} 
+      <Map
+        onMapSubmit={handleMapSubmit}
         initialDeparture={initialDeparture} // 출발지 초기값
         initialArrival={initialArrival} // 도착지 초기값
       /> {/* Map 컴포넌트 추가 */}
@@ -97,7 +98,7 @@ export function Editor({
         initialArrival={initialArrival} // 도착지 초기값 전달
         isSameUser={isSameUser} // 이메일 비교 결과 전달
       />
-      {showChat && <Chat user={user} messageList={messageList} setMessageList={setMessageList} />}
+      {showChat && <Chat postId={postId} user={user} messageList={messageList} setMessageList={setMessageList} />}
     </div>
   );
 }
@@ -123,10 +124,10 @@ function PostingForm({
 
   useEffect(() => {
     if (editData) {
-      console.log('받은 데이터:', editData); // 받은 데이터 콘솔 출력
+      // console.log('받은 데이터:', editData); // 받은 데이터 콘솔 출력
       const titleParts = editData.title.split(" "); // title을 split하여 배열로 저장
-      console.log('titleParts:', titleParts); // titleParts 콘솔 출력
-      
+      // console.log('titleParts:', titleParts); // titleParts 콘솔 출력
+
       setType(titleParts[3] || ""); // 타입 설정
       setTime(titleParts[5] || ""); // 시간 설정
       setDate(titleParts[4] || ""); // 날짜 설정
@@ -230,9 +231,7 @@ function PostingForm({
         <button type="button" onClick={handleReserve}>채팅하기</button>
         <button type="button" onClick={handleDelete}>취소하기</button>
       </div>
-      <div>
-        <p>현재 사용자 이메일: {userEmail}</p> {/* 현재 사용자 이메일 표시 */}
-      </div>
+
     </form>
   );
 }

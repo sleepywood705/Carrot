@@ -73,7 +73,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         }
       };
 
-      const title = `${mapData.from}->${mapData.to} ${type} ${date} ${time} 일정 모집중`;
+      const title = `${mapData.from} -> ${mapData.to} ${type} ${date} ${time} 일정 모집중`;
 
       const postData = {
         title: title,
