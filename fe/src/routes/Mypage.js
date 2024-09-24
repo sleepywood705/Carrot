@@ -1,5 +1,9 @@
-import "./Mypage.css";
-import React, { useState, useEffect } from "react";
+import "./MyPage.css";
+import { ChangeInfo } from "../components/MyPage/ChangeInfo.js";
+import { MyPoint } from "../components/MyPage/MyPoint.js"; 
+import { Withdrawal } from "../components/MyPage/Withdrawal.js";
+import { MyHistory } from "../components/MyPage/MyHistory.js";
+import { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 
 export function Mypage() {
@@ -62,7 +66,7 @@ export function Mypage() {
   };
 
   return (
-    <div id="Mypage">
+    <div id="MyPage">
       <div id="SNB" className="left">
         <div className="profile">
           <div className="wrap_img">
@@ -99,131 +103,66 @@ export function Mypage() {
   );
 }
 
-function ChangeInfo({ user }) {
-  const displayGender = (gender) => {
-    switch (gender) {
-      case "MALE":
-        return "남성";
-      case "FEMALE":
-        return "여성";
-      default:
-        return gender;
-    }
-  };
 
-  return (
-    <div id="ChangeInfo">
-      <h2>회원정보변경</h2>
-      <div className="userInfo">
-        <div>
-          <span>이름</span>
-          <div>{user.name}</div>
-        </div>
-        <div>
-          <span>성별</span>
-          <div>{displayGender(user.gender)}</div>
-        </div>
-        <div>
-          <span>이메일</span>
-          <div>{user.email}</div>
-        </div>
-        <div>
-          <span>비밀번호</span>
-          <input placeholder="******" />
-        </div>
-        <div>
-          <span>비밀번호 확인</span>
-          <input placeholder="******" />
-        </div>
-        <button className="btn_change">변경</button>
-      </div>
-    </div>
-  );
-}
 
-function MyPoint({ point }) {
-  return (
-    <div id="MyPoint">
-      <h2>내 포인트</h2>
-      <div className="currentPoint">{point}</div>
-      <h3>포인트 내역</h3>
-      <ul>
-        <li className="pointList">2024-09-10 100포인트 적립</li>
-        <li className="pointList">2024-09-10 100포인트 적립</li>
-      </ul>
-    </div>
-  );
-}
 
-function Withdrawal() {
-  return (
-    <div id="Withdrawal">
-      <h2>회원탈퇴</h2>
-      <div>
-        <p>
-          앗, 정말 탈퇴하시겠어요?
-          <br />
-          출퇴근길이 힘들어질지도 몰라요😥
-        </p>
-      </div>
-      <div className="wrap">
-        <button className="btn_confirm">탈퇴</button>
-      </div>
-    </div>
-  );
-}
 
-function MyHistory() {
-  return (
-    <div id="MyHistory">
-      <h2>이용 내역</h2>
-    </div>
-  );
-}
+
+
+
 
 function MyPost({ userId }) {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [userEmail, setUserEmail] = useState(null); // 사용자 이메일 상태 추가
+  const [user, setUser] = useState(null); // 사용자 상태 추가
+  const [trips, setTrips] = useState([]);
+  const [selectedTrip, setSelectedTrip] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
   useEffect(() => {
-
-    const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
-
-
-    const fetchUserPosts = async () => {
+    const fetchUserEmail = async () => {
       try {
-        const response = await axios.get('/users/me', {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("/users/me", {
           headers: {
-            Authorization: token,  
+            Authorization: token,
           },
-        });      
-        setPosts(response.data);
-        setLoading(false);
+        });
+        console.log(response.data.data.email);
       } catch (err) {
         console.error(err);
-        setError("Failed to load posts.");
-        setLoading(false);
       }
     };
-
-    fetchUserPosts();
+    fetchUserEmail();
   }, [userId]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  useEffect(() => {
+    const fetchTrips = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await axios.get('/posts/gets');
+        console.log('서버에서 받은 데이터:', response.data);
+        
+        if (response.data && Array.isArray(response.data.data)) {
+          setTrips(response.data.data);
+        } else {
+          throw new Error('서버에서 받은 데이터 구조가 예상과 다릅니다.');
+        }
+      } catch (error) {        console.error('포스팅 데이터를 가져오는 데 실패했습니다:', error);
+        setError(error.message || '데이터를 불러오는 데 실패했습니다.');
+
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  }, [userId]);
 
   return (
     <div id="MyPost">
       <h2>내가 작성한 글</h2>
-      <div>
-        {posts.map((post, index) => (
-          <div key={index} className="post">
-            <h3>{post.title}</h3>
-            <p>{post.content}</p>
-          </div>
-        ))}
-      </div>
+      <div></div>
     </div>
   );
 }

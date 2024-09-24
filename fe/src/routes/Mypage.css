@@ -1,4 +1,4 @@
-#Mypage {
+#MyPage {
     padding: 60px 500px;
     margin-top: 80px;
     width: 100%; height: calc(100vh - 80px);
@@ -8,11 +8,11 @@
     grid-template-columns: 290px auto;
     overflow-y: scroll;
 }
-#Mypage > div {
+#MyPage > div {
     width: 100%; height: 100%;
     /* border: 1px solid #000; */
 }
-#Mypage .bot {
+#MyPage .bot {
 
 }
 
