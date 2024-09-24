@@ -68,7 +68,7 @@ export function Mypage() {
   };
 
   return (
-    <div id="MyPage">
+    <div id="Mypage">
       <div id="SNB" className="left">
         <div className="profile">
           <div className="wrap_img">
