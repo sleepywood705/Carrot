@@ -75,7 +75,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
       };
 
       const title = `${mapData.from} -> ${mapData.to} ${type} ${date} ${time} ${type === '택시' ? `${taxiCapacity}인` : gender} `;
-      
+
       const postData = {
         title: title,
         from: mapData.from,
@@ -86,12 +86,12 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         taxiCapacity: type === '택시' ? taxiCapacity : undefined, // 택시 선택 시 인원 수 추가
       };
       console.log('Sending post data:', postData);
-      
+
       const postResponse = await axios.post('/posts/post', postData, config);
       console.log('Post가 성공적으로 생성되었습니다:', postResponse.data);
 
       // 서버 응답 데이터와 함께 선택한 데이터를 포함하여 전달
-      onSubmit({...postResponse.data, ...postData});
+      onSubmit({ ...postResponse.data, ...postData });
       onClose();
     } catch (error) {
       console.error('데이터 저장 중 오류 발생:', error);
@@ -118,8 +118,8 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
       {type === '택시' && (
         <div className="a">
           <h2>몇 명이 탑승하나요?</h2>
-          <select 
-            value={taxiCapacity} 
+          <select
+            value={taxiCapacity}
             onChange={(e) => setTaxiCapacity(Number(e.target.value))}
           >
             <option value={2}>2인</option>
