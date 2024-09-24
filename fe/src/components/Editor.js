@@ -1,8 +1,8 @@
 import "./Post.css";
 import { Chat } from "./Chat";
 import { useState, useEffect } from "react";
-import Map from "../api/Map"; // Map 컴포넌트 가져오기
-import axios from '../api/axios'; // axios 가져오기
+import Map from "../api/Map";
+import axios from '../api/axios';
 
 export function Editor({
   isOpen,
@@ -14,6 +14,7 @@ export function Editor({
   editData,
   refreshPosts, // Main 컴포넌트에서 posts를 새로고침하는 함수
 }) {
+
   const [showChat, setShowChat] = useState(false);
   const [userEmail, setUserEmail] = useState(null); // 사용자 이메일 상태 추가
   const [user, setUser] = useState(null); // 사용자 상태 추가
@@ -301,7 +302,6 @@ function PostingForm({
         ) : (
           <button type="button" onClick={handleCloseModal}>취소하기</button>
         )}
-
       </div>
 
     </form>

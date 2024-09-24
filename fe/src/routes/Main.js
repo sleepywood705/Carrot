@@ -166,7 +166,7 @@ export function Main() {
                   <div className="row1">
                     <div className="img_profile"></div>
                     <div className="wrap">
-                      <div className="user">{trip.author?.name || '알 수 없음'} </div>
+                      <div className="user">{trip.author?.name || '알 수 없음'}</div>
                     </div>
                     <div className="manner">{trip.manner}</div>
                   </div>
@@ -197,4 +197,4 @@ export function Main() {
       <Editor isOpen={isEditModalOpen} onClose={handleCloseEditModal} editData={selectedTrip} refreshPosts={fetchTrips} />
     </div>
   );
-}``
+}
