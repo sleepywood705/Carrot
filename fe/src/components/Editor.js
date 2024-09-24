@@ -172,7 +172,7 @@ function PostingForm({
         <select value={type} onChange={(e) => setType(e.target.value)}>
           <option value="탑승자">탑승자</option>
           <option value="운전자">운전자</option>
-          <option value="택시">택시</option>
+          {/* <option value="택시">택시</option> */}
         </select>
       </div>
       <div className="a">

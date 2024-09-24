@@ -17,8 +17,8 @@
 #Post > form {
   position: relative;
   padding: 20px;
-  min-width: 440px;
-  width: 440px; height: 91vh;
+  min-width: 380px;
+  width: 380px; height: 80vh;
   background-color: #fff;
   border-radius: 10px;
   gap: 30px;
@@ -45,14 +45,14 @@
 }
 .PostingForm .a > h2 > button {
   margin-right: 4px;
-  height: 18px; aspect-ratio: 1;
+  height: 16px; aspect-ratio: 1;
   background: url(/public/img/close_blk.png) center/cover no-repeat;
   cursor: pointer;
 }
 .PostingForm .a > select,
 .PostingForm .a > input {
-  padding: 0 20px;
-  height: 60px;
+  padding: 0 10px;
+  height: 50px;
   color: #444;
   font-size: 17px;
   border-radius: 8px;
@@ -82,11 +82,8 @@
 }
 .PostingForm .cont_btn > button {
   flex: 1 1 calc(50% - 10px);
-}
-.PostingForm button[type="submit"] {
-  margin-top: auto;
   color: #fff;
-  height: 50px;
+  height: 46px;
   border-radius: 6px;
   background-color: #ff6f0f;
 }

@@ -220,7 +220,9 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
           />
         </div>
       </div>
-      <button type="submit">경로 검색</button>
+      <div className="cont_btn">
+        <button type="submit">경로 검색</button>
+      </div>
     </form>
   );
 };
