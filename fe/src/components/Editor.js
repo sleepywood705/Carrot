@@ -1,4 +1,4 @@
-import "./Post.css";
+import "./Posting.css";
 import { Chat } from "./Chat";
 import { useState, useEffect } from "react";
 import Map from "../api/Map";
@@ -130,7 +130,7 @@ export function Editor({
   };
 
   return (
-    <div id="Post">
+    <div id="Editing">
       <Map
         onMapSubmit={handleMapSubmit}
         initialDeparture={initialDeparture} // 출발지 초기값
