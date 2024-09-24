@@ -26,17 +26,17 @@ app.listen(port, () => {
   console.log(port, '포트로 서버가 열렸어요!');
 });
 
-// 작성: 미열
-import mongoose from "mongoose";
+// // 작성: 미열
+// import mongoose from "mongoose";
 
-mongoose
-  .connect(process.env.DB, {
-    user: "admin",
-    pass: "admin",
-    authSource: "admin",
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
-  })
-  .then(() => console.log("몽고DB에 연결되었어요!"));
+// mongoose
+//   .connect(process.env.DB, {
+//     user: "admin",
+//     pass: "admin",
+//     authSource: "admin",
+//     // useNewUrlParser: true,
+//     // useUnifiedTopology: true,
+//   })
+//   .then(() => console.log("몽고DB에 연결되었어요!"));
 
 export default app;
