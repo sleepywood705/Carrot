@@ -1,7 +1,7 @@
 header {
   z-index: 998;
   position: fixed;
-  padding: 0 160px;
+  padding: 0 100px;
   width: 100vw; height: 80px;
   display: flex;
   align-items: center;

@@ -2,16 +2,20 @@
 	position: relative;
 	width: 100vw; height: fit-content;
 	/* overflow-y: scroll; */
-	/* scroll-snap-type: y mandatory; */
 }
 #Landing section {
+	position: sticky;
+	top: 0;
 	width: 100%; height: 100vh;
 	/* scroll-snap-align: center; */
+	background-color: #fff;
+	overflow: hidden;
 }
 #Landing .sect1 {
 	position: relative;
 	width: 100%; height: 100vh;
 	/* border: 1px solid #fff; */
+	background-color: transparent;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -55,7 +59,11 @@
 	background: url(../../public/img/sect2.png) center/cover no-repeat;
 }
 #Landing .sect3 {
-	background: url(../../public/img/sect3.png) center/cover no-repeat;
+	display: grid;
+	place-items: center;
+}
+#Landing .sect3 img {
+	transform: scale(1);
 }
 #Landing .sect4,
 #Landing .sect5,
@@ -68,13 +76,23 @@
 #Landing .sect5 > p {
 	color: #333;
 	font-size: 36px;
-	font-weight: 700;
+	font-weight: 600;
 	text-align: center;
+}
+#Landing .sect6 img:nth-child(1) {
+	position: absolute;
+	left: -100px; top: 50%;
+	transform: translate(0, -50%) scale(0.7);
+}
+#Landing .sect6 img:nth-child(2) {
+	position: absolute;
+	right: -200px; top: 50%;
+	transform: translate(0, -50%) rotate(-1deg) scale(1.2);
 }
 #Landing .sect6 > p {
 	color: #333;
 	font-size: 30px;
-	font-weight: 700;
+	font-weight: 600;
 	text-align: center;
 }
 #Landing .sect7 {

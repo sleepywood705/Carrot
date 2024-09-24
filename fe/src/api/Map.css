@@ -25,33 +25,34 @@ form.right input[type="text"]::placeholder {
 }
 .c input[type="text"]:nth-child(1) {
   border-radius: 10px 10px 0 0;
-  border-left: 2px solid #ddd;
-  border-top: 2px solid #ddd;
-  border-right: 2px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
 }
 .c input[type="text"]:nth-child(2) {
+  margin-top: -1px;
   border-radius: 0 0 10px 10px;
-  border-left: 2px solid #ddd;
+  border-left: 1px solid #ddd;
   border-top: 1px solid #ddd;
-  border-right: 2px solid #ddd;
-  border-bottom: 2px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 .c input[type="text"]:nth-child(1):focus,
 .c input[type="text"]:nth-child(2):focus {
-  border: 2px solid #FF6F0F;
+  border: 1px solid #FF6F0F;
 }
 
 .map-view {
   width: 100%; aspect-ratio: 1;
-  border: 2px solid #ddd;
+  border: 1px solid #ddd;
   border-radius: 10px;
 }
 
 .cost-result {
   padding: 20px;
   height: 50px;
-  border: 2px solid #ddd;
+  border: 1px solid #ddd;
   border-radius: 10px;
   gap: 20px;
   display: flex;

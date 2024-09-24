@@ -42,6 +42,7 @@ export function Header({ isLoggedIn, onLogout, userName }) {
     <header className={`${visible ? 'visible' : 'hidden'}`}>
       <Link to="/main" id="logo" className={invert}>당근마차</Link>
       <Link to="/guide" className={invert}>이용가이드</Link>
+      <Link to="/main" id="logo" className={invert}>체험해보기</Link>
       {isLoggedIn && (
         <button className={invert} onClick={()=>toggleNav()}>
           {userName} 님 안녕하세요
