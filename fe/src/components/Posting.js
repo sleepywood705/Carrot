@@ -33,6 +33,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
   const [date, setDate] = useState("");
   const [gender, setGender] = useState("성별무관");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [taxiCapacity, setTaxiCapacity] = useState(2); // 새로운 상태 추가
 
   useEffect(() => {
     const currentDate = new Date();
@@ -73,7 +74,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         }
       };
 
-      const title = `${mapData.from} -> ${mapData.to} ${type} ${date} ${time} ${gender} 일정 모집중`;
+      const title = `${mapData.from} -> ${mapData.to} ${type} ${date} ${time} ${gender} ${type === '택시' ? `${taxiCapacity}인` : ''} 일정 모집중`;
       
       const postData = {
         title: title,
@@ -82,7 +83,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         date: date,
         time: time,
         type: type,
-
+        taxiCapacity: type === '택시' ? taxiCapacity : undefined, // 택시 선택 시 인원 수 추가
       };
       console.log('Sending post data:', postData);
       
@@ -114,6 +115,19 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
           <option value="택시">택시</option>
         </select>
       </div>
+      {type === '택시' && (
+        <div className="a">
+          <h2>몇 명이 탑승하나요?</h2>
+          <select 
+            value={taxiCapacity} 
+            onChange={(e) => setTaxiCapacity(Number(e.target.value))}
+          >
+            <option value={2}>2인</option>
+            <option value={3}>3인</option>
+            <option value={4}>4인</option>
+          </select>
+        </div>
+      )}
       <div className="a">
         <h2>몇 시에 출발하시나요?</h2>
         <input
@@ -133,33 +147,35 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
           required
         />
       </div>
-      <div className="a">
-        <h2>어떤 분과 탑승하시나요?</h2>
-        <div className="wrap">
-          <label>
-            <input
-              type="radio"
-              id="anyone"
-              name="type"
-              value="성별무관"
-              checked={gender === "성별무관"}
-              onChange={(e) => setGender(e.target.value)}
-            />
-            성별무관
-          </label>
-          <label>
-            <input
-              type="radio"
-              id="same"
-              name="type"
-              value="동성"
-              checked={gender === "동성"}
-              onChange={(e) => setGender(e.target.value)}
-            />
-            동성
-          </label>
+      {type !== '택시' && (
+        <div className="a">
+          <h2>어떤 분과 탑승하시나요?</h2>
+          <div className="wrap">
+            <label>
+              <input
+                type="radio"
+                id="anyone"
+                name="type"
+                value="성별무관"
+                checked={gender === "성별무관"}
+                onChange={(e) => setGender(e.target.value)}
+              />
+              성별무관
+            </label>
+            <label>
+              <input
+                type="radio"
+                id="same"
+                name="type"
+                value="동성"
+                checked={gender === "동성"}
+                onChange={(e) => setGender(e.target.value)}
+              />
+              동성
+            </label>
+          </div>
         </div>
-      </div>
+      )}
       <button type="submit">작성</button>
     </form>
   );
