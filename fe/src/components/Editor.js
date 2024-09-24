@@ -160,10 +160,9 @@ function PostingForm({
 
   useEffect(() => {
     if (editData) {
-      console.log('받은 데이터:', editData);
-      const titleParts = editData.title.split(" ");
-      console.log('titleParts:', titleParts);
 
+      const titleParts = editData.title.split(" "); // title을 split하여 배열로 저장
+      
       setType(titleParts[3] || "");
       setTime(titleParts[5] || "");
       setDate(titleParts[4] || "");
@@ -174,7 +173,8 @@ function PostingForm({
   const handleSubmit = (e) => {
     e.preventDefault();
     const editedTrip = {
-      title: `${departure} -> ${arrival} ${type} ${date} ${time} ${type === '택시' ? `${taxiCapacity}인` : gender}`
+      title: `${departure} -> ${arrival} ${type} ${date} ${time} ${type === "택시" ? `${taxiCapacity}인` : gender
+        }`,
     };
     console.log('수정된 데이터 (서버로 전송 전):', editedTrip);
     onEdit(editedTrip);
