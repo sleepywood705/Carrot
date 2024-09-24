@@ -28,8 +28,8 @@ export function Main() {
     setError(null);
     try {
       const response = await axios.get('/posts/gets');
-      // console.log('서버에서 받은 데이터:', response.data);
-
+      console.log('서버에서 받은 데이터:', response.data);
+      
       if (response.data && Array.isArray(response.data.data)) {
         setTrips(response.data.data);
       } else {
@@ -73,7 +73,7 @@ export function Main() {
       date: document.getElementById("tripDate").value
     };
     setSearchParams(newSearchParams);
-
+    
     // 검색 후 필터링 적용
     let result = trips;
     if (newSearchParams.departure || newSearchParams.arrival || newSearchParams.date) {
@@ -85,12 +85,12 @@ export function Main() {
         return fromMatch && toMatch && dateMatch;
       });
     }
-
+    
     // 현재 활성화된 필터 적용
     if (activeFilter !== "전체") {
       result = result.filter(trip => trip.title.split(" ")[3] === activeFilter);
     }
-
+    
     setFilteredTrips(result);
   };
 
@@ -100,17 +100,8 @@ export function Main() {
   };
 
   const handleEditClick = (trip) => {
-
-    const token = localStorage.getItem('token');
-    if (!token) {
-      throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
-    }
-
-    const config = {
-      headers: { 'Authorization': `${token}` }
-    };
-    setSelectedTrip(trip); // 선택한 trip 데이터를 설정
-    setIsEditModalOpen(true); // 에디터 모달 열기
+    setSelectedTrip(trip);
+    setIsEditModalOpen(true);
   };
 
   const handleCloseEditModal = () => {
@@ -154,34 +145,10 @@ export function Main() {
               <button type="submit">검색</button>
             </form>
             <div className="wrap">
-              <button
-                className={`btn_filter ${activeFilter === "전체" ? "active" : ""
-                  }`}
-                onClick={() => filterTrips("전체")}
-              >
-                전체
-              </button>
-              <button
-                className={`btn_filter ${activeFilter === "탑승자" ? "active" : ""
-                  }`}
-                onClick={() => filterTrips("탑승자")}
-              >
-                탑승자
-              </button>
-              <button
-                className={`btn_filter ${activeFilter === "운전자" ? "active" : ""
-                  }`}
-                onClick={() => filterTrips("운전자")}
-              >
-                운전자
-              </button>
-              <button
-                className={`btn_filter ${activeFilter === "택시" ? "active" : ""
-                  }`}
-                onClick={() => filterTrips("택시")}
-              >
-                택시
-              </button>
+              <button className={`btn_filter ${activeFilter === "전체" ? "active" : ""}`} onClick={() => filterTrips("전체")}>전체</button>
+              <button className={`btn_filter ${activeFilter === "탑승자" ? "active" : ""}`} onClick={() => filterTrips("탑승자")}>탑승자</button>
+              <button className={`btn_filter ${activeFilter === "운전자" ? "active" : ""}`} onClick={() => filterTrips("운전자")}>운전자</button>
+              <button className={`btn_filter ${activeFilter === "택시" ? "active" : ""}`} onClick={() => filterTrips("택시")}>택시</button>
             </div>
           </div>
           <button onClick={() => setIsWriteModalOpen(true)} className="btn_write">카풀 요청하기</button>
@@ -200,7 +167,6 @@ export function Main() {
                     <div className="profile"></div>
                     <div className="wrap">
                       <div className="user">{trip.author?.name || '알 수 없음'} </div>
-
                     </div>
                     <div className="manner">{trip.manner}</div>
                   </div>
@@ -210,12 +176,12 @@ export function Main() {
                   <div className="row3">
                     <div className="time">
                       <img src="/img/clock.png" alt="clock" />
-                      출발 : {trip.title.split(" ")[4]} , {trip.title.split(" ")[5]}
+                      출발 : {trip.title.split(" ")[4]} {trip.title.split(" ")[5]} 
                     </div>
                     <div className="genderType">
                       <img src="/img/person.png" alt="person" />
-                      {trip.title.split(" ")[3]} ·
-                      {trip.title.split(" ")[3] === "택시"
+                      {trip.title.split(" ")[3]} · 
+                      {trip.title.split(" ")[3] === "택시" 
                         ? trip.title.split(" ")[7] // 택시일 경우 인원수 표시
                         : trip.title.split(" ")[6] // 택시가 아닐 경우 성별 표시
                       }
@@ -227,18 +193,8 @@ export function Main() {
           )}
         </section>
       </div>
-      <Post
-        isOpen={isWriteModalOpen}
-        onClose={() => setIsWriteModalOpen(false)}
-        onSubmit={handleWriteSubmit} // onSubmit prop 전달
-      />
-      <Editor
-        isOpen={isEditModalOpen}
-        onClose={handleCloseEditModal}
-        editData={selectedTrip} // 선택한 trip을 editData로 전달
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
+      <Post isOpen={isWriteModalOpen} onClose={() => setIsWriteModalOpen(false)} onSubmit={handleWriteSubmit} />
+      <Editor isOpen={isEditModalOpen} onClose={handleCloseEditModal} editData={selectedTrip} refreshPosts={fetchTrips} />
     </div>
   );
 }

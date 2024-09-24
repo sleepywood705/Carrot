@@ -1,9 +1,9 @@
-import "./Mypage2.css";
+import "./Mypage.css";
 import React, { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 import { useNavigate } from 'react-router-dom'
 
-export function Mypage2() {
+export function Mypage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
