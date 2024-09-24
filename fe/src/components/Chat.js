@@ -19,6 +19,7 @@ export function Chat(postId) {
       socket.emit("login", token, (res) => {
         if (res?.ok) {
           setUser(res.data);
+          socket.emit("join_room", { roomId: postId.postId });
         } else {
           setError(res.error || "로그인에 실패했습니다.");
           console.error("로그인 실패:", res.error);
@@ -36,7 +37,7 @@ export function Chat(postId) {
     return () => {
       socket.off('receive_message', messageHandler);
     };
-  }, []);
+  }, [messageList]);
 
   const sendMessage = (event) => {
     event.preventDefault()

@@ -68,6 +68,7 @@ export function socketIo(io) {
             }
 
             const { chat, roomId } = data;
+            console.log(roomId)
 
             try {
                 const message = await chatController.sendMessage({
@@ -75,7 +76,11 @@ export function socketIo(io) {
                     userId: socket.user.id,
                     roomId,
                 });
-                io.to(roomId).emit('receive_message', message);
+                // io.to(roomId).emit("receive_message", {
+                //     chat,
+                //     user: socket.user, // Make sure `user` is attached to socket during login
+                // }); 
+                io.emit('receive_message', message);
                 cb({ ok: true });
             } catch (error) {
                 console.error('Error sending message:', error);
