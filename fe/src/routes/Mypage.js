@@ -3,10 +3,11 @@ import { ChangeInfo } from "../components/MyPage/ChangeInfo.js";
 import { MyPoint } from "../components/MyPage/MyPoint.js"; 
 import { Withdrawal } from "../components/MyPage/Withdrawal.js";
 import { MyHistory } from "../components/MyPage/MyHistory.js";
+import { MyPost } from "../components/MyPage/MyPost.js";
 import { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 
-export function Mypage() {
+export function MyPage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -99,70 +100,6 @@ export function Mypage() {
         </details>
       </div>
       <div className="right">{renderContent()}</div>
-    </div>
-  );
-}
-
-
-
-
-
-
-
-
-
-function MyPost({ userId }) {
-  const [userEmail, setUserEmail] = useState(null); // 사용자 이메일 상태 추가
-  const [user, setUser] = useState(null); // 사용자 상태 추가
-  const [trips, setTrips] = useState([]);
-  const [selectedTrip, setSelectedTrip] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-
-  useEffect(() => {
-    const fetchUserEmail = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get("/users/me", {
-          headers: {
-            Authorization: token,
-          },
-        });
-        console.log(response.data.data.email);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchUserEmail();
-  }, [userId]);
-
-  useEffect(() => {
-    const fetchTrips = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await axios.get('/posts/gets');
-        console.log('서버에서 받은 데이터:', response.data);
-        
-        if (response.data && Array.isArray(response.data.data)) {
-          setTrips(response.data.data);
-        } else {
-          throw new Error('서버에서 받은 데이터 구조가 예상과 다릅니다.');
-        }
-      } catch (error) {        console.error('포스팅 데이터를 가져오는 데 실패했습니다:', error);
-        setError(error.message || '데이터를 불러오는 데 실패했습니다.');
-
-      } finally {
-        setIsLoading(false);
-      }
-    };
-  }, [userId]);
-
-  return (
-    <div id="MyPost">
-      <h2>내가 작성한 글</h2>
-      <div></div>
     </div>
   );
 }

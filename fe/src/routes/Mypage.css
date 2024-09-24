@@ -206,3 +206,8 @@
     background-color: #FF6F0F;
 }
 
+#MyPost > div {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+}
