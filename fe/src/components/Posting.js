@@ -73,7 +73,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         }
       };
 
-      const title = `${mapData.from} -> ${mapData.to} ${type} ${date} ${time} 일정 모집중`;
+      const title = `${mapData.from} -> ${mapData.to} ${type} ${date} ${time} ${gender} 일정 모집중`;
       
       const postData = {
         title: title,
@@ -82,7 +82,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         date: date,
         time: time,
         type: type,
-        gender: gender,
+
       };
       console.log('Sending post data:', postData);
       
@@ -111,7 +111,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         <select value={type} onChange={(e) => setType(e.target.value)}>
           <option value="탑승자">탑승자</option>
           <option value="운전자">운전자</option>
-          {/* <option value="택시">택시</option> */}
+          <option value="택시">택시</option>
         </select>
       </div>
       <div className="a">
@@ -152,17 +152,15 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
               type="radio"
               id="same"
               name="type"
-              value="동성끼리 탑승"
-              checked={gender === "동성끼리 탑승"}
+              value="동성"
+              checked={gender === "동성"}
               onChange={(e) => setGender(e.target.value)}
             />
-            동성끼리 탑승
+            동성
           </label>
         </div>
       </div>
-      <div className="cont_btn">
-        <button type="submit">작성</button>
-      </div>
+      <button type="submit">작성</button>
     </form>
   );
 }
