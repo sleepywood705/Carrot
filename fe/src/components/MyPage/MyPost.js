@@ -21,6 +21,7 @@ export function MyPost({ userId }) {
         setUserEmail(response.data.data.email);
       } catch (err) {
         console.error(err);
+        setError("이메일을 가져오는 데 실패했습니다.");
       }
     };
     fetchUserEmail();
@@ -63,11 +64,14 @@ export function MyPost({ userId }) {
   return (
     <div id="MyPost">
       <h2>내가 작성한 글</h2>
+      {isLoading && <p>로딩 중...</p>}
+      {error && <p>{error}</p>}
+      {postpost.length === 0 && !isLoading && !error && <div><p>작성한 게시글이 없습니다</p></div>}
       {postpost.map((post, index) => (
-          <div key={index}>
-            <p>{post.title}</p>
-          </div>
-        ))}
+        <div key={index}>
+          <p>{post.title}</p>
+        </div>
+      ))}
     </div>
   );
 }

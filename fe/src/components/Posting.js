@@ -176,7 +176,9 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
           </div>
         </div>
       )}
-      <button type="submit">작성</button>
+      <div className="cont_btn">
+        <button type="submit">작성</button>
+      </div>
     </form>
   );
 }
