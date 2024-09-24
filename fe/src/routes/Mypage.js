@@ -50,7 +50,7 @@ export function Mypage() {
   };
 
   return (
-    <div id="Mypage2">
+    <div id="Mypage">
       <div id="SNB" className="left">
         <div className="profile">
           <div className="wrap_img">

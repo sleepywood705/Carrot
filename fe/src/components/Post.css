@@ -1,4 +1,5 @@
-#Post,
+#Posting,
+#Editing,
 #Modal {
   z-index: 999;
   position: fixed;
@@ -13,8 +14,10 @@
   gap: 20px;
   display: flex;
 }
-#Post > div,
-#Post > form {
+#Posting > div,
+#Editing > div,
+#Posting > form,
+#Editing > form {
   position: relative;
   padding: 20px;
   min-width: 380px;
@@ -24,6 +27,7 @@
   gap: 30px;
   box-sizing: border-box;
 }
+
 
 .PostingForm {
   display: flex;
