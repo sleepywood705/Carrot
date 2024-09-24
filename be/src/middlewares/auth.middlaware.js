@@ -25,7 +25,7 @@ export default async function authMiddleware(req, res, next) {
             if (jwtError instanceof jwt.TokenExpiredError) {
                 throw new Error('Token has expired');
             } else if (jwtError instanceof jwt.JsonWebTokenError) {
-                console.log("hello")
+                // console.log("hello")
                 throw new Error('Invalid token');
             } else {
                 throw new Error('JWT verification failed');

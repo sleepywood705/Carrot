@@ -10,7 +10,7 @@ export function InputField({ message, setMessage, sendMessage }) {
           placeholder="하고 싶은 말을 입력하세요"
           value={message}
           onChange={(event) => setMessage(event.target.value)}
-          multiline={false}
+          // multiline={false}
           rows={1}
         />
         <button

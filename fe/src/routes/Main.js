@@ -28,8 +28,8 @@ export function Main() {
     setError(null);
     try {
       const response = await axios.get('/posts/gets');
-      console.log('서버에서 받은 데이터:', response.data);
-      
+      // console.log('서버에서 받은 데이터:', response.data);
+
       if (response.data && Array.isArray(response.data.data)) {
         setTrips(response.data.data);
       } else {
@@ -73,7 +73,7 @@ export function Main() {
       date: document.getElementById("tripDate").value
     };
     setSearchParams(newSearchParams);
-    
+
     // 검색 후 필터링 적용
     let result = trips;
     if (newSearchParams.departure || newSearchParams.arrival || newSearchParams.date) {
@@ -85,12 +85,12 @@ export function Main() {
         return fromMatch && toMatch && dateMatch;
       });
     }
-    
+
     // 현재 활성화된 필터 적용
     if (activeFilter !== "전체") {
       result = result.filter(trip => trip.title.split(" ")[3] === activeFilter);
     }
-    
+
     setFilteredTrips(result);
   };
 
@@ -176,12 +176,12 @@ export function Main() {
                   <div className="row3">
                     <div className="time">
                       <img src="/img/clock.png" alt="clock" />
-                      출발 : {trip.title.split(" ")[4]} {trip.title.split(" ")[5]} 
+                      출발 : {trip.title.split(" ")[4]} {trip.title.split(" ")[5]}
                     </div>
                     <div className="genderType">
                       <img src="/img/person.png" alt="person" />
-                      {trip.title.split(" ")[3]} · 
-                      {trip.title.split(" ")[3] === "택시" 
+                      {trip.title.split(" ")[3]} ·
+                      {trip.title.split(" ")[3] === "택시"
                         ? trip.title.split(" ")[6] // 택시일 경우 인원수 표시
                         : trip.title.split(" ")[6] // 택시가 아닐 경우 성별 표시
                       }
@@ -194,7 +194,7 @@ export function Main() {
         </section>
       </div>
       <Post isOpen={isWriteModalOpen} onClose={() => setIsWriteModalOpen(false)} onSubmit={handleWriteSubmit} />
-      <Editor isOpen={isEditModalOpen} onClose={handleCloseEditModal} editData={selectedTrip} refreshPosts={fetchTrips} />
+      <Editor isOpen={isEditModalOpen} onClose={handleCloseEditModal} editData={selectedTrip} refreshPosts={fetchTrips} postId={selectedTrip?.id} />
     </div>
   );
-}``
+}

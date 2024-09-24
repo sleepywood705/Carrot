@@ -172,9 +172,9 @@ function PostingForm({
 
   useEffect(() => {
     if (editData) {
-      console.log('받은 데이터:', editData); // 받은 데이터 콘솔 출력
+      // console.log('받은 데이터:', editData); // 받은 데이터 콘솔 출력
       const titleParts = editData.title.split(" "); // title을 split하여 배열로 저장
-      console.log('titleParts:', titleParts); // titleParts 콘솔 출력
+      // console.log('titleParts:', titleParts); // titleParts 콘솔 출력
 
       setType(titleParts[3] || ""); // 타입 설정
       setTime(titleParts[5] || ""); // 시간 설정
