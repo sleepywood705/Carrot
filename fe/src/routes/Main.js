@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 
 export function Main() {
-  const [userGender, setUserGender] = useState(null);
   const [trips, setTrips] = useState([]);
   const [filteredTrips, setFilteredTrips] = useState([]);
   const [activeFilter, setActiveFilter] = useState("전체");
@@ -19,9 +18,11 @@ export function Main() {
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     fetchTrips();
+    fetchUserEmail();
   }, []);
 
   useEffect(() => {
@@ -45,6 +46,21 @@ export function Main() {
       setError(error.message || "데이터를 불러오는 데 실패했습니다.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const fetchUserEmail = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+      const response = await axios.get('/users/me', {
+        headers: { 'Authorization': `${token}` }
+      });
+      setUserId(response.data.data.id);
+      console.log('현재 로그인한 사용자의 이메일:', response.data.data.id);
+    } catch (error) {
+      console.error('사용자 정보를 가져오는 데 실패했습니다:', error);
     }
   };
 
@@ -125,7 +141,6 @@ export function Main() {
   const handleEditClick = (trip) => {
     setSelectedTrip(trip);
     setIsEditModalOpen(true);
-    myGender();
   };
 
   const handleCloseEditModal = () => {
@@ -150,24 +165,6 @@ export function Main() {
         (trip) => trip.title.split(" ")[3] === filterType
       );
       setFilteredTrips(filtered);
-    }
-  };
-
-  const myGender = async () => {
-    const token = localStorage.getItem('token');
-
-    try {
-      const response = await axios.get('/users/me', {
-        headers: {
-          Authorization: token,
-        },
-      });
-      const gender = response.data.data.gender;
-      setUserGender(gender);
-      setUserGender(response.data);
-      console.log("젠더 데이터임", gender);
-    } catch (error) {
-      console.error('사용자 정보를 가져오는 데 실패했습니다:', error);
     }
   };
 
@@ -204,7 +201,7 @@ export function Main() {
             onClick={() => setIsWriteModalOpen(true)}
             className="btn_write"
           >
-            작성하기
+            카풀 요청하기
           </button>
         </section>
         <section className="sct_board">
@@ -217,48 +214,64 @@ export function Main() {
             <div className="cont_board">
               {filteredTrips
                 .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                .map((trip, index) => (
-                  <div
-                    key={trip.id || index}
-                    className="card"
-                    onClick={() => handleEditClick(trip)}
-                  >
-                    <div className="row1">
-                      <div className="img_profile"></div>
-                      <div className="wrap">
-                        <div className="user">
-                          {trip.author?.name || "알 수 없음"}{" "}
+                .map((trip, index) => {
+                  console.log('게시물 ID:', trip.id, '예약 정보:', trip.reservations);
+                  if (trip.reservations && trip.reservations.length > 0) {
+                    trip.reservations.forEach(reservation => {
+                      console.log('예약자 이메일:', reservation.bookerId.email);
+                    });
+                  }
+                  return (
+                    <div
+                      key={trip.id || index}
+                      className="card"
+                      onClick={() => handleEditClick(trip)}
+                    >
+                      <div className="row1">
+                        <div className="img_profile"></div>
+                        <div className="wrap">
+                          <div className="user">
+                            {trip.author?.name || "알 수 없음"}{" "}
+                          </div>
+                        </div>
+                        <div className="manner">{trip.manner}</div>
+                      </div>
+                      <div className="row2">
+                        <div className="route">
+                          {trip.title.split(" ")[0]} {"->"}{" "}
+                          {trip.title.split(" ")[2]}
                         </div>
                       </div>
-                      <div className="manner">{trip.manner}</div>
-                    </div>
-                    <div className="row2">
-                      <div className="route">
-                        {trip.title.split(" ")[0]} {"->"}{" "}
-                        {trip.title.split(" ")[2]}
+                      <div className="row3">
+                        <div className="calendar">
+                          <img src="/img/calendar.png" alt="clock icon" />
+                          {trip.title.split(" ")[4]}{" "}
+                        </div>
+                        <div className="time">
+                          <img src="/img/clock.png" alt="clock icon" />
+                          {trip.title.split(" ")[5]}에 출발
+                        </div>
+                        <div className="genderType">
+                          <img src="/img/person.png" alt="person icon" />
+                          {trip.title.split(" ")[3]} ·
+                          {
+                            trip.title.split(" ")[3] === "택시"
+                              ? trip.title.split(" ")[6] // 택시일 경우 인원수 표시
+                              : trip.title.split(" ")[6] // 택시가 아닐 경우 성별 표시
+                          }
+                        </div>
+                        {trip.reservations && 
+                         trip.reservations.length > 0 && 
+                         trip.reservations.some(reservation => {
+                           console.log('비교:', reservation.bookerId, userId);
+                           return reservation.bookerId === userId;
+                         }) && (
+                          <div className="reservation-status">예약중</div>
+                        )}
                       </div>
                     </div>
-                    <div className="row3">
-                      <div className="calendar">
-                        <img src="/img/calendar.png" alt="clock icon" />
-                        {trip.title.split(" ")[4]}{" "}
-                      </div>
-                      <div className="time">
-                        <img src="/img/clock.png" alt="clock icon" />
-                        {trip.title.split(" ")[5]}에 출발
-                      </div>
-                      <div className="genderType">
-                        <img src="/img/person.png" alt="person icon" />
-                        {trip.title.split(" ")[3]} ·
-                        {
-                          trip.title.split(" ")[3] === "택시"
-                            ? trip.title.split(" ")[6] // 택시일 경우 인원수 표시
-                            : trip.title.split(" ")[6] // 택시가 아닐 경우 성별 표시
-                        }
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
             </div>
           )}
         </section>
