@@ -122,6 +122,7 @@
   border-radius: 8px;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 .sct_board .card:hover {
   border: 1px solid #ff6f0f;
