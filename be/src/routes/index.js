@@ -9,8 +9,6 @@ const router = express.Router();
 router.use('/users', UsersRouter);
 router.use('/posts', PostsRouter);
 router.use('/reserve', ReserveRouter);
-router.use('/chat', ChatRouter
-
-)
+router.use('/chat', ChatRouter);
 
 export default router;

@@ -277,6 +277,7 @@ export function Main() {
         onClose={handleCloseEditModal}
         editData={selectedTrip}
         refreshPosts={fetchTrips}
+        postId={selectedTrip?.id}
       />
     </div>
   );
