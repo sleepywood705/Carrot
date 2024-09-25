@@ -1,7 +1,7 @@
 import { prisma } from "../utils/prisma/index.js";
 
 export class ChatRepository {
-    // Create a new chat message
+
     createChat = async ({ chat, userId, roomId }) => {
         try {
             const newChat = await prisma.chat.create({
