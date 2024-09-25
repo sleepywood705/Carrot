@@ -1,7 +1,4 @@
 import "./Landing.css";
-import 'animate.css';
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 export function Landing() {
   return (
