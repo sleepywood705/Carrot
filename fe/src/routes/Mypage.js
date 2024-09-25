@@ -1,9 +1,10 @@
 import "./Mypage.css";
 import { ChangeInfo } from "../components/MyPage/ChangeInfo.js";
 import { MyPoint } from "../components/MyPage/MyPoint.js"; 
-import { Withdrawal } from "../components/MyPage/Withdrawal.js";
 import { MyHistory } from "../components/MyPage/MyHistory.js";
 import { MyPost } from "../components/MyPage/MyPost.js";
+import { Withdrawal } from "../components/MyPage/Withdrawal.js";
+import { License } from "../components/MyPage/License.js";
 import { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 
@@ -61,6 +62,8 @@ export function Mypage() {
         return <Withdrawal />;
       case "MyHistory":
         return <MyHistory />;
+      case "License":
+          return <License />;
       default:
         return null;
     }
@@ -96,6 +99,12 @@ export function Mypage() {
           <summary>이용 관리</summary>
           <ul>
             <li onClick={() => setSelectedMenu("MyHistory")}>이용 내역</li>
+          </ul>
+        </details>
+        <details open>
+          <summary>차량 등록</summary>
+          <ul>
+            <li onClick={() => setSelectedMenu("License")}>면허 인증</li>
           </ul>
         </details>
       </div>
