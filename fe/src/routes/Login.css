@@ -22,13 +22,22 @@
 }
 
 
+#form_login,
 #form_signup {
   margin-top: 10px;
-  width: 340px;
+  width: 300px;
   gap: 16px;
   display: flex;
   flex-direction: column;
 }
+#form_login {
+  gap: 8px;
+}
+#form_login .btn_login {
+  margin-top: 8px;
+}
+
+
 #form_signup > span,
 #form_signup > div:not(.cont_btn) {
   font-size: 14px;
@@ -39,6 +48,7 @@
   display: flex;
   align-items: center;
 }
+#form_login > input,
 #form_signup > span > input {
   padding: 10px;
   font-size: 14px;
