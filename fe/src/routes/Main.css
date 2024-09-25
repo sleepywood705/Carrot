@@ -61,14 +61,14 @@
 }
 .sct_search button[type="submit"] {
   padding: 10px 20px;
-  background-color: #ff6f0f;
+  background-color: #ff6600;
   color: white;
   border: none;
   border-radius: 4px;
   font-size: 16px;
 }
 .sct_search button[type="submit"]:hover {
-  background-color: #ff6f0f;
+  background-color: #ff6600;
 }
 .sct_search > div .wrap {
   gap: 10px;
@@ -81,7 +81,7 @@
   background-color: #f2f2f2;
 }
 .sct_search button.btn_filter.active {
-  background-color: #ff6f0f;
+  background-color: #ff6600;
   color: white;
 }
 .sct_search button.btn_write {
@@ -95,7 +95,7 @@
 }
 .sct_search button.btn_write:hover {
   color: #fff;
-  background-color: #ff6f0f;
+  background-color: #ff6600;
 }
 .sct_board {
   padding: 30px;
@@ -125,7 +125,7 @@
   cursor: pointer;
 }
 .sct_board .card:hover {
-  border: 1px solid #ff6f0f;
+  border: 1px solid #ff6600;
 }
 .card .row1 {
   /* border: 1px solid #000; */

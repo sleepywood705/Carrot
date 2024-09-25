@@ -78,6 +78,15 @@ button {
     display: grid;
     place-items: center;
 }
+.marginLeftAuto {
+	margin-left: auto;
+}
+.marginRightAuto {
+	margin-right: auto;
+}
+.marginCenter{
+	margin: 0 auto;
+}
 .pore{
     position: relative;
 }

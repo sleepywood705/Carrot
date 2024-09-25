@@ -11,7 +11,7 @@
   width: 50px;
 }
 #Login > h2 {
-  color: #FF6F0F;
+  color: #ff6600;
   font-size: 30px;
   font-weight: 800;
 }
@@ -78,7 +78,7 @@
   opacity: 0;
 }
 #form_signup > div > span > label.selected {
-  border-color: #FF6F0F;
+  border-color: #ff6600;
 }
 #Login .cont_btn {
   gap: 4px;
@@ -90,6 +90,6 @@
   color: #fff;
   font-size: 16px;
   border-radius: 50px;
-  background-color: #FF6F0F;
+  background-color: #ff6600;
 }
 

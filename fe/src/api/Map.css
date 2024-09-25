@@ -43,7 +43,7 @@ form.right input[type="text"]::placeholder {
 }
 .c input[type="text"]:nth-child(1):focus,
 .c input[type="text"]:nth-child(2):focus {
-  border: 1px solid #FF6F0F;
+  border: 1px solid #ff6600;
 }
 
 .mapView {
