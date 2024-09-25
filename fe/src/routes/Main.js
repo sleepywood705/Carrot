@@ -234,9 +234,7 @@ export function Main() {
                     </div>
                     <div className="row2">
                       <div className="route">
-                        {/* {trip.title.split(" ")[0]} {"->"}{" "}
-                        {trip.title.split(" ")[2]} */}
-                        {trip.title.split(" ")[0]}
+                        {trip.title.split(" ")[0]} {"->"}{" "}
                         {trip.title.split(" ")[2]}
                       </div>
                     </div>
