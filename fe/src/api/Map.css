@@ -3,8 +3,8 @@
 } 
 
 form.right {
-  display: grid;
-  /* grid-template-rows: repeat(2, 1fr); */
+  display: flex;
+  flex-direction: column;
 }
 form.right input[type="text"] {
   padding: 0 20px;
@@ -19,20 +19,23 @@ form.right input[type="text"]::placeholder {
 }
 
 .c {
+  margin-bottom: auto;
   gap: 0 !important;
   display: flex;
   flex-direction: column;
 }
-.c input[type="text"]:nth-child(1) {
+.c input[type="text"]:nth-child(1),
+.c input[type="number"]:nth-child(1) {
   border-radius: 10px 10px 0 0;
   border-left: 1px solid #ddd;
   border-top: 1px solid #ddd;
   border-right: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
 }
-.c input[type="text"]:nth-child(2) {
+.c input[type="text"]:nth-child(2),
+.c button {
   margin-top: -1px;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px !important;
   border-left: 1px solid #ddd;
   border-top: 1px solid #ddd;
   border-right: 1px solid #ddd;
@@ -43,13 +46,13 @@ form.right input[type="text"]::placeholder {
   border: 1px solid #FF6F0F;
 }
 
-.map-view {
+.mapView {
   width: 100%; aspect-ratio: 1;
   border: 1px solid #ddd;
   border-radius: 10px;
 }
 
-.cost-result {
+.costResult {
   padding: 20px;
   height: 50px;
   border: 1px solid #ddd;
@@ -59,6 +62,10 @@ form.right input[type="text"]::placeholder {
   align-items: center;
   justify-content: center;
 }
-.cost-result p {
+.costResult p {
   color: #666;
+}
+
+.a.y {
+  margin-bottom: auto;
 }

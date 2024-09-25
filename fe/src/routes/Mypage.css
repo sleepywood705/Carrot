@@ -53,7 +53,8 @@
 #MyPost > div,
 #Withdrawal,
 #Withdrawal .wrap > button,
-#MyHistory {
+#MyHistory,
+#MyHistory > div {
   border-radius: 8px;
   border: 1px solid #ddd;
 }
@@ -163,7 +164,8 @@
   align-items: center;
 }
 
-#MyPost > div {
+#MyPost > div,
+#MyHistory > div {
   padding: 16px 20px;
   width: 100%;
   height: 60px;

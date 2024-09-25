@@ -90,7 +90,8 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         }
       };
 
-      const title = `${mapData.from} -> ${mapData.to} ${type} ${date} ${time} ${type === '택시' ? `${taxiCapacity}인` : gender} `;
+      // const title = `${mapData.from} -> ${mapData.to} ${type} ${date} ${time} ${type === '택시' ? `${taxiCapacity}인` : gender} `;
+      const title = `${mapData.from} ${mapData.to} ${type} ${date} ${time} ${type === '택시' ? `${taxiCapacity}인` : gender} `;
 
       const postData = {
         title: title,

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 
 export function Main() {
+  const [userGender, setUserGender] = useState(null);
   const [trips, setTrips] = useState([]);
   const [filteredTrips, setFilteredTrips] = useState([]);
   const [activeFilter, setActiveFilter] = useState("전체");
@@ -124,6 +125,7 @@ export function Main() {
   const handleEditClick = (trip) => {
     setSelectedTrip(trip);
     setIsEditModalOpen(true);
+    myGender();
   };
 
   const handleCloseEditModal = () => {
@@ -148,6 +150,24 @@ export function Main() {
         (trip) => trip.title.split(" ")[3] === filterType
       );
       setFilteredTrips(filtered);
+    }
+  };
+
+  const myGender = async () => {
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await axios.get('/users/me', {
+        headers: {
+          Authorization: token,
+        },
+      });
+      const gender = response.data.data.gender;
+      setUserGender(gender);
+      setUserGender(response.data);
+      console.log("젠더 데이터임", gender);
+    } catch (error) {
+      console.error('사용자 정보를 가져오는 데 실패했습니다:', error);
     }
   };
 
@@ -184,7 +204,7 @@ export function Main() {
             onClick={() => setIsWriteModalOpen(true)}
             className="btn_write"
           >
-            카풀 요청하기
+            작성하기
           </button>
         </section>
         <section className="sct_board">
@@ -214,7 +234,9 @@ export function Main() {
                     </div>
                     <div className="row2">
                       <div className="route">
-                        {trip.title.split(" ")[0]} {"->"}{" "}
+                        {/* {trip.title.split(" ")[0]} {"->"}{" "}
+                        {trip.title.split(" ")[2]} */}
+                        {trip.title.split(" ")[0]}
                         {trip.title.split(" ")[2]}
                       </div>
                     </div>

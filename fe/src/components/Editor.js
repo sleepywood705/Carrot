@@ -18,23 +18,25 @@ export function Editor({
   const [user, setUser] = useState(null);
   const [messageList, setMessageList] = useState([]);
   const [mapData, setMapData] = useState(null);
+  const [isReserved, setIsReserved] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") { onClose(); }
     };
 
-    if (isOpen) {
+    if (isOpen && editData && editData.id) {
       window.addEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "hidden";
       fetchUserEmail();
+      checkReservationStatus();
     }
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, editData]);
 
   const fetchUserEmail = async () => {
     const token = localStorage.getItem('token');
@@ -113,6 +115,96 @@ export function Editor({
     }
   };
 
+  const checkReservationStatus = async () => {
+    const token = localStorage.getItem('token');
+    if (!token || !editData || !editData.id) {
+      console.log('토큰이 없거나 editData가 유효하지 않습니다.');
+      return;
+    }
+
+    try {
+      const response = await axios.get('/reserve/gets', {
+        headers: { 'Authorization': `${token}` }
+      });
+    
+      const userReservation = response.data.find(reservation => reservation.post && reservation.post.id === editData.id);
+      setIsReserved(!!userReservation);
+      
+      if (userReservation) {
+        console.log('현재 예약 정보:', userReservation);
+      } else {
+        console.log('이 게시물에 대한 예약이 없습니다.');
+      }
+    } catch (error) {
+      console.error('예약 상태 확인 중 오류 발생:', error);
+    }
+  };
+
+  const handleReserve = async (formData) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+      }
+
+      const reserveData = {
+        from: formData.departure,
+        to: formData.arrival,
+        date: `${formData.date}T${formData.time}:00.000Z`,
+        postId: editData.id,
+        bookerId: user.data.id,
+      };
+
+      console.log('예약 데이터 (서버로 전송 전):', reserveData);
+
+      const response = await axios.post('/reserve/reserve', reserveData, {
+        headers: { 'Authorization': `${token}` }
+      });
+
+      if (response.status === 201) {
+        console.log('예약 성공:', response.data);
+        setIsReserved(true);
+        alert('예약이 완료되었습니다.');
+        onClose();
+      }
+    } catch (error) {
+      console.error('예약 중 오류 발생:', error);
+      alert('예약에 실패했습니다.');
+    }
+  };
+
+  const handleCancelReservation = async () => {
+    const token = localStorage.getItem('token');
+    if (!token || !editData || !editData.id) {
+      console.log('토큰이 없거나 editData가 유효하지 않습니다.');
+      return;
+    }
+
+    try {
+      const response = await axios.get('/reserve/gets', {
+        headers: { 'Authorization': `${token}` }
+      });
+      const userReservation = response.data.find(reservation => reservation.post && reservation.post.id === editData.id);
+      
+      if (userReservation) {
+        const cancelResponse = await axios.delete(`/reserve/delete/${userReservation.id}`, {
+          headers: { 'Authorization': `${token}` }
+        });
+
+        if (cancelResponse.status === 200) {
+          console.log('예약 취소 성공:', cancelResponse.data);
+          setIsReserved(false);
+          alert('예약이 취소되었습니다.');
+        }
+      } else {
+        alert('취소할 예약을 찾을 수 없습니다.');
+      }
+    } catch (error) {
+      console.error('예약 취소 중 오류 발생:', error);
+      alert('예약 취소에 실패했습니다.');
+    }
+  };
+
   return (
     <div id="Editing">
       <Map
@@ -132,6 +224,10 @@ export function Editor({
         initialArrival={initialArrival}
         isSameUser={isSameUser}
         setShowChat={setShowChat}
+        isReserved={isReserved}
+        onReserve={handleReserve}
+        onCancelReservation={handleCancelReservation}
+        user={user}
       />
       {showChat && <Chat postId={postId} user={user} messageList={messageList} setMessageList={setMessageList} />}
     </div>
@@ -149,6 +245,10 @@ function PostingForm({
   initialArrival,
   isSameUser,
   setShowChat,
+  isReserved,
+  onReserve,
+  onCancelReservation,
+  user,
 }) {
   const [type, setType] = useState("탑승자");
   const [time, setTime] = useState("");
@@ -157,6 +257,7 @@ function PostingForm({
   const [arrival, setArrival] = useState(initialArrival);
   const [gender, setGender] = useState("성별무관");
   const [taxiCapacity, setTaxiCapacity] = useState("2");
+  const [paymentAmount, setPaymentAmount] = useState('');
 
   useEffect(() => {
     if (editData) {
@@ -185,6 +286,27 @@ function PostingForm({
   }
 
   if (!isOpen) return null;
+
+  const handleReserveClick = () => {
+    if (isReserved) {
+      onCancelReservation();
+    } else {
+      const formData = {
+        departure,
+        arrival,
+        date,
+        time,
+        type,
+        gender: type === "택시" ? `${taxiCapacity}인` : gender,
+      };
+      onReserve(formData);
+    }
+  };
+
+  const handlePayment = () => {
+    // 여기에 결제 로직을 구현하세요
+    alert(`${paymentAmount}원 결제가 완료되었습니다.`);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
@@ -267,12 +389,27 @@ function PostingForm({
         </div>
       )}
 
+      {!isSameUser && (
+        <div className="a">
+          <div className="c">
+            <input
+              type="number"
+              className="A"
+              value={paymentAmount}
+              onChange={(e) => setPaymentAmount(e.target.value)}
+              placeholder="결제 금액 입력"
+            />
+            <button type="button" className="B" onClick={handlePayment}>결제하기</button>
+          </div>
+        </div>
+      )}
+
       <div className="cont_btn">
         {isSameUser ? (
           <button type="submit">수정하기</button>
         ) : (
-          <button type="button" >
-            {"예약하기"}
+          <button type="button" onClick={isReserved ? onCancelReservation : handleReserveClick}>
+            {isReserved ? "예약 취소하기" : "예약하기"}
           </button>
         )}
         <button type="button" onClick={() => setShowChat(true)}>채팅하기</button>
