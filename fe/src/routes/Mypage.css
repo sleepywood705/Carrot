@@ -1,8 +1,8 @@
 #Mypage {
   padding: 60px 500px;
-  margin-top: 80px;
+  margin-top: 70px;
   width: 100%;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 70px);
   background-color: #fbfbff;
   gap: 10px;
   display: grid;
@@ -54,7 +54,7 @@
 #License,
 #License > div,
 #Withdrawal,
-#Withdrawal .wrap > button,
+#Withdrawal button,
 #MyHistory,
 #MyHistory > div {
   border-radius: 8px;
@@ -83,9 +83,8 @@
 #SNB details,
 #ChangeInfo > h2,
 #MyPoint > h2,
-#MyPoint > h3,
-#MyPost > h2,
 #MyPoint .pointList,
+#MyPost > h2,
 #License > h2,
 #Withdrawal > h2,
 #MyHistory > h2 {
@@ -151,6 +150,7 @@
 
 #MyPoint > h3 {
   font-size: 17px;
+  font-weight: 500;
 }
 #MyPoint ul {
   gap: 20px;
@@ -198,6 +198,7 @@
   margin-left: auto;
   padding: 6px 16px;
   width: fit-content;
+  border: none;
   gap: 10px;
   display: flex;
   align-items: center;

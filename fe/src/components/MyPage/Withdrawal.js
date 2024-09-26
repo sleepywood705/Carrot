@@ -43,22 +43,10 @@ export function Withdrawal() {
 
   };
 
-
-  if (success) {
-    return (
-      <div id="Withdrawal" className="withdrawal-container">
-        <h2>회원탈퇴</h2>
-        <div className="success-message">
-          계정이 성공적으로 삭제되었습니다. 이용해 주셔서 감사합니다.
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div id="Withdrawal" className="withdrawal-container">
+    <div id="Withdrawal">
       <h2>회원탈퇴</h2>
-      <div className="withdrawal-content">
+      <div>
         <p>
           앗, 정말 탈퇴하시겠어요?
           <br />
@@ -66,15 +54,13 @@ export function Withdrawal() {
         </p>
       </div>
       {error && <div className="error-message">{error}</div>}
-      <div className="button-wrapper">
-        <button
-          className="withdrawal-button"
-          onClick={() => handleWithdrawal()}
-          disabled={isDeleting}
-        >
-          {isDeleting ? '처리 중...' : '탈퇴'}
-        </button>
-      </div>
+      <button
+        className="btn_confirm"
+        onClick={() => handleWithdrawal()}
+        disabled={isDeleting}
+      >
+        {isDeleting ? '처리 중...' : '탈퇴'}
+      </button>
     </div>
   );
 }
