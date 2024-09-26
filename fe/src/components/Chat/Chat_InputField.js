@@ -1,6 +1,5 @@
 import './Chat.css'
 
-
 export function InputField({ message, setMessage, sendMessage }) {
   return (
     <div className="input-area">

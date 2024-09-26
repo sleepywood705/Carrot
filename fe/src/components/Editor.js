@@ -1,5 +1,5 @@
 import "./Post.css";
-import { Chat } from "./Chat";
+import { Chat } from "./Chat/Chat";
 import { useState, useEffect } from "react";
 import Map from "../api/Map";
 import axios from '../api/axios';

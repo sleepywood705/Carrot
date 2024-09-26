@@ -1,6 +1,6 @@
 import './Chat.css'
-import socket from "../server"
-import { InputField } from "./Chat_InputField";
+import socket from "../../server"
+import { InputField } from './Chat_InputField'
 import { MessageContainer } from "./Chat_MessageContainer";
 import { useState, useEffect } from "react"
 
