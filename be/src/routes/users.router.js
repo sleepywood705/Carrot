@@ -15,4 +15,8 @@ router.get('/me', authMiddleware, usersController.getCurrentUser);
 router.patch('/update/:id', authMiddleware, usersController.updateUser);
 router.delete('/delete/:id', authMiddleware, usersController.deleteUser);
 
+router.post('/payment', usersController.processPayment);
+router.get('/reservations/:userId', usersController.getUserReservations);
+router.get('/posts/:userId', usersController.getUserPosts);
+
 export default router;
