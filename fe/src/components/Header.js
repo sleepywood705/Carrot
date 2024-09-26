@@ -41,7 +41,8 @@ export function Header({ isLoggedIn, onLogout, userName }) {
     <header className={`${visible ? 'visible' : 'hidden'}`}>
       <Link to="/" id="logo" className={invert}>당근마차</Link>
       <Link to="/guide" className={invert}>이용가이드</Link>
-      <Link to="/main" id="logo" className={invert}>체험해보기</Link>
+      {/* <Link to="/main" id="logo" className={invert}>체험해보기</Link> */}
+      <Link to="/main2" id="logo" className={invert}>체험해보기</Link>
       {isLoggedIn && (
         <Link className={`user-menu ${invert}`}>
           {userName} 님 안녕하세요
