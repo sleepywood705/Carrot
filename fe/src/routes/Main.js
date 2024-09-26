@@ -242,6 +242,7 @@ export function Main() {
               <button className={`btn_filter ${activeFilter === "탑승자" ? "active" : ""}`} onClick={() => filterTrips("탑승자")}>탑승자</button>
               <button className={`btn_filter ${activeFilter === "운전자" ? "active" : ""}`} onClick={() => filterTrips("운전자")}>운전자</button>
               <button className={`btn_filter ${activeFilter === "택시" ? "active" : ""}`} onClick={() => filterTrips("택시")}>택시</button>
+            </div>
           </div>
           <button
             onClick={() => setIsWriteModalOpen(true)}
