@@ -20,7 +20,8 @@ export class PostsRepository {
                         gender: true,
                         role: true,
                     }
-                }
+                },
+                cost: true
             }
         });
         return createdPost;

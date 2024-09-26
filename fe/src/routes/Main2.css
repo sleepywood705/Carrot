@@ -64,7 +64,7 @@
   width: 60px; aspect-ratio: 1;
 }
 #FilterButtons .butn_all {
-  border: 1px solid #ddd;
+  border: 1px solid #eee;
   background-color: #fff;
 }
 #FilterButtons .butn_taxi {
@@ -91,7 +91,7 @@
   left: -20px; top: -20px;
 }
 #FilterButtons .butn_write {
-  border: 1px solid #ddd;
+  border: 1px solid #eee;
 }
 
 
@@ -109,12 +109,17 @@
   padding: 20px;
   width: calc(50% - 20px);
   /* border: 1px solid #000; */
-  gap: 20px;
+  gap: 8px;
   display: flex;
   flex-direction: column;
   border-radius: 16px;
   background-color: #F5F5F7;
   cursor: pointer;
+}
+.Card p,
+.Card span {
+  color: #444;
+  font-weight: 500;
 }
 .Card > div {
   padding: 10px;
@@ -124,84 +129,82 @@
 
 .Card .row1 {
   padding: 0;
-  gap: 10px;
+  gap: 8px;
   display: flex;
   background-color: transparent;
 }
-
-.Card .user-name {
+.Card .row1 .user-name {
   padding: 10px;
   border-radius: 10px;
   background-color: #fff;
 }
-.Card .user-name span {
+.Card .row1 .user-name span {
   padding: 0 20px;
   width: fit-content; height: 40px;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #eee;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.Card .card-title {
+.Card .row1 .card-title {
   flex-grow: 1;
   padding: 10px;
   border-radius: 10px;
   background-color: #fff;
 }
-.Card .card-title span {
+.Card .row1 .card-title span {
   padding-left: 10px;
   height: 100%;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #eee;
   gap: 10px;
   display: flex;
   align-items: center;
 }
-.Card .card-title span img {
+.Card .row1 .card-title span img {
   height: 20px; aspect-ratio: 1;
 }
 
 .Card .row2 {
-  padding: 10px 14px 10px 10px;
-  gap: 10px;
+  padding: 10px 10px;
+  gap: 8px;
   display: flex;
 }
 .Card .row2 > div {
   flex: 1;
   /* border: 1px solid #000; */
 }
-.Card .route,
-.Card .date {
+.Card .row2 .route,
+.Card .row2 .date {
   display: flex;
   justify-content: center;
 }
-.Card .route,
-.Card .date {
-  gap: 10px;
+.Card .row2 .route,
+.Card .row2 .date {
+  gap: 8px;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
 }
-.Card .route p,
-.Card .date p {
+.Card .row2 .route p,
+.Card .row2 .date p {
   flex-grow: 1;
   padding: 10px 20px;
   height: 50px;
   color: #aaa;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #eee;
   /* border: 1px solid #000; */
   gap: 12px;
   display: flex;
   align-items: center;
 }
-.Card .route p span {
-  font-size: 22px;
-  font-weight: 500;
+.Card .row2 .route p span {
+  color: #555;
+  font-size: 20px;
+  font-weight: 600;
 }
-
-
 
 .Card .row3 {
   padding: 10px 10px 10px 16px;
@@ -209,21 +212,58 @@
   align-items: center;
   justify-content: space-between;
 }
-.Card .row3 span {
-  color: #4169e1;
-  font-size: 18px;
+.Card .row3 .user-type {
   font-weight: 600;
+  gap: 8px;
+  display: flex;
+  align-items: center;
 }
-.Card .switch {
+.Card .row3 .user-type span {
+
+}
+.Card .row3 .switch {
   padding: 2px;
   height: 30px; aspect-ratio: 2 / 1;
   border-radius: 50px;
   border: 1px solid #e9e9e9;
   background-color: #f1f1f1;
 }
-.Card .gear {
+.Card .row3 .gear {
   height: 100%; aspect-ratio: 1;
   border-radius: 50%;
   border: 1px solid #e9e9e9;
   background-color: #f9f9f9;
+}
+
+.Card .row4 {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Card .reservation-status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #ffc107;
+  color: black;
+}
+.Card .type {
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.Card .type-passenger {
+  background-color: #4caf50;
+  color: white;
+}
+.Card .type-driver {
+  background-color: #2196f3;
+  color: white;
+}
+.Card .type-taxi {
+  background-color: #ffc107;
+  color: black;
 }
