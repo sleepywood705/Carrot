@@ -116,4 +116,39 @@ export class UsersController {
             return res.status(500).json({ error, message: '서버 오류' });
         }
     };
+    processPayment = async (req, res, next) => {
+        try {
+            const { bookerId, postId } = req.body;
+            const result = await this.usersService.processPayment(bookerId, postId);
+            return res.status(200).json(result);
+        } catch (error) {
+            // next(err);
+            console.log("error : ", error)
+            return res.status(500).json({ error, message: '서버 오류' });
+        }
+    }
+
+    getUserReservations = async (req, res, next) => {
+        try {
+            const userId = parseInt(req.params.userId);
+            const reservations = await this.usersService.getUserReservations(userId);
+            return res.status(200).json(reservations);
+        } catch (error) {
+            // next(err);
+            console.log("error : ", error)
+            return res.status(500).json({ error, message: '서버 오류' });
+        }
+    }
+
+    getUserPosts = async (req, res, next) => {
+        try {
+            const userId = parseInt(req.params.userId);
+            const posts = await this.usersService.getUserPosts(userId);
+            return res.status(200).json(posts);
+        } catch (error) {
+            // next(err);
+            console.log("error : ", error)
+            return res.status(500).json({ error, message: '서버 오류' });
+        }
+    }
 }

@@ -37,6 +37,7 @@ export function Main() {
     try {
       const response = await axios.get('/posts/gets');
       console.log('서버에서 받은 데이터:', response.data);
+      console.log('서버에서 받은 데이터:', response.data);
 
       if (response.data && Array.isArray(response.data.data)) {
         const tripsWithReservationStatus = response.data.data.map(trip => ({
@@ -170,13 +171,13 @@ export function Main() {
       const isReservationEnded = trip.title.endsWith('[예약마감]');
       console.log('Main - 선택된 여행:', trip);
       console.log('Main - 예약 마감 여부:', isReservationEnded);
-      
+
       const updatedTrip = {
         ...trip,
         isReservationEnded: isReservationEnded
       };
       console.log('Main - 업데이트된 여행 정보:', updatedTrip);
-      
+
       setUserReservation(reservation);
       setSelectedTrip(updatedTrip);
       setIsEditModalOpen(true);
@@ -241,6 +242,10 @@ export function Main() {
               <button className={`btn_filter ${activeFilter === "탑승자" ? "active" : ""}`} onClick={() => filterTrips("탑승자")}>탑승자</button>
               <button className={`btn_filter ${activeFilter === "운전자" ? "active" : ""}`} onClick={() => filterTrips("운전자")}>운전자</button>
               <button className={`btn_filter ${activeFilter === "택시" ? "active" : ""}`} onClick={() => filterTrips("택시")}>택시</button>
+              <button className={`btn_filter ${activeFilter === "전체" ? "active" : ""}`} onClick={() => filterTrips("전체")}>전체</button>
+              <button className={`btn_filter ${activeFilter === "탑승자" ? "active" : ""}`} onClick={() => filterTrips("탑승자")}>탑승자</button>
+              <button className={`btn_filter ${activeFilter === "운전자" ? "active" : ""}`} onClick={() => filterTrips("운전자")}>운전자</button>
+              <button className={`btn_filter ${activeFilter === "택시" ? "active" : ""}`} onClick={() => filterTrips("택시")}>택시</button>
             </div>
           </div>
           <button
@@ -263,10 +268,10 @@ export function Main() {
                 .map((trip, index) => {
                   console.log('게시물 ID:', trip.id, '예약 정보:', trip.reservations);
                   const reservationCount = trip.reservations ? trip.reservations.length : 0;
-                  const isUserReserved = trip.reservations && 
+                  const isUserReserved = trip.reservations &&
                     trip.reservations.some(reservation => reservation.bookerId === userId);
                   const isReservationClosed = trip.title.endsWith('[예약마감]');
-                  
+
                   return (
                     <div
                       key={trip.id || index}
@@ -299,11 +304,10 @@ export function Main() {
                         </div>
                         <div className="genderType">
                           <img src="/img/person.png" alt="person icon" />
-                          <span className={`type ${
-                            trip.title.split(" ")[3] === "탑승자" ? "type-passenger" :
-                            trip.title.split(" ")[3] === "운전자" ? "type-driver" :
-                            trip.title.split(" ")[3] === "택시" ? "type-taxi" : ""
-                          }`}>
+                          <span className={`type ${trip.title.split(" ")[3] === "탑승자" ? "type-passenger" :
+                              trip.title.split(" ")[3] === "운전자" ? "type-driver" :
+                                trip.title.split(" ")[3] === "택시" ? "type-taxi" : ""
+                            }`}>
                             {trip.title.split(" ")[3]}
                           </span>
                           ·
@@ -314,11 +318,11 @@ export function Main() {
                           }
                         </div>
                         {(isReservationClosed || reservationCount > 0) && (
-  <div className={`reservation-status ${isUserReserved ? 'user-reserved' : ''}`}>
-    {isReservationClosed ? "예약 마감" : 
-      (reservationCount > 0 ? `${reservationCount}명 예약중` : "")}
-  </div>
-)}
+                          <div className={`reservation-status ${isUserReserved ? 'user-reserved' : ''}`}>
+                            {isReservationClosed ? "예약 마감" :
+                              (reservationCount > 0 ? `${reservationCount}명 예약중` : "")}
+                          </div>
+                        )}
                       </div>
                     </div>
                   );
