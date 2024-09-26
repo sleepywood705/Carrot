@@ -174,17 +174,17 @@ export function Main() {
 
 function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
   return (
-    <section className="sect_board">
+    <section id="Board">
       {isLoading ? (
         <p>데이터를 불러오는 중...</p>
       ) : error ? (
         <p>에러: {error}</p>
       ) : (
-        <div className="cont_board">
+        <div className="Board">
           {filteredTrips
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .map((trip, index) => {
-              console.log('게시물 ID:', trip.id, '예약 정보:', trip.reservations);
+              // console.log('게시물 ID:', trip.id, '예약 정보:', trip.reservations);
               if (trip.reservations && trip.reservations.length > 0) {
                 trip.reservations.forEach(reservation => {
                   console.log('예약자 이메일:', reservation.bookerId.email);
@@ -193,51 +193,52 @@ function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
               return (
                 <div
                   key={trip.id || index}
-                  className="card"
+                  className="Card"
                   onClick={() => handleEditClick(trip)}
                 >
                   <div className="row1">
-                    <div className="img_profile"></div>
-                    <div className="wrap">
-                      <div className="user">
-                        {trip.author?.name || "알 수 없음"}{" "}
-                      </div>
+                    <div className="user-name">
+                      <span>{trip.author?.name || "알 수 없음"}{" "}</span>
                     </div>
-                    <div className="manner">{trip.manner}</div>
+                    <div className="card-title">
+                      <span>
+                        <img src="/img/siren.png" />
+                        예) 출근파티 구해용 동성만~~~!
+                      </span>
+                    </div>
                   </div>
                   <div className="row2">
                     <div className="route">
-                      {trip.title.split(" ")[0]} {"->"}{" "}
-                      {trip.title.split(" ")[2]}
+                      <p>출발지<span>{trip.title.split(" ")[0]}</span></p>
+                      <p>도착지<span>{trip.title.split(" ")[2]}</span></p>
+                    </div>
+                    <div className="date">
+                      <p>날짜<span>{trip.title.split(" ")[4]}{" "}</span></p>
+                      <p>출발<span>{trip.title.split(" ")[5]}</span></p>
                     </div>
                   </div>
                   <div className="row3">
-                    <div className="calendar">
-                      <img src="/img/calendar.png" alt="clock icon" />
-                      {trip.title.split(" ")[4]}{" "}
-                    </div>
-                    <div className="time">
-                      <img src="/img/clock.png" alt="clock icon" />
-                      {trip.title.split(" ")[5]}에 출발
-                    </div>
-                    <div className="genderType">
-                      <img src="/img/person.png" alt="person icon" />
-                      {trip.title.split(" ")[3]} ·
+                    <span className="gen-type">
+                      {trip.title.split(" ")[3]}
+                      ·
                       {
                         trip.title.split(" ")[3] === "택시"
                           ? trip.title.split(" ")[6]
                           : trip.title.split(" ")[6]
                       }
+                    </span>
+                    <div className="switch">
+                      <div className="gear"></div>
                     </div>
-                    {trip.reservations &&
-                      trip.reservations.length > 0 &&
-                      trip.reservations.some(reservation => {
-                        console.log('비교:', reservation.bookerId, userId);
-                        return reservation.bookerId === userId;
-                      }) && (
-                        <div className="reservation-status">예약중</div>
-                      )}
                   </div>
+                  {trip.reservations &&
+                    trip.reservations.length > 0 &&
+                    trip.reservations.some(reservation => {
+                      console.log('비교:', reservation.bookerId, userId);
+                      return reservation.bookerId === userId;
+                    }) && (
+                      <div className="reservation-status">예약중</div>
+                  )}
                 </div>
               );
             })}
@@ -303,7 +304,9 @@ function FilterButtons({ onFilterChange, onWriteClick }) {
       <button 
         onClick={onWriteClick}
         className="butn_write"
-      />
+      >
+        작성
+      </button>
     </div>
   );
 }
