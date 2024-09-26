@@ -177,3 +177,34 @@
 .row3 .genderType > img {
   height: 14px;
 }
+.reservation-status{
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #FFC107;
+  color: black;
+}
+
+.card .type {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.card .type-passenger {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.card .type-driver {
+  background-color: #2196F3;
+  color: white;
+}
+
+.card .type-taxi {
+  background-color: #FFC107;
+  color: black;
+}
