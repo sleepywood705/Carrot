@@ -38,20 +38,26 @@ export function Login({ onLogin }) {
       <h2>당신 근처의 마차</h2>
       <p>동네라서 가능한 모든 것<br/>지금 내 동네에서 카풀을 시작해 보세요</p>
       <form onSubmit={handleSubmit} id="form_login">
-        <input
-          type="text"
-          placeholder="이메일"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="비밀번호"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <span>
+          <label>이메일</label>
+          <input
+            type="text"
+            placeholder="이메일을 입력해 주세요"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </span>
+        <span>
+          <label>비밀번호</label>
+          <input
+            type="password"
+            placeholder="비밀번호를 입력해 주세요"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </span>
         <button type="submit" className="btn_login">로그인</button>
       </form>
     </div>

@@ -93,46 +93,6 @@ export function Main() {
     setFilteredTrips(result);
   };
 
-  const searchTrips = (event) => {
-    event.preventDefault();
-    const newSearchParams = {
-      departure: document.getElementById("departure").value,
-      arrival: document.getElementById("arrival").value,
-      date: document.getElementById("tripDate").value,
-    };
-    setSearchParams(newSearchParams);
-
-    // 검색 후 필터링 적용
-    let result = trips;
-    if (
-      newSearchParams.departure ||
-      newSearchParams.arrival ||
-      newSearchParams.date
-    ) {
-      result = result.filter((trip) => {
-        const titleParts = trip.title.split(" ");
-        const fromMatch = titleParts[0]
-          .toLowerCase()
-          .includes(newSearchParams.departure.toLowerCase());
-        const toMatch = titleParts[2]
-          .toLowerCase()
-          .includes(newSearchParams.arrival.toLowerCase());
-        const dateMatch =
-          !newSearchParams.date || titleParts[4] === newSearchParams.date;
-        return fromMatch && toMatch && dateMatch;
-      });
-    }
-
-    // 현재 활성화된 필터 적용
-    if (activeFilter !== "전체") {
-      result = result.filter(
-        (trip) => trip.title.split(" ")[3] === activeFilter
-      );
-    }
-
-    setFilteredTrips(result);
-  };
-
   const handleWriteSubmit = (newTrip) => {
     setTrips((prevTrips) => [newTrip, ...prevTrips]);
     fetchTrips(); // 게시물 추가 후 목록 새로고침
@@ -152,130 +112,50 @@ export function Main() {
   const filterTrips = (filterType) => {
     setActiveFilter(filterType);
     if (filterType === "전체") {
-      // 전체를 선택하면 검색 조건도 초기화
-      setSearchParams({ departure: "", arrival: "", date: "" });
-      // 입력 필드 초기화
-      document.getElementById("departure").value = "";
-      document.getElementById("arrival").value = "";
-      document.getElementById("tripDate").value = "";
-      setFilteredTrips(trips); // 모든 여행을 표시
+      setFilteredTrips(trips);
     } else {
-      // 필터 적용
       const filtered = trips.filter(
         (trip) => trip.title.split(" ")[3] === filterType
       );
       setFilteredTrips(filtered);
     }
+    
+    // 검색 조건 초기화
+    setSearchParams({ departure: "", arrival: "", date: "" });
+    // 입력 필드 초기화
+    document.getElementById("departure").value = "";
+    document.getElementById("arrival").value = "";
+    document.getElementById("tripDate").value = "";
+  };
+
+  const handleSearch = (newSearchParams) => {
+    setSearchParams(newSearchParams);
+    applyFiltersAndSearch();
   };
 
   return (
     <div id="Main">
-      <div className="banner">
-        <video autoPlay muted loop>
-          <source src="/vid/vid2.mp4" />
-        </video>
-      </div>
-      <div className="content">
-        <section className="sct_search">
-          <div className="cont_form">
-            <h2>카풀/택시팟을 찾아볼까요?</h2>
-            <form onSubmit={searchTrips}>
-              <input type="text" id="departure" placeholder="출발지" />
-              <input
-                type="text"
-                id="arrival"
-                className="search-input"
-                placeholder="도착지"
-              />
-              <input type="date" id="tripDate" />
-              <button type="submit">검색</button>
-            </form>
-            <div className="wrap">
-              <button className={`btn_filter ${activeFilter === "전체" ? "active" : ""}`} onClick={() => filterTrips("전체")}>전체</button>
-              <button className={`btn_filter ${activeFilter === "탑승자" ? "active" : ""}`} onClick={() => filterTrips("탑승자")}>탑승자</button>
-              <button className={`btn_filter ${activeFilter === "운전자" ? "active" : ""}`} onClick={() => filterTrips("운전자")}>운전자</button>
-              <button className={`btn_filter ${activeFilter === "택시" ? "active" : ""}`} onClick={() => filterTrips("택시")}>택시</button>
-            </div>
-          </div>
-          <button
-            onClick={() => setIsWriteModalOpen(true)}
-            className="btn_write"
-          >
-            카풀 요청하기
-          </button>
-        </section>
-        <section className="sct_board">
-          <h3>최근 게시물</h3>
-          {isLoading ? (
-            <p>데이터를 불러오는 중...</p>
-          ) : error ? (
-            <p>에러: {error}</p>
-          ) : (
-            <div className="cont_board">
-              {filteredTrips
-                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                .map((trip, index) => {
-                  console.log('게시물 ID:', trip.id, '예약 정보:', trip.reservations);
-                  if (trip.reservations && trip.reservations.length > 0) {
-                    trip.reservations.forEach(reservation => {
-                      console.log('예약자 이메일:', reservation.bookerId.email);
-                    });
-                  }
-                  return (
-                    <div
-                      key={trip.id || index}
-                      className="card"
-                      onClick={() => handleEditClick(trip)}
-                    >
-                      <div className="row1">
-                        <div className="img_profile"></div>
-                        <div className="wrap">
-                          <div className="user">
-                            {trip.author?.name || "알 수 없음"}{" "}
-                          </div>
-                        </div>
-                        <div className="manner">{trip.manner}</div>
-                      </div>
-                      <div className="row2">
-                        <div className="route">
-                          {trip.title.split(" ")[0]} {"->"}{" "}
-                          {trip.title.split(" ")[2]}
-                        </div>
-                      </div>
-                      <div className="row3">
-                        <div className="calendar">
-                          <img src="/img/calendar.png" alt="clock icon" />
-                          {trip.title.split(" ")[4]}{" "}
-                        </div>
-                        <div className="time">
-                          <img src="/img/clock.png" alt="clock icon" />
-                          {trip.title.split(" ")[5]}에 출발
-                        </div>
-                        <div className="genderType">
-                          <img src="/img/person.png" alt="person icon" />
-                          {trip.title.split(" ")[3]} ·
-                          {
-                            trip.title.split(" ")[3] === "택시"
-                              ? trip.title.split(" ")[6] // 택시일 경우 인원수 표시
-                              : trip.title.split(" ")[6] // 택시가 아닐 경우 성별 표시
-                          }
-                        </div>
-                        {trip.reservations && 
-                         trip.reservations.length > 0 && 
-                         trip.reservations.some(reservation => {
-                           console.log('비교:', reservation.bookerId, userId);
-                           return reservation.bookerId === userId;
-                         }) && (
-                          <div className="reservation-status">예약중</div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-          )}
-        </section>
-      </div>
+      <Search
+        onSearch={handleSearch}
+        activeFilter={activeFilter}
+        onFilterChange={filterTrips}
+        onWriteClick={() => setIsWriteModalOpen(true)}
+      />
+      <FilterButtons
+        activeFilter={activeFilter} 
+        onFilterChange={filterTrips}
+        onWriteClick={() => setIsWriteModalOpen(true)}
+      />
+      <h1>최근 게시글</h1>
+
+      <Board
+        isLoading={isLoading}
+        error={error}
+        filteredTrips={filteredTrips}
+        handleEditClick={handleEditClick}
+        userId={userId}
+      />
+
       <Post
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
@@ -287,6 +167,142 @@ export function Main() {
         editData={selectedTrip}
         refreshPosts={fetchTrips}
         postId={selectedTrip?.id}
+      />
+    </div>
+  );
+}
+
+function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
+  return (
+    <section className="sect_board">
+      {isLoading ? (
+        <p>데이터를 불러오는 중...</p>
+      ) : error ? (
+        <p>에러: {error}</p>
+      ) : (
+        <div className="cont_board">
+          {filteredTrips
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .map((trip, index) => {
+              console.log('게시물 ID:', trip.id, '예약 정보:', trip.reservations);
+              if (trip.reservations && trip.reservations.length > 0) {
+                trip.reservations.forEach(reservation => {
+                  console.log('예약자 이메일:', reservation.bookerId.email);
+                });
+              }
+              return (
+                <div
+                  key={trip.id || index}
+                  className="card"
+                  onClick={() => handleEditClick(trip)}
+                >
+                  <div className="row1">
+                    <div className="img_profile"></div>
+                    <div className="wrap">
+                      <div className="user">
+                        {trip.author?.name || "알 수 없음"}{" "}
+                      </div>
+                    </div>
+                    <div className="manner">{trip.manner}</div>
+                  </div>
+                  <div className="row2">
+                    <div className="route">
+                      {trip.title.split(" ")[0]} {"->"}{" "}
+                      {trip.title.split(" ")[2]}
+                    </div>
+                  </div>
+                  <div className="row3">
+                    <div className="calendar">
+                      <img src="/img/calendar.png" alt="clock icon" />
+                      {trip.title.split(" ")[4]}{" "}
+                    </div>
+                    <div className="time">
+                      <img src="/img/clock.png" alt="clock icon" />
+                      {trip.title.split(" ")[5]}에 출발
+                    </div>
+                    <div className="genderType">
+                      <img src="/img/person.png" alt="person icon" />
+                      {trip.title.split(" ")[3]} ·
+                      {
+                        trip.title.split(" ")[3] === "택시"
+                          ? trip.title.split(" ")[6]
+                          : trip.title.split(" ")[6]
+                      }
+                    </div>
+                    {trip.reservations &&
+                      trip.reservations.length > 0 &&
+                      trip.reservations.some(reservation => {
+                        console.log('비교:', reservation.bookerId, userId);
+                        return reservation.bookerId === userId;
+                      }) && (
+                        <div className="reservation-status">예약중</div>
+                      )}
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function Search({ onSearch }) {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const newSearchParams = {
+      departure: event.target.departure.value,
+      arrival: event.target.arrival.value,
+      date: event.target.tripDate.value,
+    };
+    onSearch(newSearchParams);
+  };
+
+  return (
+    <section id="Search">
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          id="departure"
+          placeholder="출발지" />
+        <input
+          type="text"
+          id="arrival"
+          placeholder="도착지" />
+        <input 
+          type="date" 
+          id="tripDate" />
+        <button 
+          type="submit"
+          className="butn_search"
+        >
+          검색
+        </button>
+      </form>
+    </section>
+  );
+}
+
+function FilterButtons({ onFilterChange, onWriteClick }) {
+  const filters = ["전체", "택시", "운전자", "탑승자"];
+  const filtersClass = ["butn_all", "butn_taxi", "butn_driver", "butn_passenger"];
+  const filterImages = [null, "/img/taxi.png", "/img/wheel.png", "/img/siren.png"];
+
+  return (
+    <div id="FilterButtons">
+      {filters.map((filter, index) => (
+        <button
+          key={filter}
+          onClick={() => onFilterChange(filter)}
+          className={filtersClass[index]}
+        >
+          {filterImages[index] && <img src={filterImages[index]} />}
+          {filter}
+        </button>
+      ))}
+      <button 
+        onClick={onWriteClick}
+        className="butn_write"
       />
     </div>
   );

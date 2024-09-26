@@ -1,12 +1,13 @@
 @charset "utf-8";
 *{
     margin: 0; padding: 0;
+    color: #333;
     box-sizing: border-box;
     scroll-behavior: smooth;
     transition: all 0.5s;
 }
 html{
-    font-size: 17px;
+    font-size: 16px;
     scroll-behavior: smooth;
 }
 section
@@ -33,7 +34,7 @@ li{
 }
 input,
 button{
-    font-size: 17px;
+    font-size: 16px;
     border: none; outline: none; 
     background-color: inherit;
 }

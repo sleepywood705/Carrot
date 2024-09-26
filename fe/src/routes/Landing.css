@@ -1,6 +1,7 @@
 #Landing {
 	position: relative;
 	width: 100vw; height: 100vh;
+	margin-top: -70px;
 	/* border: 1px solid #000; */
 	overflow: hidden;
 	overflow-y: scroll;
@@ -69,16 +70,16 @@
 	top: 50%;
 }
 .sect3 .p1 img {
-	right: -230px;
-	transform: translate(0, -50%) scale(0.46);
+	right: -160px;
+	transform: translate(0, -50%) scale(0.4) scaleX(-100%);
 }
 .sect3 .p2 img {
 	right: -230px;
-	transform: translate(0, -50%) scale(0.4);
+	transform: translate(0, -50%) scale(0.4) scaleX(-100%);
 }
 .sect3 .p3 img {
-	right: -230px;
-	transform: translate(0, -50%) scale(0.6);
+	right: -160px;
+	transform: translate(0, -50%) scale(0.6) scaleX(-100%);
 }
 
 .sect4 {
@@ -185,7 +186,6 @@
 }
 .sect7 .threeByone p {
 	height: 100%; aspect-ratio: 1;
-	color: #333;
 	font-size: 60px;
 	font-weight: 600;
 	text-align: center;

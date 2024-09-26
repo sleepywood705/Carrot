@@ -1,6 +1,6 @@
 #Mypage {
   padding: 60px 500px;
-  margin-top: 70px;
+  /* margin-top: 70px; */
   width: 100%;
   height: calc(100vh - 70px);
   background-color: #fbfbff;
@@ -88,7 +88,6 @@
 #License > h2,
 #Withdrawal > h2,
 #MyHistory > h2 {
-  color: #333;
   font-size: 19px;
   font-weight: 500;
 }
@@ -118,8 +117,7 @@
   background-color: #fff;
 }
 #SNB > details > summary {
-  color: #333;
-  font-size: 17px;
+  font-size: 16px;
   cursor: pointer;
 }
 #SNB > details > ul {
@@ -149,7 +147,7 @@
 }
 
 #MyPoint > h3 {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 500;
 }
 #MyPoint ul {
@@ -190,7 +188,7 @@
   place-items: center;
 }
 #Withdrawal > div p {
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .btn_confirm,

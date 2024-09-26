@@ -1,6 +1,5 @@
 #Login {
-  margin-top: 80px;
-  width: 100%; height: calc(100vh - 80px);
+  width: 100%; height: calc(100vh - 70px);
   text-align: center;
   gap: 20px;
   display: flex;
@@ -30,27 +29,22 @@
   display: flex;
   flex-direction: column;
 }
-#form_login {
-  gap: 8px;
-}
-#form_login .btn_login {
-  margin-top: 8px;
-}
-
-
+#form_login > span,
 #form_signup > span,
 #form_signup > div:not(.cont_btn) {
   font-size: 14px;
   gap: 4px;
   display: grid;
 }
+#form_login > span > label,
 #form_signup > span > label {
   display: flex;
   align-items: center;
 }
-#form_login > input,
+#form_login > span >input,
 #form_signup > span > input {
   padding: 10px;
+  width: 100%;
   font-size: 14px;
   border-radius: 6px;
   border: 1px solid #ddd;

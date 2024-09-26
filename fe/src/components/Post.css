@@ -39,7 +39,6 @@
   flex-direction: column;
 }
 .PostingForm .a > h2 {
-  color: #333;
   font-size: 21px;
   font-weight: 500;
   display: flex;
@@ -59,7 +58,7 @@
   padding: 0 10px;
   height: 50px;
   color: #444;
-  font-size: 17px;
+  font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ddd;
 }
