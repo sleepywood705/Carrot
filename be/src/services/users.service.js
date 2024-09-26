@@ -56,4 +56,20 @@ export class UsersService {
         const { password, ...userWithoutPassword } = user;
         return userWithoutPassword;
     }
+
+    processPayment = async (bookerId, postId) => {
+        const user = await this.usersRepository.processPayment(bookerId, postId);
+        return this.excludePassword(user)
+    }
+
+    getUserReservations = async (userId) => {
+        const user = await this.usersRepository.getUserReservations(userId);
+
+        return this.excludePassword(user)
+    }
+
+    getUserPosts = async (userId) => {
+        const user = await this.usersRepository.getUserPosts(userId);
+        return this.excludePassword(user)
+    }
 }

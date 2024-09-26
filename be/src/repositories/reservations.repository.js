@@ -25,7 +25,7 @@ export class ReservationsRepository {
                         gender: true,
                         role: true,
                     }
-                }
+                },
             }
         });
         return createdReservation;

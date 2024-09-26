@@ -140,7 +140,8 @@
   display: grid;
 }
 .row1 .img_profile {
-  width: 40px; aspect-ratio: 1;
+  width: 40px;
+  aspect-ratio: 1;
   border-radius: 50%;
   border: 1px solid #ddd;
 }
@@ -172,8 +173,39 @@
   display: flex;
   align-items: center;
 }
-.row3 .calendar >  img,
+.row3 .calendar > img,
 .row3 .time > img,
 .row3 .genderType > img {
   height: 14px;
+}
+.reservation-status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #ffc107;
+  color: black;
+}
+
+.card .type {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.card .type-passenger {
+  background-color: #4caf50;
+  color: white;
+}
+
+.card .type-driver {
+  background-color: #2196f3;
+  color: white;
+}
+
+.card .type-taxi {
+  background-color: #ffc107;
+  color: black;
 }
