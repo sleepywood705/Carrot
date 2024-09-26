@@ -4,8 +4,8 @@ import "./App.css";
 import { Landing } from "./routes/Landing";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
-// import { Main } from "./routes/Main";
-import { Main2 } from "./routes/Main2";
+import { Main } from "./routes/Main";
+// import { Main2 } from "./routes/Main2";
 import { Guide } from "./routes/Guide";
 import { Login } from "./routes/Login";
 import { Signup } from "./routes/Signup";
@@ -50,15 +50,15 @@ function App() {
   const handleLogin = (userName) => {
     setUserName(userName);
     setIsLoggedIn(true);
-    // navigate("/main");
-    navigate("/main2");
+    navigate("/main");
+    // navigate("/main2");
   };
 
   const handleLogout = () => {
     setUserName("");
     setIsLoggedIn(false);
-    // navigate("/main");
-    navigate("/main2");
+    navigate("/main");
+    // navigate("/main2");
     localStorage.removeItem("token");
   };
 
@@ -71,8 +71,8 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Landing />} />
-        {/* <Route path="/main" element={<Main2 />} /> */}
-        <Route path="/main2" element={<Main2 />} />
+        <Route path="/main" element={<Main />} />
+        {/* <Route path="/main2" element={<Main2 />} /> */}
         <Route path="/guide" element={<Guide />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
