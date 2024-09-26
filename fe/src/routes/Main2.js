@@ -1,10 +1,10 @@
-import "./Main.css";
+import "./Main2.css";
 import { Post } from "../components/Post.js";
-import { Editor } from "../components/Editor";
+import { Editor } from "../components/Editor.js";
 import { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 
-export function Main() {
+export function Main2() {
   const [trips, setTrips] = useState([]);
   const [filteredTrips, setFilteredTrips] = useState([]);
   const [activeFilter, setActiveFilter] = useState("전체");

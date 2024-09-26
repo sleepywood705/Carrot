@@ -1,10 +1,10 @@
-#Main {
+#Main2 {
   padding-bottom: 70px;
   position: relative;
   height: fit-content;
   /* border: 10px solid gold; */
 }
-#Main h1 {
+#Main2 h1 {
   padding: 80px;
   display: grid;
   place-items: center;

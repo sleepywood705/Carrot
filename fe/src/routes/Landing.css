@@ -28,14 +28,16 @@
 .sect1 .Bubble {
 	padding: 16px 32px;
 	width: fit-content;
-	color: #fff;
-	font-size: 22px;
-	font-weight: 300;
 	border-radius: 50px;
 	background-color: #222;
 	gap: 4px;
 	display: flex;
 	align-items: center;
+}
+.sect1 .Bubble p {
+	color: #fff;
+	font-size: 22px;
+	font-weight: 300;
 }
 .sect1 .Bubble img {
 	height: 24px;
