@@ -193,16 +193,16 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
     <form onSubmit={handleSubmit} className="right PostingForm">
       <div className="a">
         <h2>경로 검색</h2>
-        <div className="map-view" ref={mapRef}></div>
+        <div className="mapView" ref={mapRef}></div>
       </div>
       <div className="a">
         <h2>비용 계산 결과</h2>
-        <div className="cost-result">
+        <div className="costResult">
           <p>{fuelCost}</p>
           <p>{taxiCost}</p>
         </div>
       </div>
-      <div className="a">
+      <div className="a y">
         <div className="c">
           <input 
             type="text" 

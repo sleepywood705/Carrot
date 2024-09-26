@@ -37,7 +37,7 @@ export function Login({ onLogin }) {
       <img src="/img/logo.svg" alt="logo" />
       <h2>당신 근처의 마차</h2>
       <p>동네라서 가능한 모든 것<br/>지금 내 동네에서 카풀을 시작해 보세요</p>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id="form_login">
         <input
           type="text"
           placeholder="이메일"
@@ -52,8 +52,7 @@ export function Login({ onLogin }) {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className="login">로그인</button>
-        <Link to="/signup" className="signup">회원가입</Link>
+        <button type="submit" className="btn_login">로그인</button>
       </form>
     </div>
   );

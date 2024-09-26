@@ -12,29 +12,36 @@ export function Editor({
   onDelete,
   editData,
   refreshPosts,
+  userReservation,
+  isReservationLoading,
+  userId,
+  isReservationEnded,
 }) {
   const [showChat, setShowChat] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
   const [user, setUser] = useState(null);
   const [messageList, setMessageList] = useState([]);
   const [mapData, setMapData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") { onClose(); }
+    const fetchData = async () => {
+      if (isOpen && editData && editData.id) {
+        setIsLoading(true);
+        await fetchUserEmail();
+        setIsLoading(false);
+      }
     };
 
-    if (isOpen) {
-      window.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
-      fetchUserEmail();
+    fetchData();
+  }, [isOpen, editData]);
+
+  useEffect(() => {
+    if (isOpen && editData) {
+      console.log('Editor - 받은 editData:', editData);
+      console.log('Editor - 예약 마감 여부:', isReservationEnded);
     }
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
-    };
-  }, [isOpen, onClose]);
+  }, [isOpen, editData, isReservationEnded]);
 
   const fetchUserEmail = async () => {
     const token = localStorage.getItem('token');
@@ -47,7 +54,7 @@ export function Editor({
       });
       const email = response.data.data.email;
       setUserEmail(email);
-      setUser(response.data);
+      setUser(response.data.data);
     } catch (error) {
       console.error('사용자 정보를 가져오는 데 실패했습니다:', error);
     }
@@ -113,27 +120,108 @@ export function Editor({
     }
   };
 
+  const handleReserve = async (formData) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+      }
+
+      const reserveData = {
+        from: formData.departure,
+        to: formData.arrival,
+        date: `${formData.date}T${formData.time}:00.000Z`,
+        postId: editData.id,
+        bookerId: userId,
+      };
+
+      console.log('예약 데이터 (서버로 전송 전):', reserveData);
+
+      const response = await axios.post('/reserve/reserve', reserveData, {
+        headers: { 'Authorization': `${token}` }
+      });
+
+      if (response.status === 201) {
+        console.log('예약 성공:', response.data);
+        alert('예약이 완료되었습니다.');
+        onClose();
+        refreshPosts();
+      }
+    } catch (error) {
+      console.error('예약 중 오류 발생:', error);
+      alert('예약에 실패했습니다.');
+    }
+  };
+
+  const handleCancelReservation = async () => {
+    const token = localStorage.getItem('token');
+    if (!token || !userReservation) {
+      console.log('토큰이 없거나 예약 정보가 없습니다.');
+      return;
+    }
+
+    try {
+      // 먼저 예약 정보를 조회합니다.
+      const checkResponse = await axios.get(`/reserve/get/${userReservation.id}`, {
+        headers: { 'Authorization': `${token}` }
+      });
+
+      console.log('Reservation check response:', checkResponse.data);
+
+      // 예약이 존재하면 삭제를 진행합니다.
+      const cancelResponse = await axios.delete(`/reserve/delete/${userReservation.id}`, {
+        headers: { 'Authorization': `${token}` }
+      });
+
+      if (cancelResponse.status) {
+        console.log('예약 취소 성공:', cancelResponse.data);
+        alert('예약이 취소되었습니다.');
+        onClose();
+        refreshPosts();
+      }
+    } catch (error) {
+      console.error('예약 취소 중 오류 발생:', error);
+      if (error.response) {
+        console.log('에러 응답:', error.response.data);
+        console.log('에러 상태:', error.response.status);
+        console.log('에러 헤더:', error.response.headers);
+      }
+      alert('예약 취소에 실패했습니다. 예약이 이미 취소되었거나 존재하지 않을 수 있습니다.');
+    }
+  };
+
   return (
     <div id="Editing">
-      <Map
-        onMapSubmit={handleMapSubmit}
-        initialDeparture={initialDeparture}
-        initialArrival={initialArrival}
-      />
-      <PostingForm
-        isOpen={isOpen}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        onClose={onClose}
-        editData={editData}
-        userEmail={userEmail}
-        mapData={mapData}
-        initialDeparture={initialDeparture}
-        initialArrival={initialArrival}
-        isSameUser={isSameUser}
-        setShowChat={setShowChat}
-      />
-      {showChat && <Chat postId={postId} user={user} messageList={messageList} setMessageList={setMessageList} />}
+      {!isLoading && !isReservationLoading && (
+        <>
+          <Map
+            onMapSubmit={handleMapSubmit}
+            initialDeparture={initialDeparture}
+            initialArrival={initialArrival}
+          />
+          <PostingForm
+            isOpen={isOpen}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onClose={onClose}
+            editData={editData}
+            userEmail={userEmail}
+            mapData={mapData}
+            initialDeparture={initialDeparture}
+            initialArrival={initialArrival}
+            isSameUser={isSameUser}
+            setShowChat={setShowChat}
+            userReservation={userReservation}
+            onReserve={handleReserve}
+            onCancelReservation={handleCancelReservation}
+            user={user}
+            userId={userId}
+            refreshPosts={refreshPosts}
+            isReservationEnded={isReservationEnded}
+          />
+          {showChat && <Chat postId={postId} user={user} messageList={messageList} setMessageList={setMessageList} />}
+        </>
+      )}
     </div>
   );
 }
@@ -149,6 +237,13 @@ function PostingForm({
   initialArrival,
   isSameUser,
   setShowChat,
+  userReservation,
+  onReserve,
+  onCancelReservation,
+  user,
+  userId,
+  refreshPosts,
+  isReservationEnded,
 }) {
   const [type, setType] = useState("탑승자");
   const [time, setTime] = useState("");
@@ -157,12 +252,11 @@ function PostingForm({
   const [arrival, setArrival] = useState(initialArrival);
   const [gender, setGender] = useState("성별무관");
   const [taxiCapacity, setTaxiCapacity] = useState("2");
+  const [paymentAmount, setPaymentAmount] = useState('');
 
   useEffect(() => {
     if (editData) {
-
-      const titleParts = editData.title.split(" "); // title을 split하여 배열로 저장
-      
+      const titleParts = editData.title.split(" ");
       setType(titleParts[3] || "");
       setTime(titleParts[5] || "");
       setDate(titleParts[4] || "");
@@ -170,11 +264,14 @@ function PostingForm({
     }
   }, [editData]);
 
+  useEffect(() => {
+    console.log('PostingForm - 예약 마감 여부:', isReservationEnded);
+  }, [isReservationEnded]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const editedTrip = {
-      title: `${departure} -> ${arrival} ${type} ${date} ${time} ${type === "택시" ? `${taxiCapacity}인` : gender
-        }`,
+      title: `${departure} -> ${arrival} ${type} ${date} ${time} ${type === "택시" ? `${taxiCapacity}인` : gender}`,
     };
     console.log('수정된 데이터 (서버로 전송 전):', editedTrip);
     onEdit(editedTrip);
@@ -185,6 +282,57 @@ function PostingForm({
   }
 
   if (!isOpen) return null;
+
+  const isReservationOwner = userReservation && userId && userReservation.bookerId === userId;
+
+  const handleReservationComplete = async () => {
+    const isConfirmed = window.confirm("예약을 마감하시겠습니까?");
+    if (isConfirmed) {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
+        }
+
+        // 기존 제목에 "[예약마감]" 문구를 추가합니다.
+        const updatedTitle = `${editData.title} [예약마감]`;
+        console.log(updatedTitle);
+        const response = await axios.patch(`/posts/patch/${editData.id}`, 
+          { title: updatedTitle },
+          { headers: { 'Authorization': `${token}` } }
+        );
+
+        if (response.status === 200) {
+          alert("예약이 마감되었습니다.");
+          refreshPosts(); // 메인 화면 새로고침
+          onClose(); // 모달 닫기
+        }
+      } catch (error) {
+        console.error('예약 마감 처리 중 오류 발생:', error);
+        alert('예약 마감 처리에 실패했습니다.');
+      }
+    }
+  };
+
+  const handleReserveClick = () => {
+    if (isReservationOwner) {
+      onCancelReservation();
+    } else {
+      const formData = {
+        departure,
+        arrival,
+        date,
+        time,
+        type,
+        gender: type === "택시" ? `${taxiCapacity}인` : gender,
+      };
+      onReserve(formData);
+    }
+  };
+
+  const handlePayment = () => {
+    alert(`${paymentAmount}원 결제가 완료되었습니다.`);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
@@ -267,19 +415,50 @@ function PostingForm({
         </div>
       )}
 
-      <div className="cont_btn">
+      {!isSameUser && (
+        <div className="payment-section">
+          <input
+            type="number"
+            value={paymentAmount}
+            onChange={(e) => setPaymentAmount(e.target.value)}
+            placeholder="결제 금액 입력"
+          />
+          <button type="button" onClick={handlePayment}>결제하기</button>
+        </div>
+      )}
+
+      
+
+<div className="cont_btn">
         {isSameUser ? (
-          <button type="submit">수정하기</button>
+          <>
+          <div className="button-r">
+            <button type="button" onClick={handleReservationComplete} className="full-width">
+              {isReservationEnded ? "예약 완료" : "예약 마감"}
+            </button>
+            <button type="button" onClick={() => setShowChat(true)} className="full-width">채팅하기</button>
+            <div className="button-row">
+              <button type="submit" className="half-width">수정하기</button>
+              <button type="button" onClick={onDelete} className="half-width">삭제하기</button>
+            </div>
+            </div>
+          </>
         ) : (
-          <button type="button" >
-            {"예약하기"}
-          </button>
-        )}
-        <button type="button" onClick={() => setShowChat(true)}>채팅하기</button>
-        {isSameUser ? (
-          <button type="button" onClick={onDelete}>삭제하기</button>
-        ) : (
-          <button type="button" onClick={handleCloseModal}>취소하기</button>
+          <>
+          <div className="button-r">
+            <button 
+              type="button" 
+              onClick={handleReserveClick} 
+              disabled={isReservationEnded || editData.isReservationCompleted} 
+              className="full-width"
+            >
+              {isReservationEnded ? "예약이 마감되었습니다" : 
+                (isReservationOwner ? "예약 취소하기" : "예약하기")}
+            </button>
+            <button type="button" onClick={() => setShowChat(true)} className="full-width">채팅하기</button>
+            <button type="button" onClick={handleCloseModal} className="full-width">취소하기</button>
+            </div>
+          </>
         )}
       </div>
     </form>
