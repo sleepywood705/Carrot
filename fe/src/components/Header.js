@@ -1,7 +1,7 @@
 import "./Header.css";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import axios from '../api/axios';  // axios import 추가
+import axios from '../api/axios';
 
 export function Header({ isLoggedIn, onLogout, userName }) {
   const location = useLocation();
@@ -9,7 +9,7 @@ export function Header({ isLoggedIn, onLogout, userName }) {
   const [showNav, setShowNav] = useState(false);
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [userPoint, setUserPoint] = useState(null);  // 사용자 포인트 상태 추가
+  const [userPoint, setUserPoint] = useState(null);
 
   const toggleNav = () => {
     setShowNav(!showNav);
@@ -25,7 +25,6 @@ export function Header({ isLoggedIn, onLogout, userName }) {
         } else {
           setVisible(true);
         }
-        // 현재 스크롤 위치 업데이트
         setLastScrollY(window.scrollY);
       }
     };
@@ -62,7 +61,6 @@ export function Header({ isLoggedIn, onLogout, userName }) {
       <Link to="/" id="logo" className={invert}>당근마차</Link>
       <Link to="/guide" className={invert}>이용가이드</Link>
       <Link to="/main" id="logo" className={invert}>체험해보기</Link>
-      {/* <Link to="/Main" id="logo" className={invert}>체험해보기</Link> */}
       {isLoggedIn && userPoint !== null && (
         <span className={invert}>포인트: {userPoint}</span>
       )}

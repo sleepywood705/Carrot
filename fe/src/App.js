@@ -27,7 +27,6 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // 토큰이 있으면 사용자 정보를 가져와 로그인 상태를 복원
       const fetchUserData = async () => {
         try {
           const response = await axios.get('/users/me', {
@@ -38,13 +37,12 @@ function App() {
           setIsLoggedIn(true);
         } catch (error) {
           console.error('Failed to fetch user data:', error);
-          // 토큰이 유효하지 않으면 로그아웃 처리
           handleLogout();
         }
       };
       fetchUserData();
     }
-  }, []);  // 컴포넌트 마운트 시 한 번만 실행
+  }, []);
 
   const handleLogin = (userName) => {
     setUserName(userName);
