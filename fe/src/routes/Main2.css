@@ -63,18 +63,21 @@
   position: absolute;
   width: 60px; aspect-ratio: 1;
 }
-#FilterButtons .butn_all {
-  border: 1px solid #eee;
+#FilterButtons .butn_all,
+#FilterButtons .butn_write {
+  border: 2px solid #eee;
   background-color: #fff;
+  display: grid;
+  place-items: center;
 }
 #FilterButtons .butn_taxi {
   color: #fff;
   background-color: #111;
 }
 #FilterButtons .butn_taxi img {
-  left: -20px; bottom: -20px;
+  left: -18px; bottom: -20px;
   transform: scaleX(-100%);
-  width: 80px;
+  width: 75px;
 }
 #FilterButtons .butn_driver {
   background-color: gold;
@@ -88,10 +91,10 @@
   background-color: crimson;
 }
 #FilterButtons .butn_passenger img {
-  left: -20px; top: -20px;
+  left: -16px; top: -16px;
 }
-#FilterButtons .butn_write {
-  border: 1px solid #eee;
+#FilterButtons .butn_write img {
+  width: 40px;
 }
 
 
@@ -106,7 +109,7 @@
   flex-wrap: wrap;
 }
 .Card {
-  padding: 20px;
+  padding: 10px;
   width: calc(50% - 20px);
   /* border: 1px solid #000; */
   gap: 8px;
@@ -122,7 +125,6 @@
   font-weight: 500;
 }
 .Card > div {
-  padding: 10px;
   border-radius: 12px;
   background-color: #fff;
 }
@@ -130,17 +132,18 @@
 .Card .row1 {
   padding: 0;
   gap: 8px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 8fr;
   background-color: transparent;
 }
 .Card .row1 .user-name {
-  padding: 10px;
+  padding: 6px;
   border-radius: 10px;
   background-color: #fff;
 }
 .Card .row1 .user-name span {
   padding: 0 20px;
-  width: fit-content; height: 40px;
+  width: 100%; height: 40px;
   border-radius: 10px;
   border: 1px solid #eee;
   display: flex;
@@ -149,11 +152,14 @@
 }
 .Card .row1 .card-title {
   flex-grow: 1;
-  padding: 10px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border-radius: 10px;
   background-color: #fff;
 }
-.Card .row1 .card-title span {
+/* .Card .row1 .card-title span {
   padding-left: 10px;
   height: 100%;
   border-radius: 10px;
@@ -161,14 +167,50 @@
   gap: 10px;
   display: flex;
   align-items: center;
-}
+} */
 .Card .row1 .card-title span img {
   height: 20px; aspect-ratio: 1;
 }
+.Card .row1 .user-type {
+  font-weight: 600;
+  gap: 8px;
+  display: flex;
+  align-items: stretch;
+  /* border: 1px solid #000; */
+}
+.Card .row1 .user-type span {
+  /* border: 1px solid #000; */
+  display: flex;
+  align-items: center;
+}
+.Card .row1 .switch {
+  padding: 2px;
+  height: 30px;
+  aspect-ratio: 2 / 1;
+  border-radius: 50px;
+  border: 1px solid #e9e9e9;
+  background-color: #f1f1f1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow: inset 5px -5px 20px -4px rgba(0,0,0,0.3);
+}
+.Card .row1 .gear {
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid #e9e9e9;
+  background-color: #fff;
+}
+.Card .row1 .switch.switch-on {
+  background-color: rgb(85, 85, 255);
+  justify-content: flex-end;
+  box-shadow: inset 5px -5px 20px -4px rgba(0,0,0,0.35);
+}
 
 .Card .row2 {
-  padding: 10px 10px;
-  gap: 8px;
+  padding: 8px;
+  gap: 5px;
   display: flex;
 }
 .Card .row2 > div {
@@ -193,6 +235,7 @@
   padding: 10px 20px;
   height: 50px;
   color: #aaa;
+  font-weight: 300;
   border-radius: 10px;
   border: 1px solid #eee;
   /* border: 1px solid #000; */
@@ -207,44 +250,29 @@
 }
 
 .Card .row3 {
-  padding: 10px 10px 10px 16px;
+  padding: 10px 10px 10px 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.Card .row3 .user-type {
-  font-weight: 600;
-  gap: 8px;
-  display: flex;
-  align-items: center;
-}
-.Card .row3 .user-type span {
-
-}
-.Card .row3 .switch {
-  padding: 2px;
-  height: 30px; aspect-ratio: 2 / 1;
-  border-radius: 50px;
-  border: 1px solid #e9e9e9;
-  background-color: #f1f1f1;
-}
-.Card .row3 .gear {
-  height: 100%; aspect-ratio: 1;
-  border-radius: 50%;
-  border: 1px solid #e9e9e9;
-  background-color: #f9f9f9;
-}
 
 .Card .row4 {
   height: 50px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+.Card .row4.reservation-in-progress {
+  color: rgb(85, 85, 255);
+}
+.Card .row4.reservation-closed {
+  color: crimson;
+}
 
-.Card .reservation-status {
-  padding: 4px 8px;
-  border-radius: 4px;
+
+/* .Card .reservation-status {
+  border-radius: 6px;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -252,7 +280,7 @@
   color: black;
 }
 .Card .type {
-  padding: 4px 8px;
+  padding: 5px 10px;
   border-radius: 4px;
 }
 .Card .type-passenger {
@@ -266,4 +294,4 @@
 .Card .type-taxi {
   background-color: #ffc107;
   color: black;
-}
+} */

@@ -37,7 +37,6 @@ export function Main() {
     try {
       const response = await axios.get('/posts/gets');
       console.log('서버에서 받은 데이터:', response.data);
-      console.log('서버에서 받은 데이터:', response.data);
 
       if (response.data && Array.isArray(response.data.data)) {
         const tripsWithReservationStatus = response.data.data.map(trip => ({

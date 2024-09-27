@@ -234,21 +234,41 @@ function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
                 trip.reservations.some(reservation => reservation.bookerId === userId);
               const isReservationClosed = trip.title.endsWith('[예약마감]');
 
+              const titleParts = trip.title.split(" ");
+              const genderInfo = titleParts[6];
+              const isSameGender = genderInfo === "동성";
+              const userType = titleParts[3];
+              const userNameBackgroundColor = 
+                userType === "택시" ? "#111" :
+                userType === "운전자" ? "gold" :
+                userType === "탑승자" ? "crimson" : "inherit";
+
               return (
                 <div
                   key={trip.id || index}
                   className="Card"
                   onClick={() => handleEditClick(trip)}
+                  style={{ backgroundColor: userNameBackgroundColor }}
                 >
                   <div className="row1">
                     <div className="user-name">
                       <span>{trip.author?.name || "알 수 없음"}{" "}</span>
                     </div>
                     <div className="card-title">
-                      <span>
-                        <img src="/img/siren.png" />
-                        예) 출근파티 구해용 동성만~~~!
-                      </span>
+                      <div className="user-type">
+                        <span>
+                          {titleParts[3]}
+                        </span>
+                        ·
+                        <span style={{ color: isSameGender ? 'blue' : 'inherit' }}>
+                          {titleParts[3] === "택시" ? titleParts[6] : genderInfo}
+                        </span>
+                      </div>
+                      <div 
+                        className={`switch ${isSameGender ? 'switch-on' : ''}`}
+                      >
+                        <div className="gear"></div>
+                      </div>
                     </div>
                   </div>
                   <div className="row2">
@@ -261,31 +281,18 @@ function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
                       <p>출발<span>{trip.title.split(" ")[5]}</span></p>
                     </div>
                   </div>
-                  <div className="row3">
-                    <p className="user-type">
-                      <span className={`type ${trip.title.split(" ")[3] === "탑승자" ? "type-passenger" :
-                          trip.title.split(" ")[3] === "운전자" ? "type-driver" :
-                            trip.title.split(" ")[3] === "택시" ? "type-taxi" : ""
-                        }`}>
-                        {trip.title.split(" ")[3]}
-                      </span>
-                      ·
-                      <span>
-                        {
-                          trip.title.split(" ")[3] === "택시"
-                            ? trip.title.split(" ")[6]
-                            : trip.title.split(" ")[6]
-                        }
-                      </span>
-                    </p>
-                    <div className="switch">
-                      <div className="gear"></div>
-                    </div>
-                  </div>
                   {(isReservationClosed || reservationCount > 0) && (
-                    <div className="row4">
+                    <div 
+                      className={`row4 ${
+                        isReservationClosed 
+                          ? 'reservation-closed'
+                          : reservationCount > 0 
+                            ? 'reservation-in-progress'
+                            : ''
+                      }`}
+                    >
                       {isReservationClosed ? "예약 마감" :
-                        (reservationCount > 0 ? `${reservationCount}명 예약중` : "")
+                        (reservationCount > 0 ? `${reservationCount}명 예약 중` : "")
                       }
                     </div>
                   )}  
@@ -355,7 +362,7 @@ function FilterButtons({ onFilterChange, onWriteClick }) {
         </button>
       ))}
       <button className="butn_write" onClick={onWriteClick}>
-        작성
+        <img src="/img/plus.png" />
       </button>
     </div>
   );
