@@ -47,7 +47,7 @@ function App() {
   const handleLogin = (userName) => {
     setUserName(userName);
     setIsLoggedIn(true);
-    navigate("/Main");
+    navigate("/main");
   };
 
   const handleLogout = () => {
@@ -70,7 +70,7 @@ function App() {
         <Route path="/guide" element={<Guide />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<Signup onLogin={handleLogin} />} /> {/* onLogin prop 추가 */}
       </Routes>
       <Footer />
     </div>

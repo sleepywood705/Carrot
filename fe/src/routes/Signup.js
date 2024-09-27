@@ -3,7 +3,7 @@ import axios from "../api/axios.js"
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export function Signup() {
+export function Signup({ onLogin }) {  // onLogin prop 추가
 
   const navigate = useNavigate();
 
@@ -20,19 +20,51 @@ export function Signup() {
       return;
     }
     try {
-      const response = await axios.post('/users/signup', {
+      // 회원가입 요청
+      const signupResponse = await axios.post('/users/signup', {
         name: userName,
         email: userMail,
         password,
         gender: userGender,
       });
-      // 회원가입 성공 시 처리
-      alert('회원가입 성공:', response.data);
-      console.log('회원가입 성공:', response.data);
-      navigate('/main');
+
+      if (signupResponse.status !== 201) {
+        throw new Error('회원가입에 실패했습니다.');
+      }
+
+      // 회원가입 성공 시 자동 로그인
+      const loginResponse = await axios.post('/users/signin', {
+        email: userMail,
+        password
+      });
+
+      const token = loginResponse.headers['authorization'];
+      
+      if (token) {
+        localStorage.setItem('token', token);
+        // 사용자 정보를 가져오는 추가 요청
+        const userResponse = await axios.get('/users/me', {
+          headers: { Authorization: token }
+        });
+        const loggedInUserName = userResponse.data.data.name;
+        onLogin(loggedInUserName);  // 로그인 상태 업데이트
+        alert('회원가입 및 로그인 성공!');
+        navigate('/main');
+      } else {
+        throw new Error('로그인 중 오류가 발생했습니다.');
+      }
     } catch (err) {
-      console.log(err)
-      alert('회원가입에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
+      console.error(err);
+      if (err.response) {
+        // 서버에서 응답을 받았지만 2xx 범위를 벗어난 상태 코드인 경우
+        alert(`오류: ${err.response.data.message || '알 수 없는 오류가 발생했습니다.'}`);
+      } else if (err.request) {
+        // 요청이 전송되었지만 응답을 받지 못한 경우
+        alert('서버와의 통신에 실패했습니다. 네트워크 연결을 확인해주세요.');
+      } else {
+        // 요청 설정 중에 오류가 발생한 경우
+        alert(err.message || '회원가입 중 오류가 발생했습니다.');
+      }
     }
   };
 
