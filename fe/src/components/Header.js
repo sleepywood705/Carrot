@@ -6,19 +6,14 @@ import axios from '../api/axios';
 export function Header({ isLoggedIn, onLogout, userName }) {
   const location = useLocation();
   const inMainPage = location.pathname === "/";
-  const [showNav, setShowNav] = useState(false);
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [userPoint, setUserPoint] = useState(null);
 
-  const toggleNav = () => {
-    setShowNav(!showNav);
-  };
-
   const invert = inMainPage ? "invert" : "";
 
   useEffect(() => {
-    const controlNavbar = () => {
+    const controlHeader = () => {
       if (typeof window !== 'undefined') {
         if (window.scrollY > lastScrollY) {
           setVisible(false);
@@ -30,10 +25,10 @@ export function Header({ isLoggedIn, onLogout, userName }) {
     };
 
     if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', controlNavbar);
+      window.addEventListener('scroll', controlHeader);
 
       return () => {
-        window.removeEventListener('scroll', controlNavbar);
+        window.removeEventListener('scroll', controlHeader);
       };
     }
   }, [lastScrollY]);

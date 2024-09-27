@@ -2,11 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios.js";
 
-
 export function Withdrawal() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   const handleWithdrawal = async () => {
@@ -15,7 +13,7 @@ export function Withdrawal() {
     try {
       const token = localStorage.getItem('token');
 
-      // Fetch user information to get the ID
+      // 사용자 정보 가져오기
       const response = await axios.get('/users/me', {
         headers: {
           Authorization: token
@@ -24,15 +22,19 @@ export function Withdrawal() {
 
       const userId = response.data.data.id;
 
-      // Make the delete request with the user ID
+      // 사용자 삭제 요청
       await axios.delete(`/users/delete/${userId}`, {
         headers: {
           Authorization: token
         }
       });
-      setSuccess(true);
+
+      // 로컬 스토리지에서 토큰 제거
       localStorage.removeItem('token');
-      navigate('/', { replace: true })
+
+      // 홈 페이지로 이동 및 페이지 새로고침
+      navigate('/', { replace: true });
+      window.location.reload();
 
     } catch (err) {
       console.error(err);
@@ -40,7 +42,6 @@ export function Withdrawal() {
     } finally {
       setIsDeleting(false);
     }
-
   };
 
   return (
@@ -56,7 +57,7 @@ export function Withdrawal() {
       {error && <div className="error-message">{error}</div>}
       <button
         className="btn_confirm"
-        onClick={() => handleWithdrawal()}
+        onClick={handleWithdrawal}
         disabled={isDeleting}
       >
         {isDeleting ? '처리 중...' : '탈퇴'}

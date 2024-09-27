@@ -588,7 +588,6 @@ function PostingForm({
                 </button>
               )}
               <button type="button" onClick={() => setShowChat(true)} className="full-width">채팅하기</button>
-              <button type="button" onClick={handleCloseModal} className="full-width">취소하기</button>
             </div>
           </>
         )}
