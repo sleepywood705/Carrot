@@ -191,7 +191,6 @@ export function Main2() {
         onWriteClick={() => setIsWriteModalOpen(true)}
       />
       <h1>최근 게시글</h1>
-
       <Board
         isLoading={isLoading}
         error={error}
@@ -199,7 +198,6 @@ export function Main2() {
         handleEditClick={handleEditClick}
         userId={userId}
       />
-
       <Post
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
@@ -237,18 +235,12 @@ function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
               const titleParts = trip.title.split(" ");
               const genderInfo = titleParts[6];
               const isSameGender = genderInfo === "동성";
-              const userType = titleParts[3];
-              const userNameBackgroundColor = 
-                userType === "택시" ? "#111" :
-                userType === "운전자" ? "gold" :
-                userType === "탑승자" ? "crimson" : "inherit";
 
               return (
                 <div
                   key={trip.id || index}
                   className="Card"
                   onClick={() => handleEditClick(trip)}
-                  style={{ backgroundColor: userNameBackgroundColor }}
                 >
                   <div className="row1">
                     <div className="user-name">
@@ -283,7 +275,7 @@ function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
                   </div>
                   {(isReservationClosed || reservationCount > 0) && (
                     <div 
-                      className={`row4 ${
+                      className={`row3 ${
                         isReservationClosed 
                           ? 'reservation-closed'
                           : reservationCount > 0 
@@ -295,7 +287,12 @@ function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
                         (reservationCount > 0 ? `${reservationCount}명 예약 중` : "")
                       }
                     </div>
-                  )}  
+                  )}
+                  {(isReservationClosed || reservationCount > 0) && (
+                    <div className="cover">
+                      <img src={isReservationClosed ? "/img/finish.png" : "/img/booking.png"} alt="예약 상태" />
+                    </div>
+                  )}
                 </div>
               );
             })}

@@ -108,9 +108,11 @@
   display: flex;
   flex-wrap: wrap;
 }
+
 .Card {
+  position: relative;
   padding: 10px;
-  width: calc(50% - 20px);
+  width: calc(50% - 20px); height: calc(100% + 50px);
   /* border: 1px solid #000; */
   gap: 8px;
   display: flex;
@@ -119,6 +121,23 @@
   background-color: #F5F5F7;
   cursor: pointer;
 }
+.cover {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  width: 100%; height: 100%;
+  border-radius: 30px;
+  border: none;
+  overflow: hidden;
+}
+.cover img {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 570px;
+}
+
 .Card p,
 .Card span {
   color: #444;
@@ -250,23 +269,16 @@
 }
 
 .Card .row3 {
-  padding: 10px 10px 10px 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.Card .row4 {
   height: 50px;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.Card .row4.reservation-in-progress {
+.Card .row3.reservation-in-progress {
   color: rgb(85, 85, 255);
 }
-.Card .row4.reservation-closed {
+.Card .row3.reservation-closed {
   color: crimson;
 }
 
