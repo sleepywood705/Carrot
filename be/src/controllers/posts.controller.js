@@ -6,8 +6,19 @@ export class PostsController {
     createPost = async (req, res, next) => {
         try {
             const { title } = req.body
+            let { type } = req.body
+            if (type == "탑승자") {
+                type = "USER";
+            }
+            else if (type == "운전자") {
+                type = "DRIVER";
+            }
+            else {
+                type = "TAXI";
+            }
+
             const authorId = req.user.id;
-            const post = await this.postsService.createPost(title, authorId);
+            const post = await this.postsService.createPost(title, type, authorId);
             res.status(201).json({ data: post });
         } catch (error) {
             res.status(400).json({ error: error.message });

@@ -118,8 +118,8 @@ export class UsersController {
     };
     processPayment = async (req, res, next) => {
         try {
-            const { bookerId, postId } = req.body;
-            const result = await this.usersService.processPayment(bookerId, postId);
+            const { payer, receiver, cost } = req.body;
+            const result = await this.usersService.processPayment(payer, receiver, cost);
             return res.status(200).json(result);
         } catch (error) {
             // next(err);

@@ -2,11 +2,11 @@ import { PostsRepository } from "../repositories/posts.repository.js";
 export class PostsService {
     postsRepository = new PostsRepository();
 
-    createPost = async (title, authorId) => {
+    createPost = async (title, type, authorId) => {
         if (!title) {
             throw new Error('Title is required');
         }
-        const createdPost = await this.postsRepository.createPost(title, authorId);
+        const createdPost = await this.postsRepository.createPost(title, type, authorId);
         return createdPost;
     }
 
