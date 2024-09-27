@@ -367,7 +367,7 @@ function PostingForm({
       }
 
       let payer, receiver;
-      if (editData.title.includes('운전자')) {
+      if (editData.title.includes('운전자') || editData.title.includes('택시')) {
         payer = userId;
         receiver = editData.authorId;
       } else if (editData.title.includes('탑승자')) {
