@@ -270,6 +270,7 @@ function PostingForm({
   const [taxiCapacity, setTaxiCapacity] = useState("2");
   const [paymentAmount, setPaymentAmount] = useState('');
   const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
+  const [isReservationCompleted, setIsReservationCompleted] = useState(isReservationEnded);
 
   useEffect(() => {
     if (editData) {
@@ -311,7 +312,6 @@ function PostingForm({
           throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
         }
 
-        // 기존 제목에 "[예약마감]" 문구를 추가합니다.
         const updatedTitle = `${editData.title} [예약마감]`;
         console.log(updatedTitle);
         const response = await axios.patch(`/posts/patch/${editData.id}`, 
@@ -320,9 +320,9 @@ function PostingForm({
         );
 
         if (response.status === 200) {
+          setIsReservationCompleted(true);
           alert("예약이 마감되었습니다.");
-          refreshPosts(); // 메인 화면 새로고침
-          onClose(); // 모달 닫기
+          refreshPosts();
         }
       } catch (error) {
         console.error('예약 마감 처리 중 오류 발생:', error);
@@ -367,7 +367,7 @@ function PostingForm({
       }
 
       let payer, receiver;
-      if (editData.title.includes('운전자') || editData.title.includes('택시')) {
+       if (editData.title.includes('운전자') || editData.title.includes('택시')) {
         payer = userId;
         receiver = editData.authorId;
       } else if (editData.title.includes('탑승자')) {
@@ -422,9 +422,8 @@ function PostingForm({
   };
 
   const showPaymentSection = 
-    (type === "탑승자" && isReservationEnded) || 
-    (type === "운전자" && isReservationOwner) || 
-    (type === "택시" && isReservationOwner);
+    (type === "탑승자" && isSameUser && isReservationCompleted) || 
+    ((type === "운전자" || type === "택시") && isReservationOwner);
 
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
@@ -511,7 +510,7 @@ function PostingForm({
         {isSameUser ? (
           <>
             <div className="button-r">
-              {!isReservationEnded && (
+              {!isReservationCompleted && (
                 <button type="button" onClick={handleReservationComplete} className="full-width">
                   예약 마감
                 </button>
@@ -564,7 +563,7 @@ function PostingForm({
                   </button>
                 </div>
               )}
-              {!isReservationEnded && (
+              {!isReservationCompleted && (
                 <button 
                   type="button" 
                   onClick={handleReserveClick} 
