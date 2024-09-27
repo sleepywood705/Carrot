@@ -278,10 +278,10 @@
   align-items: center;
   justify-content: center;
 }
-.Card .row3.reservation-in-progress {
+.Card .row3.booking-finished {
   color: rgb(85, 85, 255);
 }
-.Card .row3.reservation-closed {
+.Card .row3.booking {
   color: crimson;
 }
 

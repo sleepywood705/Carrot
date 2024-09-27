@@ -198,21 +198,20 @@ export function Main() {
         handleEditClick={handleEditClick}
         userId={userId}
       />
-
       <Post
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
         onSubmit={handleWriteSubmit}
       />
       <Editor
-         isOpen={isEditModalOpen}
-         onClose={handleCloseEditModal}
-         editData={selectedTrip}
-         refreshPosts={fetchTrips}
-         postId={selectedTrip?.id}
-         userReservation={userReservation}
-         userId={userId}
-         isReservationEnded={selectedTrip?.isReservationEnded}
+        isOpen={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        editData={selectedTrip}
+        refreshPosts={fetchTrips}
+        postId={selectedTrip?.id}
+        userReservation={userReservation}
+        userId={userId}
+        isReservationEnded={selectedTrip?.isReservationEnded}
       />
     </div>
   );
@@ -281,9 +280,9 @@ function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
                     <div 
                       className={`row3 ${
                         isReservationClosed 
-                          ? 'reservation-closed'
+                          ? 'booking'
                           : reservationCount > 0 
-                            ? 'reservation-in-progress'
+                            ? 'booking-finished'
                             : ''
                       }`}
                     >
@@ -364,6 +363,7 @@ function FilterButtons({ onFilterChange, onWriteClick }) {
       ))}
       <button className="butn_write" onClick={onWriteClick}>
         <img src="/img/plus.png" />
+        {/*  */}
       </button>
     </div>
   );
