@@ -363,7 +363,7 @@ function FilterButtons({ onFilterChange, onWriteClick }) {
       ))}
       <button className="butn_write" onClick={onWriteClick}>
         <img src="/img/plus.png" />
-        {/*  */}
+        작성
       </button>
     </div>
   );

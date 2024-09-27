@@ -59,25 +59,6 @@ export function Editor({
     }
   }, [isOpen, editData, isReservationEnded]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (isOpen && editData && editData.id) {
-        setIsLoading(true);
-        await fetchUserEmail();
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [isOpen, editData]);
-
-  useEffect(() => {
-    if (isOpen && editData) {
-      console.log('Editor - 받은 editData:', editData);
-      console.log('Editor - 예약 마감 여부:', isReservationEnded);
-    }
-  }, [isOpen, editData, isReservationEnded]);
-
   const fetchUserEmail = async () => {
     const token = localStorage.getItem('token');
 
