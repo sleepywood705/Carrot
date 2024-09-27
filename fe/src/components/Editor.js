@@ -124,7 +124,7 @@ export function Editor({
       const response = await axios.delete(`/posts/delete/${editData.id}`, {
         headers: { 'Authorization': `${token}` }
       });
-    
+
       if (response.status) {
         onClose();
         refreshPosts();
@@ -269,7 +269,6 @@ function PostingForm({
   const [gender, setGender] = useState("성별무관");
   const [taxiCapacity, setTaxiCapacity] = useState("2");
   const [paymentAmount, setPaymentAmount] = useState('');
-  const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
 
   useEffect(() => {
     if (editData) {
@@ -314,7 +313,7 @@ function PostingForm({
         // 기존 제목에 "[예약마감]" 문구를 추가합니다.
         const updatedTitle = `${editData.title} [예약마감]`;
         console.log(updatedTitle);
-        const response = await axios.patch(`/posts/patch/${editData.id}`, 
+        const response = await axios.patch(`/posts/patch/${editData.id}`,
           { title: updatedTitle },
           { headers: { 'Authorization': `${token}` } }
         );
@@ -347,84 +346,9 @@ function PostingForm({
     }
   };
 
-  const handlePayment = async () => {
-    if (!paymentAmount || isNaN(paymentAmount) || paymentAmount <= 0) {
-      alert('올바른 결제 금액을 입력해주세요.');
-      return;
-    }
-
-    if (editData.title.includes('탑승자') && (!editData.reservations || editData.reservations.length === 0)) {
-      alert('예약이 없어 결제를 진행할 수 없습니다.');
-      return;
-    }
-
-    setIsPaymentProcessing(true);
-
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
-      }
-
-      let payer, receiver;
-      if (editData.title.includes('운전자')) {
-        payer = userId;
-        receiver = editData.authorId;
-      } else if (editData.title.includes('탑승자')) {
-        payer = editData.authorId;
-        receiver = editData.reservations[0].bookerId;
-      } else {
-        throw new Error('게시물 유형을 확인할 수 없습니다.');
-      }
-
-      const paymentData = {
-        payer: payer,
-        receiver: receiver,
-        cost: parseInt(paymentAmount)
-      };
-
-      console.log('결제 요청 데이터:', paymentData);
-
-      const response = await axios.post('/users/payment', paymentData, {
-        headers: { 'Authorization': `${token}` }
-      });
-
-      console.log('결제 응답:', response.data);
-
-      if (response.status) {
-        console.log('결제 성공:', response.data);
-        alert(`${paymentAmount}원 결제가 완료되었습니다.`);
-        setPaymentAmount('');
-        onClose();
-        refreshPosts();
-      }
-    } catch (error) {
-      console.error('결제 처리 중 오류 발생:', error);
-      if (error.response) {
-        console.log('에러 응답:', error.response.data);
-        console.log('에러 상태:', error.response.status);
-        console.log('에러 헤더:', error.response.headers);
-        if (error.response.data && error.response.data.message) {
-          alert(`결제 실패: ${error.response.data.message}`);
-        } else {
-          alert('결제에 실패했습니다. 서버 오류가 발생했습니다.');
-        }
-      } else if (error.request) {
-        console.log('요청 에러:', error.request);
-        alert('서버에 연결할 수 없습니다. 네트워크 연결을 확인해 주세요.');
-      } else {
-        console.log('기타 에러:', error.message);
-        alert(error.message || '알 수 없는 오류가 발생했습니다.');
-      }
-    } finally {
-      setIsPaymentProcessing(false);
-    }
+  const handlePayment = () => {
+    alert(`${paymentAmount}원 결제가 완료되었습니다.`);
   };
-
-  const showPaymentSection = 
-    (type === "탑승자" && isReservationEnded) || 
-    (type === "운전자" && isReservationOwner) || 
-    (type === "택시" && isReservationOwner);
 
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
@@ -507,34 +431,27 @@ function PostingForm({
         </div>
       )}
 
+      {!isSameUser && (
+        <div className="payment-section">
+          <input
+            type="number"
+            value={paymentAmount}
+            onChange={(e) => setPaymentAmount(e.target.value)}
+            placeholder="결제 금액 입력"
+          />
+          <button type="button" onClick={handlePayment}>결제하기</button>
+        </div>
+      )}
+
+
+
       <div className="cont_btn">
         {isSameUser ? (
           <>
             <div className="button-r">
-              {!isReservationEnded && (
-                <button type="button" onClick={handleReservationComplete} className="full-width">
-                  예약 마감
-                </button>
-              )}
-              {showPaymentSection && (
-                <div className="payment-section">
-                  <input
-                    type="number"
-                    value={paymentAmount}
-                    onChange={(e) => setPaymentAmount(e.target.value)}
-                    placeholder="결제 금액 입력"
-                    disabled={isPaymentProcessing}
-                  />
-                  <button 
-                    type="button" 
-                    onClick={handlePayment} 
-                    disabled={isPaymentProcessing}
-                    className="full-width"
-                  >
-                    {isPaymentProcessing ? '처리 중...' : '결제하기'}
-                  </button>
-                </div>
-              )}
+              <button type="button" onClick={handleReservationComplete} className="full-width">
+                {isReservationEnded ? "예약 완료" : "예약 마감"}
+              </button>
               <button type="button" onClick={() => setShowChat(true)} className="full-width">채팅하기</button>
               <div className="button-row">
                 <button type="submit" className="half-width">수정하기</button>
@@ -545,35 +462,15 @@ function PostingForm({
         ) : (
           <>
             <div className="button-r">
-              {showPaymentSection && (
-                <div className="payment-section">
-                  <input
-                    type="number"
-                    value={paymentAmount}
-                    onChange={(e) => setPaymentAmount(e.target.value)}
-                    placeholder="결제 금액 입력"
-                    disabled={isPaymentProcessing}
-                  />
-                  <button 
-                    type="button" 
-                    onClick={handlePayment} 
-                    disabled={isPaymentProcessing}
-                    className="full-width"
-                  >
-                    {isPaymentProcessing ? '처리 중...' : '결제하기'}
-                  </button>
-                </div>
-              )}
-              {!isReservationEnded && (
-                <button 
-                  type="button" 
-                  onClick={handleReserveClick} 
-                  disabled={editData.isReservationCompleted} 
-                  className="full-width"
-                >
-                  {isReservationOwner ? "예약 취소하기" : "예약하기"}
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={handleReserveClick}
+                disabled={isReservationEnded || editData.isReservationCompleted}
+                className="full-width"
+              >
+                {isReservationEnded ? "예약이 마감되었습니다" :
+                  (isReservationOwner ? "예약 취소하기" : "예약하기")}
+              </button>
               <button type="button" onClick={() => setShowChat(true)} className="full-width">채팅하기</button>
               <button type="button" onClick={handleCloseModal} className="full-width">취소하기</button>
             </div>

@@ -95,18 +95,18 @@ export function Mypage() {
             <li onClick={() => setSelectedMenu("Withdrawal")}>회원 탈퇴</li>
           </ul>
         </details>
-        <details open>
+        {/* <details open>
           <summary>이용 관리</summary>
           <ul>
             <li onClick={() => setSelectedMenu("MyHistory")}>이용 내역</li>
           </ul>
-        </details>
-        <details open>
+        </details> */}
+        {/* <details open>
           <summary>차량 등록</summary>
           <ul>
             <li onClick={() => setSelectedMenu("License")}>면허 인증</li>
           </ul>
-        </details>
+        </details> */}
       </div>
       <div className="right">{renderContent()}</div>
     </div>

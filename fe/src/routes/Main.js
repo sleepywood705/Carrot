@@ -198,6 +198,7 @@ export function Main() {
         handleEditClick={handleEditClick}
         userId={userId}
       />
+
       <Post
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
@@ -291,11 +292,15 @@ function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
                       }
                     </div>
                   )}
-                  {(isReservationClosed || reservationCount > 0) && (
-                    <div className="cover">
-                      <img src={isReservationClosed ? "/img/finish.png" : "/img/booking.png"} alt="예약 상태" />
-                    </div>
-                  )}
+                  <div className="cover">
+                    {isReservationClosed ? (
+                      <img src="/img/finish.png" alt="예약 마감" />
+                    ) : (
+                      isUserReserved && userId === trip.reservations.find(res => res.bookerId === userId)?.bookerId ? (
+                        <img src="/img/booking.png" alt="예약 중" />
+                      ) : null
+                    )}
+                  </div>
                 </div>
               );
             })}
@@ -363,7 +368,6 @@ function FilterButtons({ onFilterChange, onWriteClick }) {
       ))}
       <button className="butn_write" onClick={onWriteClick}>
         <img src="/img/plus.png" />
-        작성
       </button>
     </div>
   );
