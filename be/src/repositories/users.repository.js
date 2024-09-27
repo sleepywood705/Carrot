@@ -52,53 +52,44 @@ export class UsersRepository {
         return true;
     };
 
-    processPayment = async (bookerId, postId) => {
+    processPayment = async (payer, receiver, cost) => {
         return await prisma.$transaction(async (prisma) => {
-            // 예약 및 게시글 정보 조회
-            const user = await prisma.user.findUnique({
-                where: { id: bookerId },
-                include: {
-                    reservationsMade: {
-                        where: {
-                            postId: postId,
-                            isPaid: false
-                        },
-                        include: {
-                            post: {
-                                include: {
-                                    author: true
-                                }
-                            }
-                        }
-                    }
+            const payUser = await prisma.user.findUnique({
+                where: { id: payer },
+                select: {
+                    id: true,
+                    email: true,
+                    name: true,
+                    gender: true,
+                    point: true,
+                    role: true
                 }
             });
 
-            // 예약이 없거나 이미 결제된 경우 처리
-            if (!user || user.reservationsMade.length === 0) {
-                throw new Error('Reservation not found or already paid');
+            const receiveUser = await prisma.user.findUnique({
+                where: { id: receiver },
+                select: {
+                    id: true,
+                    email: true,
+                    name: true,
+                    gender: true,
+                    point: true,
+                    role: true
+                }
+            });
+
+            if (!payUser || !receiveUser) {
+                throw new Error('Both users must exist for the transaction');
             }
 
-            // reservationsMade 배열에서 첫 번째 예약만 사용
-            const reservation = user.reservationsMade[0];
-
-            // 추가적인 확인으로 isPaid가 false인지 체크
-            if (reservation.isPaid) {
-                throw new Error('This reservation has already been paid');
-            }
-
-            const cost = reservation.post.cost || 0;
-
-            // 예약자의 포인트가 충분하지 않을 경우 오류 발생
-            if (user.point < cost) {
+            if (payUser.point < cost) {
                 throw new Error('Insufficient points');
             }
 
-            // 트랜잭션 내에서 포인트 처리 및 상태 업데이트
-            const updatedBooker = await prisma.user.update({
-                where: { id: bookerId },
+            const updatedPayer = await prisma.user.update({
+                where: { id: payer },
                 data: { point: { decrement: cost } },
-                select: { // 비밀번호를 제외하고 선택
+                select: {
                     id: true,
                     email: true,
                     name: true,
@@ -108,10 +99,10 @@ export class UsersRepository {
                 }
             });
 
-            const updatedAuthor = await prisma.user.update({
-                where: { id: reservation.post.authorId },
+            const updatedReceiver = await prisma.user.update({
+                where: { id: receiver },
                 data: { point: { increment: cost } },
-                select: { // 비밀번호를 제외하고 선택
+                select: {
                     id: true,
                     email: true,
                     name: true,
@@ -121,12 +112,7 @@ export class UsersRepository {
                 }
             });
 
-            const updatedReservation = await prisma.reservation.update({
-                where: { id: reservation.id },
-                data: { isPaid: true }
-            });
-
-            return { updatedBooker, updatedAuthor, updatedReservation };
+            return { updatedPayer, updatedReceiver };
         });
     }
 

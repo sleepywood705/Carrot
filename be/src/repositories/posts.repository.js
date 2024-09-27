@@ -2,10 +2,11 @@ import { prisma } from '../utils/prisma/index.js';
 
 export class PostsRepository {
 
-    createPost = async (title, authorId) => {
+    createPost = async (title, type, authorId) => {
         const createdPost = await prisma.post.create({
             data: {
                 title,
+                type,
                 author: { connect: { id: authorId } },
             },
             select: {
@@ -13,6 +14,7 @@ export class PostsRepository {
                 title: true,
                 createdAt: true,
                 updatedAt: true,
+                cost: true,
                 author: {
                     select: {
                         email: true,
