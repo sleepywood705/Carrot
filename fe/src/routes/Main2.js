@@ -97,18 +97,9 @@ export function Main2() {
     setFilteredTrips(result);
   };
 
-  const handleWriteSubmit = async (newTrip) => {
-    try {
-      const response = await axios.post('/posts/create', newTrip);
-      if (response.data && response.data.success) {
-        fetchTrips();
-        setIsWriteModalOpen(false);
-      } else {
-        throw new Error("게시물 생성에 실패했습니다.");
-      }
-    } catch (error) {
-      console.error("게시물 작성 중 오류 발생:", error);
-    }
+  const handleWriteSubmit = (newTrip) => {
+    setTrips((prevTrips) => [newTrip, ...prevTrips]);
+    fetchTrips(); // 게시물 추가 후 목록 새로고침
   };
 
   const fetchUserReservation = async (postId) => {
