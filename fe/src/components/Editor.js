@@ -43,6 +43,25 @@ export function Editor({
     }
   }, [isOpen, editData, isReservationEnded]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (isOpen && editData && editData.id) {
+        setIsLoading(true);
+        await fetchUserEmail();
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [isOpen, editData]);
+
+  useEffect(() => {
+    if (isOpen && editData) {
+      console.log('Editor - 받은 editData:', editData);
+      console.log('Editor - 예약 마감 여부:', isReservationEnded);
+    }
+  }, [isOpen, editData, isReservationEnded]);
+
   const fetchUserEmail = async () => {
     const token = localStorage.getItem('token');
 
@@ -108,7 +127,7 @@ export function Editor({
       const response = await axios.delete(`/posts/delete/${editData.id}`, {
         headers: { 'Authorization': `${token}` }
       });
-    
+
       if (response.status) {
         onClose();
         refreshPosts();
@@ -297,7 +316,7 @@ function PostingForm({
         // 기존 제목에 "[예약마감]" 문구를 추가합니다.
         const updatedTitle = `${editData.title} [예약마감]`;
         console.log(updatedTitle);
-        const response = await axios.patch(`/posts/patch/${editData.id}`, 
+        const response = await axios.patch(`/posts/patch/${editData.id}`,
           { title: updatedTitle },
           { headers: { 'Authorization': `${token}` } }
         );
@@ -427,36 +446,36 @@ function PostingForm({
         </div>
       )}
 
-      
 
-<div className="cont_btn">
+
+      <div className="cont_btn">
         {isSameUser ? (
           <>
-          <div className="button-r">
-            <button type="button" onClick={handleReservationComplete} className="full-width">
-              {isReservationEnded ? "예약 완료" : "예약 마감"}
-            </button>
-            <button type="button" onClick={() => setShowChat(true)} className="full-width">채팅하기</button>
-            <div className="button-row">
-              <button type="submit" className="half-width">수정하기</button>
-              <button type="button" onClick={onDelete} className="half-width">삭제하기</button>
-            </div>
+            <div className="button-r">
+              <button type="button" onClick={handleReservationComplete} className="full-width">
+                {isReservationEnded ? "예약 완료" : "예약 마감"}
+              </button>
+              <button type="button" onClick={() => setShowChat(true)} className="full-width">채팅하기</button>
+              <div className="button-row">
+                <button type="submit" className="half-width">수정하기</button>
+                <button type="button" onClick={onDelete} className="half-width">삭제하기</button>
+              </div>
             </div>
           </>
         ) : (
           <>
-          <div className="button-r">
-            <button 
-              type="button" 
-              onClick={handleReserveClick} 
-              disabled={isReservationEnded || editData.isReservationCompleted} 
-              className="full-width"
-            >
-              {isReservationEnded ? "예약이 마감되었습니다" : 
-                (isReservationOwner ? "예약 취소하기" : "예약하기")}
-            </button>
-            <button type="button" onClick={() => setShowChat(true)} className="full-width">채팅하기</button>
-            <button type="button" onClick={handleCloseModal} className="full-width">취소하기</button>
+            <div className="button-r">
+              <button
+                type="button"
+                onClick={handleReserveClick}
+                disabled={isReservationEnded || editData.isReservationCompleted}
+                className="full-width"
+              >
+                {isReservationEnded ? "예약이 마감되었습니다" :
+                  (isReservationOwner ? "예약 취소하기" : "예약하기")}
+              </button>
+              <button type="button" onClick={() => setShowChat(true)} className="full-width">채팅하기</button>
+              <button type="button" onClick={handleCloseModal} className="full-width">취소하기</button>
             </div>
           </>
         )}
