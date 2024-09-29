@@ -21,7 +21,7 @@
   position: relative;
   padding: 20px;
   min-width: 380px;
-  width: 380px; height: 90vh;
+  width: 380px; height: fit-content;
   background-color: #fff;
   border-radius: 10px;
   gap: 30px;
@@ -52,9 +52,7 @@
   cursor: pointer;
 }
 .PostingForm .a > select,
-.PostingForm .a > input,
-.PostingForm .A,
-.PostingForm .B {
+.PostingForm .a > input {
   padding: 0 10px;
   height: 50px;
   color: #444;

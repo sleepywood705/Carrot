@@ -3,20 +3,21 @@
 	width: 100vw; height: 100vh;
 	margin-top: -70px;
 	/* border: 1px solid #000; */
-	overflow: hidden;
+	/* overflow: hidden; */
 	overflow-y: scroll;
 	scroll-snap-type: y mandatory;
 }
 #Landing section {
-	z-index: 1;
-	position: sticky;
-	top: 0;
+	/* z-index: 1; */
 	width: 100%; height: 100vh;
 	background-color: #111;
 	scroll-snap-align: center;
 }
 
-.sect1 {
+
+#Landing .sect1 {
+	position: sticky;
+	top: 0;
 	padding: 0 320px;
 	gap: 20px;
 	display: flex;
@@ -25,7 +26,7 @@
 	align-items: center;
 	justify-content: center;
 }
-.sect1 .Bubble {
+#Landing .sect1 .Bubble {
 	padding: 16px 32px;
 	width: fit-content;
 	border-radius: 50px;
@@ -34,21 +35,27 @@
 	display: flex;
 	align-items: center;
 }
-.sect1 .Bubble p {
+#Landing .sect1 .Bubble p {
 	color: #fff;
 	font-size: 22px;
 	font-weight: 300;
 }
-.sect1 .Bubble img {
+#Landing .sect1 .Bubble img {
 	height: 24px;
 }
 
-.sect2 {
+
+#Landing .sect2 {
+	position: sticky;
+	top: 0;
 	display: grid;
 	place-items: center;
 }
 
-.sect3 {
+
+#Landing .sect3 {
+	position: sticky;
+	top: 0;
 	padding: 0 320px;
 	display: flex;
 	/* flex-wrap: wrap; */
@@ -56,7 +63,7 @@
 	align-content: center;
 	justify-content: center;
 }
-.sect3 > p {
+#Landing .sect3 > p {
 	z-index: 1;
 	position: relative;
 	width: fit-content;
@@ -64,55 +71,62 @@
 	font-size: 80px;
 	font-weight: 600;
 }
-.sect3 .p1 img,
-.sect3 .p2 img,
-.sect3 .p3 img {
+#Landing .sect3 .p1 img,
+#Landing .sect3 .p2 img,
+#Landing .sect3 .p3 img {
 	z-index: -1;
 	position: absolute;
 	top: 50%;
 }
-.sect3 .p1 img {
+#Landing .sect3 .p1 img {
 	right: -160px;
 	transform: translate(0, -50%) scale(0.4) scaleX(-100%);
 }
-.sect3 .p2 img {
+#Landing .sect3 .p2 img {
 	right: -230px;
 	transform: translate(0, -50%) scale(0.4) scaleX(-100%);
 }
-.sect3 .p3 img {
+#Landing .sect3 .p3 img {
 	right: -160px;
 	transform: translate(0, -50%) scale(0.6) scaleX(-100%);
 }
 
-.sect4 {
+
+#Landing .sect4 {
+	position: sticky;
+	top: 0;
 	display: grid;
 	place-items: center;
 }
-.sect4 p {
+#Landing .sect4 p {
 	position: relative;
 	color: #fff;
 	font-size: 60px;
 	font-weight: 600;
 }
-.sect4 p img {
+#Landing .sect4 p img {
 	position: absolute;
 	left: 50%; top: -270px;
 	transform: translate(-50%, 0) scale(0.4);
 }
 
-.sect5 {
+
+#Landing .sect5 {
+	position: sticky;
+	top: 0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
 }
-.sect5 p {
+#Landing .sect5 p {
 	color: #fff;
 	font-size: 40px;
 	font-weight: 600;
 }
-.sect5 p span {
+#Landing .sect5 p span {
+	color: #fff;
   font-family: 'Freesentation-9Black';
 }
 .img_people {
@@ -126,25 +140,28 @@
 	transform: translate(0, -50%);
 }
 
-.sect6 {
+
+#Landing .sect6 {
+	position: sticky;
+	top: 0;
 	display: grid;
 	place-items: center;
 	overflow: hidden;
 }
-.sect6 div {
+#Landing .sect6 div {
 	position: absolute;
 	top: 50%;
 	transform: translate(0, -50%);
 	width: 100%; height: fit-content;
 }
-.sect6 p {
+#Landing .sect6 p {
 	position: relative;
 	left: 0;
 	width: 200%;
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 }
-.sect6 p span {
+#Landing .sect6 p span {
 	width: 100%;
 	color: #fff;
 	font-size: 100px;
@@ -154,7 +171,7 @@
 	align-items: center;
 	animation: marquee 20s infinite linear;
 }
-.sect6 p span img {
+#Landing .sect6 p span img {
 	height: 100px;
 }
 @keyframes marquee {
@@ -166,39 +183,145 @@
 	}
 }
 
-.sect7 {
-	padding: 210px 320px;
-	height: calc(450vh) !important;
+
+#Landing .sect7 {
+	position: relative;
+	height: fit-content !important;
 	background-color: #fff !important;
-	gap: 10px;
 	display: flex;
 	flex-direction: column;
 }
-.sect7 .row {
+#Landing .sect7 .row {
 	display: flex;
 	flex-direction: column;
 }
-.sect7 .threeByone {
+#Landing .sect7 .row2 {
+	margin-top: -426px;
+}
+#Landing .sect7 .row p {
 	position: sticky;
 	top: 50%;
 	transform: translate(0, -50%);
-	gap: 10px;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	padding: 0 320px;
+	height: fit-content;
+	display: flex;
 }
-.sect7 .threeByone p {
-	height: 100%; aspect-ratio: 1;
-	font-size: 60px;
+#Landing .sect7 .row span {
+	flex: 1;
+	aspect-ratio: 1;
+	font-size: 50px;
 	font-weight: 600;
-	text-align: center;
-	border-radius: 20px;
+	display: grid;
+	place-items: center;
+}
+#Landing .sect7 .row span img {
+	width: 100%;
+}
+.bgWhite {
+	background-color: #fff;
+}
+
+
+#Landing .sect8 {
+	position: sticky;
+	top: 0;
+	gap: 10px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-.sect7 .threeByone p img {
-	width: 90%;
+#Landing .sect8 > div {
+	position: relative;
+	font-size: 18px;
+  font-weight: 500;
+	border-radius: 10px;
+	width: 100px; aspect-ratio: 1;
+	display: grid;
+	place-items: center;
+	filter: brightness(30%);
 }
-.none {
-	opacity: 0;
+#Landing .sect8 > div img {
+	position: absolute;
+  width: 60px; aspect-ratio: 1;
+}
+#Landing .sect8 > p,
+#Landing .sect9 > p {
+	position: absolute;
+	left: 50%; top: 25%;
+	transform: translate(-50%, 0);
+	color: #fff;
+	font-size: 50px;
+}
+#Landing .sect8 .all {
+  font-weight: 600;
+	background-color: #fff;
+}
+#Landing .sect8 .taxi {
+	color: #fff;
+	background-color: #222;
+}
+#Landing .sect8 .taxi img {
+	left: -18px; bottom: -20px;
+  transform: scaleX(-100%);
+  width: 75px;
+}
+#Landing .sect8 .driver {
+  font-weight: 600;
+	background-color: gold;
+}
+#Landing .sect8 .driver img {
+	left: -16px; bottom: -10px;
+  width: 60px; aspect-ratio: 1;
+  transform: rotate(-15deg);
+}
+#Landing .sect8 .carfuller {
+	color: #fff;
+	background-color: crimson;
+}
+#Landing .sect8 .carfuller img {
+  left: -16px; top: -16px;
+}
+#Landing .sect8 .create {
+	border: 2px solid #fff;
+	background: url(../../public/img/plus.png) center/40px no-repeat;
+	background-color: #111;
+	filter: brightness(100%);
+}
+#Landing .sect8 .create:hover {
+	transform: scale(1.4);
+}
+
+
+#Landing .sect9 {
+	position: sticky;
+	top: 0;
+	background: url(../../public/img/sect9.png) center/cover no-repeat;
+}
+#Landing .sect9 p {
+	color: #000;
+	font-weight: 600;
+}
+
+
+#Landing .sect10 {
+	position: sticky;
+	top: 0;
+	background-color: #fff !important;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+#Landing .sect10 > div {
+	gap: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#Landing .sect10 span {
+	font-size: 50px;
+	font-weight: 600;
+}
+#Landing .sect10 span:nth-child(odd) {
+	color: #FF6600;
 }

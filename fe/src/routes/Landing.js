@@ -39,52 +39,73 @@ export function Landing() {
       </section>
       <section className="sect7">
         <div className="row">
-          <div className="threeByone">
-            <p>그런</p>
-          </div>
-          <div className="threeByone">
-            <p className="none"></p>
-            <p>여러분들을</p>
-            <p className="none"></p>
-          </div>
-          <div className="threeByone">
-            <p className="none"></p>
-            <p className="none"></p>
-            <p>위해</p>
-          </div>
-        </div>
-        <div className="row">
-          <div className="threeByone">
-            <p className="none"></p>
-            <p style={{color: "#ff6600"}}>당근이</p>
-            <p className="none"></p>
-          </div>
-          <div className="threeByone">
-            <p>마차를</p>
-          </div>
-          <div className="threeByone">
-            <p className="none"></p>
-            <p className="none"></p>
-            <p>준비했습니다~!</p>
-          </div>          
-          <div className="threeByone">
-            <p className="none"></p>
-            <p>
-              <img src="/img/car.png" />
-            </p>
-            <p className="none"></p>
-          </div>
+          <p>
+            <span>그런</span>
+            <span></span>
+            <span></span>
+          </p>
+          <p>
+            <span></span>
+            <span>여러분들을</span>
+            <span></span>
+          </p>
+          <p>
+            <span></span>
+            <span></span>
+            <span>위해</span>
+          </p>
+          <p>
+            <span className="bgWhite">당근이</span>
+            <span></span>
+            <span></span>
+          </p>
+          <p>
+            <span></span>
+            <span className="bgWhite">마차를</span>
+            <span></span>
+          </p>
+          <p>
+            <span></span>
+            <span></span>
+            <span className="bgWhite">준비했습니다~!</span>
+          </p>
+          <p>
+            <span></span>
+            <span className="bgWhite"><img src="/img/car.png" /></span>
+            <span></span>
+          </p>
         </div>
       </section>
-      <section></section>
+      <section className="sect8">
+        <p>손 쉽게 작성하고</p>
+        <div className="all">전체</div>
+        <div className="taxi">
+          <img src="/img/taxi.png" />
+          택시
+        </div>
+        <div className="driver">
+          <img src="/img/wheel.png"/>
+          드라이버
+        </div>
+        <div className="carfuller">
+          <img src="/img/siren.png"/>
+          카풀러
+        </div>
+        <div className="create"></div>
+      </section>
+      <section className="sect9">
+        <p>가격은 우리끼리 정해봐요</p>
+      </section>
+      <section className="sect10">
+        <div>
+          <span>당신</span>
+          <span>근처의</span>
+          <span>마차</span>
+        </div>
+      </section>
     </div>
   );
 }
-
-
-
-
-
 
 export function Bubble({ text, img, imgCount = 1, className }) {
   return (

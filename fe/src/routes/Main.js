@@ -198,7 +198,6 @@ export function Main() {
         handleEditClick={handleEditClick}
         userId={userId}
       />
-
       <Post
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
@@ -292,7 +291,7 @@ function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
                       }
                     </div>
                   )}
-                  <div className="cover">
+                  <div className="Cover">
                     {isReservationClosed ? (
                       <img src="/img/finish.png" alt="예약 마감" />
                     ) : (

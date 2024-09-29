@@ -9,10 +9,10 @@ import { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 
 export function Mypage() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedMenu, setSelectedMenu] = useState("MyPost");
+  const [selectedMenu, setSelectedMenu] = useState("MyPoint");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -55,9 +55,9 @@ export function Mypage() {
       case "ChangeInfo":
         return <ChangeInfo user={user} />;
       case "MyPoint":
-        return <MyPoint point={user.point} />;
+        return <MyPoint user={user} />;
       case "MyPost":
-        return <MyPost userId={user.id} />; // MyPost 컴포넌트에 userId 전달
+        return <MyPost user={user} />;
       case "Withdrawal":
         return <Withdrawal />;
       case "MyHistory":
@@ -71,20 +71,19 @@ export function Mypage() {
 
   return (
     <div id="Mypage">
-      <div id="SNB" className="left">
-        <div className="profile">
-          <div className="wrap_img">
-            <img src="/img/leaf.png" alt="leaf" />
-            <div
-              className="img_profile"
-              style={{
-                background: `${getProfileImage(
-                  user.gender
-                )} center/cover no-repeat`,
-              }}
-            ></div>
+      <aside id="SNB" className="left">
+        <div className="myProfile">
+          <img src="/img/leaf.png" alt="leaf" className="leaf"/>
+          <div
+            className="myImg"
+            style={{
+              background: `${getProfileImage(
+                user.gender
+              )} center/cover no-repeat`,
+            }}
+          >
           </div>
-          <div className="username">{user.name}</div>
+          <div className="myName">{user.name}</div>
         </div>
         <details open>
           <summary>내 정보 관리</summary>
@@ -107,7 +106,7 @@ export function Mypage() {
             <li onClick={() => setSelectedMenu("License")}>면허 인증</li>
           </ul>
         </details> */}
-      </div>
+      </aside>
       <div className="right">{renderContent()}</div>
     </div>
   );

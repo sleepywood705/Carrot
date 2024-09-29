@@ -1,7 +1,5 @@
 #Main {
   padding-bottom: 70px;
-  position: relative;
-  height: fit-content;
   /* border: 10px solid gold; */
 }
 #Main h1 {
@@ -108,7 +106,6 @@
   display: flex;
   flex-wrap: wrap;
 }
-
 .Card {
   position: relative;
   padding: 10px;
@@ -121,7 +118,16 @@
   background-color: #F5F5F7;
   cursor: pointer;
 }
-.cover {
+.Card p,
+.Card span {
+  color: #444;
+  font-weight: 500;
+}
+.Card > div:not(.Cover) {
+  border-radius: 12px;
+  background-color: #fff;
+}
+.Cover {
   position: absolute;
   left: 50%; top: 50%;
   transform: translate(-50%, -50%);
@@ -131,24 +137,14 @@
   border: none;
   overflow: hidden;
 }
-.cover img {
+.Cover img {
   position: absolute;
   left: 50%; top: 50%;
   transform: translate(-50%, -50%);
   width: 570px;
 }
-.Card:hover .cover {
+.Card:hover .Cover {
   opacity: 0;
-}
-
-.Card p,
-.Card span {
-  color: #444;
-  font-weight: 500;
-}
-.Card > div:not(.cover) {
-  border-radius: 12px;
-  background-color: #fff;
 }
 
 .Card .row1 {
@@ -275,7 +271,6 @@
 .Card .row3.reservation-closed {
   color: crimson;
 }
-
 
 /* .Card .reservation-status {
   border-radius: 6px;

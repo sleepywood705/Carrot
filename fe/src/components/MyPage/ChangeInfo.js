@@ -13,24 +13,24 @@ export function ChangeInfo({ user }) {
     return (
       <div id="ChangeInfo">
         <h2>회원정보변경</h2>
-        <div className="userInfo">
-          <div>
+        <div className="cont">
+          <div className="wrap">
             <span>이름</span>
             <div>{user.name}</div>
           </div>
-          <div>
+          <div className="wrap">
             <span>성별</span>
             <div>{displayGender(user.gender)}</div>
           </div>
-          <div>
+          <div className="wrap">
             <span>이메일</span>
             <div>{user.email}</div>
           </div>
-          <div>
+          <div className="wrap">
             <span>비밀번호</span>
             <input placeholder="******" />
           </div>
-          <div>
+          <div className="wrap">
             <span>비밀번호 확인</span>
             <input placeholder="******" />
           </div>
