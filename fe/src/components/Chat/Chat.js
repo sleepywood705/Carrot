@@ -67,7 +67,7 @@ export function Chat(postId) {
 
   return (
     <div className="Chat">
-      {/* <h2>환영합니다, {user.name}님!</h2> */}
+      <h3>환영합니다, {user.name}님!</h3>
       <MessageContainer messageList={messageList} user={user} postId={postId.postId} />
       <InputField
         message={message}

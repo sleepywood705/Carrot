@@ -21,10 +21,10 @@
   position: relative;
   padding: 20px;
   min-width: 380px;
-  width: 380px; height: fit-content;
+  width: 380px; height: 70%;
   background-color: #fff;
   border-radius: 10px;
-  gap: 30px;
+  gap: 20px;
   box-sizing: border-box;
 }
 
@@ -34,11 +34,10 @@
   flex-direction: column;
 }
 .PostingForm .row {
-  gap: 16px;
+  gap: 10px;
   display: flex;
   flex-direction: column;
 }
-
 .PostingForm .row > h2 {
   font-size: 21px;
   font-weight: 500;
@@ -52,9 +51,9 @@
   background: url(/public/img/close_blk.png) center/cover no-repeat;
   cursor: pointer;
 }
-
 .PostingForm .row > select,
-.PostingForm .row > input {
+.PostingForm .row > input,
+.PostingForm .costResult {
   padding: 0 10px;
   height: 50px;
   color: #444;
@@ -62,6 +61,39 @@
   border-radius: 8px;
   border: 1px solid #ddd;
 }
+.PostingForm .costResult p {
+  color: #666;
+}
+
+.c input[type="text"]:nth-child(1),
+.c input[type="number"]:nth-child(1) {
+  padding: 0 10px;
+  width:100%; height: 50px;
+  border-radius: 10px 10px 0 0;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+.c input[type="text"]:nth-child(2),
+.c button {
+  padding: 0 10px;
+  width:100%; height: 50px;
+  border-radius: 0 0 10px 10px !important;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+.c input[type="text"]:nth-child(1):focus,
+.c input[type="text"]:nth-child(2):focus {
+  border: 1px solid #ff6600;
+}
+
+
+
+
+
 
 .PostingForm .wrap_label {
   gap: 10px;
@@ -79,7 +111,6 @@
   align-items: center;
   justify-content: center;
 }
-
 
 .PostingForm .cont_btn {
   margin-top: auto;
@@ -99,19 +130,24 @@
   border: 1px solid #000;
 }
 
-
-.row .c .row {
-  padding: 0 20px;
+.mapView {
+  width: 100%; aspect-ratio: 1;
+  border: 1px solid #ddd;
+  border-radius: 10px;
 }
+
+
+
+
 .cont_btn {
   display: flex;
   flex-direction: column;
   gap: 10px;
   width: 100%;
 }
-
 .cont_btn button {
   padding: 10px;
+  height: 50px !important;
   border: none;
   border-radius: 5px;
   background-color: #ff7f00;
@@ -119,17 +155,14 @@
   font-weight: bold;
   cursor: pointer;
 }
-
 .full-width {
   width: 100%;
   height: 50px;
 }
-
 .button-row {
   display: flex;
   gap: 10px;
 }
-
 .half-width {
   flex: 1;
   height: 50px;
@@ -137,7 +170,7 @@
 .button-r {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* 버튼 사이의 세로 간격 */
+  gap: 10px;
   width: 100%;
 }
 .payment-section {
@@ -146,7 +179,6 @@
   gap: 10px;
   width: 100%;
 }
-
 .payment-section input {
   padding: 0 10px;
   height: 50px;
@@ -157,7 +189,6 @@
   width: 100%;
   box-sizing: border-box;
 }
-
 .payment-section button {
   width: 100%;
   height: 50px;

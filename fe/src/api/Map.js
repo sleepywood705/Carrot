@@ -1,4 +1,4 @@
-import './Map.css';
+import '../components/Post.css'
 import { useEffect, useRef, useState, useCallback } from 'react';
 
 const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
@@ -190,27 +190,28 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="right PostingForm">
-      <div className="a">
+    <form onSubmit={handleSubmit} className="PostingForm">
+      <div className="row">
         <h2>경로 검색</h2>
         <div className="mapView" ref={mapRef}></div>
       </div>
-      <div className="a">
+      <div className="row">
         <h2>비용 계산 결과</h2>
         <div className="costResult">
           <p>{fuelCost}</p>
           <p>{taxiCost}</p>
         </div>
       </div>
-      <div className="a y">
+      <div className="row">
+        <h2>경로</h2>
         <div className="c">
           <input 
             type="text" 
             id="startName" 
             name="startName" 
             placeholder="출발지 이름을 입력하세요" 
-            value={startName} // 상태를 입력 필드에 연결
-            onChange={(e) => setStartName(e.target.value)} // 상태 업데이트
+            value={startName}
+            onChange={(e) => setStartName(e.target.value)}
             required 
           />
           <input 

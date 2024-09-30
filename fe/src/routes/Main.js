@@ -238,6 +238,7 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
               const titleParts = trip.title.split(" ");
               const genderInfo = titleParts[6];
               const isSameGender = genderInfo === "동성";
+              const tripType = titleParts[3].toLowerCase();
 
               return (
                 <div
@@ -251,10 +252,10 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
                     </div>
                     <div className="card-title">
                       <div className="user-type">
-                        <span>
+      
+                        <span className={`type type-${tripType}`}>
                           {titleParts[3]}
                         </span>
-                        ·
                         <span style={{ color: isSameGender ? 'blue' : 'inherit' }}>
                           {titleParts[3] === "택시" ? titleParts[6] : genderInfo}
                         </span>
