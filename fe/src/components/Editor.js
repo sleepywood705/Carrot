@@ -367,7 +367,7 @@ function PostingForm({
       }
 
       let payer, receiver;
-       if (editData.title.includes('운전자') || editData.title.includes('택시')) {
+      if (editData.title.includes('운전자') || editData.title.includes('택시')) {
         payer = userId;
         receiver = editData.authorId;
       } else if (editData.title.includes('탑승자')) {
@@ -378,14 +378,14 @@ function PostingForm({
       }
 
       const paymentData = {
-        payer: payer,
-        receiver: receiver,
+        payerId: payer,
+        receiverId: receiver,
         cost: parseInt(paymentAmount)
       };
 
       console.log('결제 요청 데이터:', paymentData);
 
-      const response = await axios.post('/users/payment', paymentData, {
+      const response = await axios.post('/point/payment', paymentData, {
         headers: { 'Authorization': `${token}` }
       });
 
@@ -421,8 +421,8 @@ function PostingForm({
     }
   };
 
-  const showPaymentSection = 
-    (type === "탑승자" && isSameUser && isReservationCompleted) || 
+  const showPaymentSection =
+    (type === "탑승자" && isSameUser && isReservationCompleted) ||
     ((type === "운전자" || type === "택시") && isReservationOwner);
 
   return (
@@ -524,9 +524,9 @@ function PostingForm({
                     placeholder="결제 금액 입력"
                     disabled={isPaymentProcessing}
                   />
-                  <button 
-                    type="button" 
-                    onClick={handlePayment} 
+                  <button
+                    type="button"
+                    onClick={handlePayment}
                     disabled={isPaymentProcessing}
                     className="full-width"
                   >
@@ -553,9 +553,9 @@ function PostingForm({
                     placeholder="결제 금액 입력"
                     disabled={isPaymentProcessing}
                   />
-                  <button 
-                    type="button" 
-                    onClick={handlePayment} 
+                  <button
+                    type="button"
+                    onClick={handlePayment}
                     disabled={isPaymentProcessing}
                     className="full-width"
                   >
@@ -564,10 +564,10 @@ function PostingForm({
                 </div>
               )}
               {!isReservationCompleted && (
-                <button 
-                  type="button" 
-                  onClick={handleReserveClick} 
-                  disabled={editData.isReservationCompleted} 
+                <button
+                  type="button"
+                  onClick={handleReserveClick}
+                  disabled={editData.isReservationCompleted}
                   className="full-width"
                 >
                   {isReservationOwner ? "예약 취소하기" : "예약하기"}
