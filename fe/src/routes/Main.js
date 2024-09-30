@@ -252,9 +252,7 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
                     </div>
                     <div className="card-title">
                       <div className="user-type">
-                        <span>
-                          {titleParts[3]}
-                        </span>
+      
                         <span className={`type type-${tripType}`}>
                           {titleParts[3]}
                         </span>
