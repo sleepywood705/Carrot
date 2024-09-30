@@ -4,6 +4,7 @@ import { MyPoint } from "../components/MyPage/MyPoint.js";
 import { MyReservation } from "../components/MyPage/MyReservation.js";
 import { MyPost } from "../components/MyPage/MyPost.js";
 import { Withdrawal } from "../components/MyPage/Withdrawal.js";
+import { License } from "../components/MyPage/License.js";
 import { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 
@@ -61,8 +62,10 @@ export function Mypage() {
         return <MyPost user={user} />;
       case "Withdrawal":
         return <Withdrawal />;
-      case "MyReservation":
-        return <MyReservation />;
+      case "MyHistory":
+        return <MyHistory />;
+      case "License":
+          return <License />;
       default:
         return null;
     }
@@ -89,7 +92,8 @@ export function Mypage() {
           <ul>
             <li onClick={() => setSelectedMenu("ChangeInfo")}>회원정보변경</li>
             <li onClick={() => setSelectedMenu("MyPoint")}>내 포인트</li>
-            <li onClick={() => setSelectedMenu("MyPost")}>내가 작성한 글</li>
+            <li onClick={() => setSelectedMenu("MyPost")}>내가 작성한 글</li> 
+            <li onClick={() => setSelectedMenu("MyReserve")}>내가 예약한 글</li>
             <li onClick={() => setSelectedMenu("Withdrawal")}>회원 탈퇴</li>
           </ul>
         </details>

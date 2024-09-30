@@ -23,8 +23,7 @@ export class UsersService {
     };
 
     getCurrentUser = async (user) => {
-        // return this.excludePassword(user);
-        return user
+        return this.excludePassword(user);
     }
 
     createUser = async (email, password, name, gender, role = "USER") => {

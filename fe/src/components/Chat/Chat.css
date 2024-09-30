@@ -1,4 +1,5 @@
 .Chat {
+  height: 40vw !important;
   display: grid;
   grid-template-rows: auto 50px;
 }
@@ -63,4 +64,8 @@
   padding: 6px 2px;
   font-size: 14px;
   text-align: left;
+}
+.h2 {
+  height: 10%;
+  width: 100%;
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "../../api/axios.js";
 import { Editor } from "../Editor.js";
 
-export function MyPost({ user }) {
+export function MyReserve({ user }) {
   const [myPosts, setMyPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -48,7 +48,7 @@ export function MyPost({ user }) {
   };
 
   return (
-    <div id="MyPost">
+    <div id="MyReserve">
       <h2>내가 작성한 글</h2>
       {isLoading && <p>로딩 중...</p>}
       {error && <p>{error}</p>}
