@@ -14,4 +14,14 @@ export class PointController {
         }
     }
 
+    getUserTransactions = async (req, res, next) => {
+        try {
+            const userId = parseInt(req.params.userId);
+            const transactions = await this.pointService.getTransactionsByUserId(userId);
+            res.status(200).json({ data: transactions });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+            console.log(error);
+        }
+    };
 }

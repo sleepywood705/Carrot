@@ -33,7 +33,7 @@ export class UsersController {
             return res.status(200).json({ data: user });
         } catch (error) {
             // next(err);
-            console.log("error : ", err)
+            console.log("error : ", error)
             return res.status(500).json({ error, message: '서버 오류' });
         }
     };
@@ -108,7 +108,6 @@ export class UsersController {
         try {
             const { email, password } = req.body;
             const token = await this.usersService.loginUser(email, password);
-            // console.log('Bearer ' + token)
             return res.status(200).setHeader('authorization', `Bearer ${token}`).json({ message: 'Token logged in console' });
         } catch (error) {
             // next(err);

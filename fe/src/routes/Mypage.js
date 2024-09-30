@@ -1,6 +1,6 @@
 import "./Mypage.css";
 import { ChangeInfo } from "../components/MyPage/ChangeInfo.js";
-import { MyPoint } from "../components/MyPage/MyPoint.js"; 
+import { MyPoint } from "../components/MyPage/MyPoint.js";
 import { MyPost } from "../components/MyPage/MyPost.js";
 import { MyReserve } from "../components/MyPage/Myreserve.js";
 import { Withdrawal } from "../components/MyPage/Withdrawal.js";
@@ -18,12 +18,12 @@ export function Mypage() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get("/users/me", {
-          headers: 
+          headers:
           {
             Authorization: token,
           },
         });
-        console.log("토큰", token )
+        // console.log("토큰", token )
         setUser(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -72,7 +72,7 @@ export function Mypage() {
     <div id="Mypage">
       <aside id="SNB" className="left">
         <div className="myProfile">
-          <img src="/img/leaf.png" alt="leaf" className="leaf"/>
+          <img src="/img/leaf.png" alt="leaf" className="leaf" />
           <div
             className="myImg"
             style={{
@@ -89,7 +89,7 @@ export function Mypage() {
           <ul>
             <li onClick={() => setSelectedMenu("ChangeInfo")}>회원정보변경</li>
             <li onClick={() => setSelectedMenu("MyPoint")}>내 포인트</li>
-            <li onClick={() => setSelectedMenu("MyPost")}>내가 작성한 글</li> 
+            <li onClick={() => setSelectedMenu("MyPost")}>내가 작성한 글</li>
             <li onClick={() => setSelectedMenu("Withdrawal")}>회원 탈퇴</li>
           </ul>
         </details>
