@@ -380,6 +380,7 @@ function PostingForm({
       const paymentData = {
         payerId: payer,
         receiverId: receiver,
+        reservationId: editData.reservations[0].id,
         cost: parseInt(paymentAmount)
       };
 
