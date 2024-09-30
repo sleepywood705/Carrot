@@ -23,7 +23,8 @@ export class UsersService {
     };
 
     getCurrentUser = async (user) => {
-        return this.excludePassword(user);
+        // return this.excludePassword(user);
+        return user
     }
 
     createUser = async (email, password, name, gender, role = "USER") => {
@@ -32,7 +33,10 @@ export class UsersService {
         return this.excludePassword(createdUser);
     };
 
-    updateUser = async (id, data) => {
+    updateUser = async (id, data) => { 
+        if (data.password) {
+            data.password = await bcrypt.hash(data.password, 10);
+        }
         const user = await this.usersRepository.updateUser(id, data);
         if (!user) throw new Error('User not found');
         return this.excludePassword(user);
