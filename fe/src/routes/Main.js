@@ -229,6 +229,7 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
           {filteredTrips
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .map((trip, index) => {
+              // console.log('게시물 ID:', trip.id, '예약 정보:', trip.reservations);
               const reservationCount = trip.reservations ? trip.reservations.length : 0;
               const isUserReserved = trip.reservations &&
                 trip.reservations.some(reservation => reservation.bookerId === userId);
@@ -251,7 +252,7 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
                     </div>
                     <div className="card-title">
                       <div className="user-type">
-      
+
                         <span className={`type type-${tripType}`}>
                           {titleParts[3]}
                         </span>
@@ -259,7 +260,7 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
                           {titleParts[3] === "택시" ? titleParts[6] : genderInfo}
                         </span>
                       </div>
-                      <div 
+                      <div
                         className={`switch ${isSameGender ? 'switch-on' : ''}`}
                       >
                         <div className="gear"></div>
@@ -277,14 +278,13 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
                     </div>
                   </div>
                   {(isReservationClosed || reservationCount > 0) && (
-                    <div 
-                      className={`row3 ${
-                        isReservationClosed 
+                    <div
+                      className={`row3 ${isReservationClosed
                           ? 'booking'
-                          : reservationCount > 0 
+                          : reservationCount > 0
                             ? 'booking-finished'
                             : ''
-                      }`}
+                        }`}
                     >
                       {isReservationClosed ? "예약 마감" :
                         (reservationCount > 0 ? `${reservationCount}명 예약 중` : "")

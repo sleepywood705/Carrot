@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
-import axios from "../../api/axios";
+import axios from "../../api/axios.js";
 
 export function MyPoint({ user }) {
   const [pointTransactions, setPointTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     fetchPointTransactions();
   }, [user]);
+
   const fetchPointTransactions = async () => {
     setIsLoading(true);
     setError(null);
@@ -41,6 +43,7 @@ export function MyPoint({ user }) {
       setIsLoading(false);
     }
   };
+  
   return (
     <div id="MyPoint">
       <h2>내 포인트</h2>
