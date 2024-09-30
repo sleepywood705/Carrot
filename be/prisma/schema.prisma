@@ -11,13 +11,14 @@ model User {
     id                    Int            @id @default(autoincrement())
     email                 String         @unique
     password              String
-    name                  String?       
+    name                  String?        
     gender                Gender         
     point                 Int            @default(10000)
     role                  Role           @default(USER)
-    posts                 Post[]         @relation("Author") 
-    reservationsMade      Reservation[]  @relation("ReservationsMade") 
+    posts                 Post[]         @relation("Author")
+    reservationsMade      Reservation[]  @relation("ReservationsMade")
     chats                 Chat[]         @relation("UserChats")
+    pointTransactions     PointTransaction[] @relation("UserPointTransactions")
 }
 
 model Post {
@@ -25,9 +26,9 @@ model Post {
     createdAt             DateTime       @default(now())
     updatedAt             DateTime       @updatedAt
     title                 String
-    cost                  Int?            @default(0)
-    type                  Role?          
-    author                User           @relation("Author", fields: [authorId], references: [id], onDelete: Cascade) // Add onDelete: Cascade
+    cost                  Int?           @default(0)
+    type                  Role?         
+    author                User           @relation("Author", fields: [authorId], references: [id], onDelete: Cascade)
     authorId              Int
     reservations          Reservation[]
 }
@@ -37,25 +38,38 @@ model Reservation {
     from                  String
     to                    String
     date                  DateTime
-    cost                  Int?            @default(0)
+    cost                  Int?           @default(0)
+    status                Status         @default(PENDING)
     post                  Post           @relation(fields: [postId], references: [id], onDelete: Cascade)
     postId                Int
     booker                User           @relation("ReservationsMade", fields: [bookerId], references: [id], onDelete: Cascade)
-    bookerId              Int
-    isPaid                Boolean        @default(false)
+    bookerId              Int       
+    @@unique([postId, bookerId])
+}
 
-     @@unique([postId, bookerId])
+model PointTransaction {
+    id                Int       @id @default(autoincrement())
+    user              User      @relation("UserPointTransactions", fields: [userId], references: [id], onDelete: Cascade)
+    userId           Int
+    amount           Int      
+    createdAt        DateTime  @default(now())
+    description      String?   // Optional field for describing the transaction
 }
 
 model Chat {
-  id                Int              @id @default(autoincrement())
-  chat              String
-  createdAt         DateTime         @default(now())
-  user              User             @relation("UserChats", fields: [userId], references: [id], onDelete: Cascade)
-  userId            Int
-  roomId            Int
+    id                Int       @id @default(autoincrement())
+    chat              String
+    createdAt        DateTime   @default(now())
+    user              User       @relation("UserChats", fields: [userId], references: [id], onDelete: Cascade)
+    userId           Int
+    roomId           Int
 }
 
+enum Status {
+    PENDING
+    COMPLETED
+    FAILED
+}
 
 enum Role {
     USER

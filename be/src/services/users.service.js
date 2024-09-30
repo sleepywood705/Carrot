@@ -33,7 +33,7 @@ export class UsersService {
         return this.excludePassword(createdUser);
     };
 
-    updateUser = async (id, data) => { 
+    updateUser = async (id, data) => {
         if (data.password) {
             data.password = await bcrypt.hash(data.password, 10);
         }
