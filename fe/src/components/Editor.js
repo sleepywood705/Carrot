@@ -506,20 +506,6 @@ function PostingForm({
         </div>
       )}
 
-      {!isSameUser && (
-        <div className="payment-section">
-          <input
-            type="number"
-            value={paymentAmount}
-            onChange={(e) => setPaymentAmount(e.target.value)}
-            placeholder="결제 금액 입력"
-          />
-          <button type="button" onClick={handlePayment}>결제하기</button>
-        </div>
-      )}
-
-
-
       <div className="cont_btn">
         {isSameUser ? (
           <>
