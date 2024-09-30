@@ -229,7 +229,6 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
           {filteredTrips
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .map((trip, index) => {
-              console.log('게시물 ID:', trip.id, '예약 정보:', trip.reservations);
               const reservationCount = trip.reservations ? trip.reservations.length : 0;
               const isUserReserved = trip.reservations &&
                 trip.reservations.some(reservation => reservation.bookerId === userId);
