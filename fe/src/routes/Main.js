@@ -217,7 +217,7 @@ export function Main() {
   );
 }
 
-function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
+export function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
   return (
     <section id="Board">
       {isLoading ? (

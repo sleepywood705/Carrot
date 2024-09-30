@@ -1,10 +1,9 @@
 import "./Mypage.css";
 import { ChangeInfo } from "../components/MyPage/ChangeInfo.js";
 import { MyPoint } from "../components/MyPage/MyPoint.js"; 
-import { MyHistory } from "../components/MyPage/MyHistory.js";
+import { MyReservation } from "../components/MyPage/MyReservation.js";
 import { MyPost } from "../components/MyPage/MyPost.js";
 import { Withdrawal } from "../components/MyPage/Withdrawal.js";
-import { License } from "../components/MyPage/License.js";
 import { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 
@@ -62,10 +61,8 @@ export function Mypage() {
         return <MyPost user={user} />;
       case "Withdrawal":
         return <Withdrawal />;
-      case "MyHistory":
-        return <MyHistory />;
-      case "License":
-          return <License />;
+      case "MyReservation":
+        return <MyReservation />;
       default:
         return null;
     }
@@ -97,9 +94,9 @@ export function Mypage() {
           </ul>
         </details>
         <details open>
-          <summary>이용 관리</summary>
+          <summary>예약 관리</summary>
           <ul>
-            <li onClick={() => setSelectedMenu("MyHistory")}>이용 내역</li>
+            <li onClick={() => setSelectedMenu("MyReservation")}>내 예약</li>
           </ul>
         </details>
         {/* <details open>

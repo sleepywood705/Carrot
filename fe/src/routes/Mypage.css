@@ -57,7 +57,7 @@
 #MyPoint,
 #MyPost,
 #Withdrawal,
-#MyHistory {
+#MyReservation {
   padding: 20px;
   width: 500px;
   background-color: #fff;
@@ -71,14 +71,14 @@
 #MyPoint .currentPoint,
 #MyPoint .pointHistory,
 #MyPost .postHistory,
-#Withdrawal > div,
-#MyHistory > div {
+#MyReservation > div {
   padding: 10px 16px;
   color: #666;
   font-weight: 400;
   height: fit-content;
 }
 /* 보더 처리 */
+.myName,
 #SNB > div,
 #SNB > details,
 #ChangeInfo,
@@ -90,7 +90,7 @@
 #MyPost,
 #MyPost .postHistory,
 #Withdrawal,
-#MyHistory {
+#MyReservation {
   border-radius: 6px;
   border: 1px solid #ddd;
 }
@@ -99,7 +99,7 @@
 #MyPoint > h2,
 #MyPost > h2,
 #Withdrawal > h2,
-#MyHistory > h2 {
+#MyReservation > h2 {
   color: #333;
   font-size: 20px;
   font-weight: 700;
@@ -132,6 +132,31 @@
   flex-direction: column;
 }
 
+#Withdrawal > div > p {
+  height: 100px;
+  border-radius: 8px;
+  background-color: #eee;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+
+#MyReservation > section {
+  padding: 0;
+  width: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+}
+#MyReservation > section > div {
+  width: 100%; height: fit-content;
+  gap: 20px;
+}
+#MyReservation > section > div > div {
+  width: 100%; height: fit-content;
+}
+
+
 .btn_change,
 .btn_confirm {
   padding: 4px 12px;
@@ -143,5 +168,5 @@
 }
 .btn_confirm {
   color: #333;
-  background-color: #ddd;
+  background-color: #eee;
 }
