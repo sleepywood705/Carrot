@@ -19,10 +19,12 @@ export function Mypage() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get("/users/me", {
-          headers: {
+          headers: 
+          {
             Authorization: token,
           },
         });
+        console.log("토큰", token )
         setUser(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -94,12 +96,12 @@ export function Mypage() {
             <li onClick={() => setSelectedMenu("Withdrawal")}>회원 탈퇴</li>
           </ul>
         </details>
-        {/* <details open>
+        <details open>
           <summary>이용 관리</summary>
           <ul>
             <li onClick={() => setSelectedMenu("MyHistory")}>이용 내역</li>
           </ul>
-        </details> */}
+        </details>
         {/* <details open>
           <summary>차량 등록</summary>
           <ul>

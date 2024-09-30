@@ -68,7 +68,7 @@ export function Header({ isLoggedIn, onLogout, userName }) {
           {userName} 님 안녕하세요
           <nav>
             <Link to='/mypage'>마이페이지</Link>
-            <Link to='/history'>이용 내역</Link>
+            {/* <Link to='/history'>이용 내역</Link> */}
           </nav>
         </Link>
       )}
