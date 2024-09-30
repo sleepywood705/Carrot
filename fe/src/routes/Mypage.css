@@ -56,7 +56,8 @@
 #ChangeInfo,
 #MyPoint,
 #MyPost,
-#Withdrawal {
+#Withdrawal,
+#MyHistory {
   padding: 20px;
   width: 500px;
   background-color: #fff;
@@ -70,7 +71,8 @@
 #MyPoint .currentPoint,
 #MyPoint .pointHistory,
 #MyPost .postHistory,
-#Withdrawal > div {
+#Withdrawal > div,
+#MyHistory > div {
   padding: 10px 16px;
   color: #666;
   font-weight: 400;
@@ -87,7 +89,8 @@
 #MyPoint .pointHistory,
 #MyPost,
 #MyPost .postHistory,
-#Withdrawal {
+#Withdrawal,
+#MyHistory {
   border-radius: 6px;
   border: 1px solid #ddd;
 }

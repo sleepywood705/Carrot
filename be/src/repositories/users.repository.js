@@ -17,7 +17,6 @@ export class UsersRepository {
                 gender: true,
                 point: true,
                 role: true
-
             }
         });
         return user;
