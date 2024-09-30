@@ -8,4 +8,9 @@ export class PointService {
         return createdPost;
     }
 
+    getTransactionsByUserId = async (userId) => {
+        return await this.pointRepository.getPointTransactionsByUserId(userId);
+    };
+
+
 }

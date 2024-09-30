@@ -78,5 +78,26 @@ export class PointRepository {
             };
         });
     };
+
+    getPointTransactionsByUserId = async (userId) => {
+        return await prisma.pointTransaction.findMany({
+            where: {
+                userId: userId,
+            },
+            include: {
+                reservation: true,
+                user: {
+                    select: {
+                        id: true,
+                        email: true,
+                        name: true,
+                        gender: true,
+                        point: true,
+                        role: true,
+                    },
+                },
+            },
+        });
+    };
 }
 
