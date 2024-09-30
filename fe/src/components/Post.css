@@ -44,7 +44,7 @@
   flex-direction: column;
 }
 .PostingForm .row > h2 {
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -58,7 +58,8 @@
 }
 .PostingForm .row > select,
 .PostingForm .row > input,
-.PostingForm .costResult {
+.PostingForm .costResult,
+.PostingForm .wrap_payment input {
   padding: 0 20px;
   height: 50px;
   color: #444;
@@ -99,9 +100,6 @@
 }
 
 
-
-
-
 .PostingForm .wrap_label {
   gap: 10px;
   width: 100%;
@@ -119,81 +117,33 @@
   justify-content: center;
 }
 
-.PostingForm .cont_btn {
-  margin-top: auto;
+.PostingForm .wrap_payment {
   gap: 10px;
-  display: flex;
-  flex-row: row;
+  display: grid;
+  grid-template-columns: auto auto;
 }
-.PostingForm .cont_btn > button {
-  flex: 1 1 calc(50% - 10px);
-  color: #fff;
-  border-radius: 6px;
-  background-color: #ff7f00;
+.PostingForm .wrap_payment input,
+.PostingForm .wrap_payment button {
+  width: 100%;
 }
+
 #anyone,
 #same {
   width: 12px; height: 12px;
   border: 1px solid #000;
 }
 
-
-
-.full-width {
-  width: 100%;
-  height: 50px;
-}
-.button-row {
-  display: flex;
-  gap: 10px;
-}
-.half-width {
-  flex: 1;
-  height: 50px;
-}
-.button-r {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-.payment-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-.payment-section input {
-  padding: 0 10px;
-  height: 50px;
-  color: #444;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  width: 100%;
-  box-sizing: border-box;
-}
-.payment-section button {
-  width: 100%;
-  height: 50px;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  background-color: #ff7f00;
-  cursor: pointer;
-}
-
 .cont_btn {
+  margin-top: auto;
+  gap: 8px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   width: 100%;
 }
-.cont_btn button {
+.cont_btn button,
+.PostingForm .wrap_payment button {
   padding: 10px;
-  height: 50px !important;
+  width: 100%; height: 50px !important;
   border: none;
   border-radius: 5px;
   background-color: #ff7f00;

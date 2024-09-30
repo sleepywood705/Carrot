@@ -506,75 +506,52 @@ function PostingForm({
           </div>
         </div>
       )}
-
+      {showPaymentSection && (
+        <div className="row">
+          <h2>결제 금액을 입력해 주세요</h2>
+          <div className="wrap_payment">
+            <input
+              type="number"
+              value={paymentAmount}
+              onChange={(e) => setPaymentAmount(e.target.value)}
+              placeholder="결제 금액"
+              disabled={isPaymentProcessing}
+            />
+            <button
+              type="button"
+              onClick={handlePayment}
+              disabled={isPaymentProcessing}
+            >
+              {isPaymentProcessing ? '처리 중...' : '결제하기'}
+            </button>
+          </div>
+        </div>
+      )}
       <div className="cont_btn">
         {isSameUser ? (
           <>
-            <div className="button-r">
-              {!isReservationCompleted && (
-                <button type="button" onClick={handleReservationComplete} className="full-width">
-                  예약 마감
-                </button>
-              )}
-              {showPaymentSection && (
-                <div className="payment-section">
-                  <input
-                    type="number"
-                    value={paymentAmount}
-                    onChange={(e) => setPaymentAmount(e.target.value)}
-                    placeholder="결제 금액 입력"
-                    disabled={isPaymentProcessing}
-                  />
-                  <button
-                    type="button"
-                    onClick={handlePayment}
-                    disabled={isPaymentProcessing}
-                    className="full-width"
-                  >
-                    {isPaymentProcessing ? '처리 중...' : '결제하기'}
-                  </button>
-                </div>
-              )}
-              <button type="button" onClick={() => setShowChat(true)} className="full-width">채팅하기</button>
-              <div className="button-row">
-                <button type="submit" className="half-width">수정하기</button>
-                <button type="button" onClick={onDelete} className="half-width">삭제하기</button>
-              </div>
-            </div>
+            {!isReservationCompleted && (
+              <button type="button" onClick={handleReservationComplete}>
+                예약 마감
+              </button>
+            )}
+            <button type="button" onClick={() => setShowChat(true)}>채팅하기</button>
+            <button type="submit" className="halfButton">수정하기</button>
+            <button type="button" onClick={onDelete} className="halfButton">삭제하기</button>
           </>
         ) : (
           <>
-            <div className="button-r">
-              {showPaymentSection && (
-                <div className="payment-section">
-                  <input
-                    type="number"
-                    value={paymentAmount}
-                    onChange={(e) => setPaymentAmount(e.target.value)}
-                    placeholder="결제 금액 입력"
-                    disabled={isPaymentProcessing}
-                  />
-                  <button
-                    type="button"
-                    onClick={handlePayment}
-                    disabled={isPaymentProcessing}
-                    className="full-width"
-                  >
-                    {isPaymentProcessing ? '처리 중...' : '결제하기'}
-                  </button>
-                </div>
-              )}
+            <div className="row">
               {!isReservationCompleted && (
                 <button
                   type="button"
                   onClick={handleReserveClick}
                   disabled={editData.isReservationCompleted}
-                  className="full-width"
                 >
                   {isReservationOwner ? "예약 취소하기" : "예약하기"}
                 </button>
               )}
-              <button type="button" onClick={() => setShowChat(true)} className="full-width">채팅하기</button>
+              <button type="button" onClick={() => setShowChat(true)}>채팅하기</button>
             </div>
           </>
         )}
