@@ -272,27 +272,19 @@
   color: crimson;
 }
 
-/* .Card .reservation-status {
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: bold;
-  text-align: center;
-  background-color: #ffc107;
-  color: black;
-}
-.Card .type {
+.Board .Card .type {
   padding: 5px 10px;
   border-radius: 4px;
 }
-.Card .type-passenger {
-  background-color: #4caf50;
+.Board .Card .type-탑승자 {
+  background-color: crimson;
   color: white;
 }
-.Card .type-driver {
-  background-color: #2196f3;
-  color: white;
+.Board .Card .type-운전자 {
+  background-color: gold;
+  color: rgb(0, 0, 0);
 }
-.Card .type-taxi {
-  background-color: #ffc107;
-  color: black;
-} */
+.Board .Card .type-택시 {
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+} 
