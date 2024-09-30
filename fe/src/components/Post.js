@@ -123,7 +123,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
 
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
-      <div className="a">
+      <div className="row">
         <h2>유형을 선택해 주세요<button onClick={handleCloseModal}></button></h2>
         <select value={type} onChange={(e) => setType(e.target.value)}>
           <option value="탑승자">탑승자</option>
@@ -132,7 +132,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         </select>
       </div>
       {type === '택시' && (
-        <div className="a">
+        <div className="row">
           <h2>몇 명이 탑승하나요?</h2>
           <select
             value={taxiCapacity}
@@ -144,7 +144,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
           </select>
         </div>
       )}
-      <div className="a">
+      <div className="row">
         <h2>몇 시에 출발하시나요?</h2>
         <input
           type="time"
@@ -154,7 +154,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
           required
         />
       </div>
-      <div className="a">
+      <div className="row">
         <h2>언제 출발하시나요?</h2>
         <input
           type="date"
@@ -164,9 +164,9 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         />
       </div>
       {type !== '택시' && (
-        <div className="a">
+        <div className="row">
           <h2>어떤 분과 탑승하시나요?</h2>
-          <div className="wrap">
+          <div className="wrap_label">
             <label>
               <input
                 type="radio"
