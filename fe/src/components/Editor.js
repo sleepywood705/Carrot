@@ -378,14 +378,15 @@ function PostingForm({
       }
 
       const paymentData = {
-        payer: payer,
-        receiver: receiver,
+        payerId: payer,
+        receiverId: receiver,
+        reservationId: editData.reservations[0].id,
         cost: parseInt(paymentAmount)
       };
 
       console.log('결제 요청 데이터:', paymentData);
 
-      const response = await axios.post('/users/payment', paymentData, {
+      const response = await axios.post('/point/payment', paymentData, {
         headers: { 'Authorization': `${token}` }
       });
 
