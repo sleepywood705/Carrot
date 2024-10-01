@@ -96,6 +96,7 @@ function ReservationCard({ post, onEditClick }) {
   const isSameGender = genderInfo === "동성";
   const getStatusText = (status) => {
     if (status === "PENDING") return "예약중";
+    if (status === "COMPLETED") return "결제완료";
     return status || "알 수 없음";
   };
 
