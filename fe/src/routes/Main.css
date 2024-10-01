@@ -4,8 +4,6 @@
 }
 #Main h1 {
   padding: 80px;
-  color: #333;
-  font-size: 28px;
   display: grid;
   place-items: center;
 }
@@ -239,11 +237,24 @@
   align-items: center;
   justify-content: center;
 }
-.Card .row3.reservation-in-progress {
+.Card .row3.booking {
   color: rgb(85, 85, 255);
 }
-.Card .row3.reservation-closed {
-  color: crimson;
+
+@keyframes sparkle {
+  0% {
+    color: rgba(0, 0, 0, 1);  /* 완전히 불투명한 검정 */
+  }
+  50% {
+    color: rgba(0, 0, 0, 0.5);  /* 반투명한 검정 */
+  }
+  100% {
+    color: rgba(0, 0, 0, 1);  /* 다시 완전히 불투명한 검정 */
+  }
+}
+
+.Card .row3.booking-finished {
+  animation: sparkle 1.5s infinite ease-in-out;
 }
 .Cover {
   position: absolute;
