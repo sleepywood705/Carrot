@@ -73,7 +73,7 @@
 
 ### 일반적인 오류와 해결 방법
 
-# 1. 무결성 오류
+#### 1. 무결성 오류
 - 해결:
   1. npm 캐시 정리: `npm cache clean --force`
   2. `node_modules` 폴더와 `package-lock.json` 파일 삭제
