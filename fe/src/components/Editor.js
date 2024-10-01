@@ -429,7 +429,7 @@ function PostingForm({
 
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
-      <button onClick={handleCloseModal} className="btn_close"/>
+      <button onClick={handleCloseModal} className="btn_close" />
       <div className="row">
         <h2>유형을 선택해 주세요</h2>
         <select
@@ -529,31 +529,31 @@ function PostingForm({
           </div>
         </div>
       )}
-        {isSameUser ? (
-          <div className="wrap_btn">
-            {!isReservationCompleted && (
-              <button type="button" onClick={handleReservationComplete}>
-                예약 마감
-              </button>
-            )}
-            <button type="button" onClick={() => setShowChat(true)}>채팅하기</button>
-            <button type="submit" className="btn_modify">수정하기</button>
-            <button type="button" onClick={onDelete} className="btn_delete">삭제하기</button>
-          </div>
-        ) : (
-          <div className="wrap_btn">
-            {!isReservationCompleted && (
-              <button
-                type="button"
-                onClick={handleReserveClick}
-                disabled={editData.isReservationCompleted}
-              >
-                {isReservationOwner ? "예약 취소하기" : "예약하기"}
-              </button>
-            )}
-            <button type="button" onClick={() => setShowChat(true)}>채팅하기</button>
-          </div>
-        )}
+      {isSameUser ? (
+        <div className="wrap_btn">
+          {!isReservationCompleted && (
+            <button type="button" onClick={handleReservationComplete}>
+              예약 마감
+            </button>
+          )}
+          <button type="button" onClick={() => setShowChat(true)}>채팅하기</button>
+          <button type="submit" className="btn_modify">수정하기</button>
+          <button type="button" onClick={onDelete} className="btn_delete">삭제하기</button>
+        </div>
+      ) : (
+        <div className="wrap_btn">
+          {!isReservationCompleted && (
+            <button
+              type="button"
+              onClick={handleReserveClick}
+              disabled={editData.isReservationCompleted}
+            >
+              {isReservationOwner ? "예약 취소하기" : "예약하기"}
+            </button>
+          )}
+          <button type="button" onClick={() => setShowChat(true)}>채팅하기</button>
+        </div>
+      )}
     </form>
   );
 }

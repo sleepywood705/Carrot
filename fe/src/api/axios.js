@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'https://flycarrot10011413.fly.dev/api',
+    baseURL: 'https://flycarrot10011413.fly.dev/api' || process.env.REACT_APP_API_URL,
     headers: {
         'Content-Type': 'application/json',
     },

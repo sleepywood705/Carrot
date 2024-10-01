@@ -36,7 +36,7 @@ export function Main() {
     setError(null);
     try {
       const response = await axios.get('/posts/gets');
-      
+
       if (response.data && Array.isArray(response.data.data)) {
         const tripsWithReservationStatus = response.data.data.map(trip => ({
           ...trip,
@@ -63,9 +63,9 @@ export function Main() {
         headers: { 'Authorization': `${token}` }
       });
       setUserId(response.data.data.id);
-   
+
     } catch (error) {
-  
+
     }
   };
 
@@ -136,7 +136,7 @@ export function Main() {
       setSelectedTrip(updatedTrip);
       setIsEditModalOpen(true);
     } catch (error) {
-   
+
       alert('예약 정보를 가져오는 데 실패했습니다. 다시 시도해 주세요.');
     } finally {
       setIsReservationLoading(false);
@@ -249,7 +249,7 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
                     </div>
                     <div className="card-title">
                       <div className="user-type">
-      
+
                         <span className={`type type-${tripType}`}>
                           {titleParts[3]}
                         </span>
@@ -257,7 +257,7 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
                           {titleParts[3] === "택시" ? titleParts[6] : genderInfo}
                         </span>
                       </div>
-                      <div 
+                      <div
                         className={`switch ${isSameGender ? 'switch-on' : ''}`}
                       >
                         <div className="gear"></div>
@@ -275,14 +275,13 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
                     </div>
                   </div>
                   {(isReservationClosed || reservationCount > 0) && (
-                    <div 
-                      className={`row3 ${
-                        isReservationClosed 
+                    <div
+                      className={`row3 ${isReservationClosed
                           ? 'booking'
-                          : reservationCount > 0 
+                          : reservationCount > 0
                             ? 'booking-finished'
                             : ''
-                      }`}
+                        }`}
                     >
                       {isReservationClosed ? "예약 마감" :
                         (reservationCount > 0 ? `${reservationCount}명 예약 중` : "")

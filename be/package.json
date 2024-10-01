@@ -5,11 +5,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm index.js",
+    "start": "node index.js",
+    "index": "nodemon index.js",
     "dev": "nodemon src/app.js",
-    "format": "prettier --write *.js **/*.js",
-    "index": "nodemon index.js"
+    "format": "prettier --write *.js **/*.js"
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
