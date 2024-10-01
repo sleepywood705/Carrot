@@ -15,6 +15,8 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
   const [startName, setStartName] = useState(initialDeparture); // 출발지 상태
   const [endName, setEndName] = useState(initialArrival); // 도착지 상태
 
+  const [bounds, setBounds] = useState(null);
+
   useEffect(() => {
     const script = document.createElement('script');
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=c2828d7dee20f4b50bd4e887a055a84b&libraries=services&autoload=false`;
@@ -70,6 +72,23 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
     });
   }, [map]);
 
+  const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  const calculateCosts = useCallback((distance) => {
+    const distanceKm = distance / 1000;
+    const fuelPrice = 1800;
+    const fuelEfficiency = 10;
+    const fuelCost = (distanceKm / fuelEfficiency) * fuelPrice;
+    setFuelCost(`기름값: 약 ${numberWithCommas(fuelCost.toFixed(0))}원`);
+
+    const baseFare = 4000;
+    const per100mFare = 132;
+    const taxiCost = baseFare + (distance / 100 * per100mFare);
+    setTaxiCost(`택시비: 약 ${numberWithCommas(taxiCost.toFixed(0))}원`);
+  }, []);
+
   const setMarker = useCallback((coords, type) => {
     if (!map) return;
 
@@ -93,6 +112,15 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
       setStartMarker(marker);
     } else if (type === 'E') {
       setEndMarker(marker);
+    }
+
+    // 두 마커가 모두 설정되었을 때 경계를 업데이트합니다
+    if (startMarker && endMarker) {
+      const newBounds = new window.kakao.maps.LatLngBounds();
+      newBounds.extend(startMarker.getPosition());
+      newBounds.extend(endMarker.getPosition());
+      setBounds(newBounds);
+      map.setBounds(newBounds);
     }
   }, [map, startMarker, endMarker]);
 
@@ -132,29 +160,18 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
           setPolyline(newPolyline);
           setDistance(newDistance);
           calculateCosts(newDistance);
+
+          // 경로가 그려진 후 경계를 업데이트합니다
+          const routeBounds = new window.kakao.maps.LatLngBounds();
+          path.forEach(coord => routeBounds.extend(coord));
+          setBounds(routeBounds);
+          map.setBounds(routeBounds);
         } else {
           alert('경로를 찾을 수 없습니다.');
         }
       })
       .catch(error => console.error('경로 가져오기 실패:', error));
-  }, [map, polyline]);
-
-  const calculateCosts = useCallback((distance) => {
-    const distanceKm = distance / 1000;
-    const fuelPrice = 1800;
-    const fuelEfficiency = 10;
-    const fuelCost = (distanceKm / fuelEfficiency) * fuelPrice;
-    setFuelCost(`기름값: 약 ${numberWithCommas(fuelCost.toFixed(0))}원`);
-
-    const baseFare = 4000;
-    const per100mFare = 132;
-    const taxiCost = baseFare + (distance / 100 * per100mFare);
-    setTaxiCost(`택시비: 약 ${numberWithCommas(taxiCost.toFixed(0))}원`);
-  }, []);
-
-  const numberWithCommas = (x) => {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
+  }, [map, polyline, calculateCosts]);
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
