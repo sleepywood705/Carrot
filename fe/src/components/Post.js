@@ -123,8 +123,9 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
 
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
+      <button onClick={handleCloseModal} className="btn_close"/>
       <div className="row">
-        <h2>유형을 선택해 주세요<button onClick={handleCloseModal}></button></h2>
+        <h2>유형을 선택해 주세요</h2>
         <select value={type} onChange={(e) => setType(e.target.value)}>
           <option value="탑승자">탑승자</option>
           <option value="운전자">운전자</option>
@@ -192,7 +193,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
           </div>
         </div>
       )}
-      <div className="cont_btn">
+      <div className="wrap_btn">
         <button type="submit">작성</button>
       </div>
     </form>

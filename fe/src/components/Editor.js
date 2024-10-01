@@ -427,8 +427,9 @@ function PostingForm({
 
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
-      <div className="a">
-        <h2>유형을 선택해 주세요<button onClick={handleCloseModal}></button></h2>
+      <button onClick={handleCloseModal} className="btn_close"/>
+      <div className="row">
+        <h2>유형을 선택해 주세요</h2>
         <select
           value={type}
           onChange={(e) => setType(e.target.value)}
@@ -440,7 +441,7 @@ function PostingForm({
         </select>
       </div>
       {type === '택시' && (
-        <div className="a">
+        <div className="row">
           <h2>몇 명이 탑승하나요?</h2>
           <select
             value={taxiCapacity}
@@ -453,7 +454,7 @@ function PostingForm({
           </select>
         </div>
       )}
-      <div className="a">
+      <div className="row">
         <h2>몇 시에 출발하시나요?</h2>
         <input
           type="time"
@@ -464,7 +465,7 @@ function PostingForm({
           disabled={!isSameUser}
         />
       </div>
-      <div className="a">
+      <div className="row">
         <h2>언제 출발하시나요?</h2>
         <input
           type="date"
@@ -475,9 +476,9 @@ function PostingForm({
         />
       </div>
       {type !== '택시' && (
-        <div className="a">
+        <div className="row">
           <h2>어떤 분과 탑승하시나요?</h2>
-          <div className="wrap">
+          <div className="wrap_label">
             <label>
               <input
                 type="radio"
@@ -526,35 +527,31 @@ function PostingForm({
           </div>
         </div>
       )}
-      <div className="cont_btn">
         {isSameUser ? (
-          <>
+          <div className="wrap_btn">
             {!isReservationCompleted && (
               <button type="button" onClick={handleReservationComplete}>
                 예약 마감
               </button>
             )}
             <button type="button" onClick={() => setShowChat(true)}>채팅하기</button>
-            <button type="submit" className="halfButton">수정하기</button>
-            <button type="button" onClick={onDelete} className="halfButton">삭제하기</button>
-          </>
+            <button type="submit" className="btn_modify">수정하기</button>
+            <button type="button" onClick={onDelete} className="btn_delete">삭제하기</button>
+          </div>
         ) : (
-          <>
-            <div className="row">
-              {!isReservationCompleted && (
-                <button
-                  type="button"
-                  onClick={handleReserveClick}
-                  disabled={editData.isReservationCompleted}
-                >
-                  {isReservationOwner ? "예약 취소하기" : "예약하기"}
-                </button>
-              )}
-              <button type="button" onClick={() => setShowChat(true)}>채팅하기</button>
-            </div>
-          </>
+          <div className="wrap_btn">
+            {!isReservationCompleted && (
+              <button
+                type="button"
+                onClick={handleReserveClick}
+                disabled={editData.isReservationCompleted}
+              >
+                {isReservationOwner ? "예약 취소하기" : "예약하기"}
+              </button>
+            )}
+            <button type="button" onClick={() => setShowChat(true)}>채팅하기</button>
+          </div>
         )}
-      </div>
     </form>
   );
 }

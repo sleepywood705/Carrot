@@ -1,11 +1,20 @@
 import './Login.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from '../api/axios.js'
 
 export function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('savedEmail');
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,10 +31,16 @@ export function Login({ onLogin }) {
         });
         const userName = userResponse.data.data.name; // data.data.name으로 수정
         onLogin(userName);  // 이메일 대신 이름을 전달
+
+        if (rememberMe) {
+          localStorage.setItem('savedEmail', email);
+        } else {
+          localStorage.removeItem('savedEmail');
+        }
       } else {
         alert('No token received.');
       }
-      console.log("successfully logged in")
+      console.log("successfully logged in");
     } catch (error) {
       console.error('Login error:', error);
       alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
@@ -57,6 +72,17 @@ export function Login({ onLogin }) {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+        </span>
+        <span>
+          <label className="check_remember">
+            <input
+              type="checkbox"
+              className="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+            아이디 저장
+          </label>
         </span>
         <button type="submit" className="btn_login">로그인</button>
       </form>

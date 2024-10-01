@@ -204,7 +204,7 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
       </div>
       <div className="row">
         <h2>경로</h2>
-        <div className="c">
+        <div className="outline">
           <input 
             type="text" 
             id="startName" 
@@ -225,7 +225,7 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
           />
         </div>
       </div>
-      <div className="cont_btn">
+      <div className="wrap_btn">
         <button type="submit">경로 검색</button>
       </div>
     </form>

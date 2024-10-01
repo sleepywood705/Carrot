@@ -46,10 +46,16 @@
 }
 #SNB > details > ul {
   margin-top: 20px;
+  font-size: 16px;
   gap: 20px;
   display: flex;
   flex-direction: column;
 }
+#SNB details summary {
+  font-size: 18px;
+  font-weight: 500;
+}
+
 
 
 /* 컨테이너 크기 처리 */
@@ -59,7 +65,7 @@
 #Withdrawal,
 #MyReserve {
   padding: 20px;
-  width: 500px;
+  width: 580px;
   background-color: #fff;
   gap: 20px;
   display: flex;
@@ -103,14 +109,6 @@
   color: #333;
   font-size: 20px;
   font-weight: 700;
-}
-#SNB > details > ul {
-  font-size: 16px;
-}
-#SNB details summary,
-#MyPoint > h3 {
-  font-size: 18px;
-  font-weight: 500;
 }
 
 

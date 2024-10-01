@@ -48,7 +48,7 @@ export function MyPoint({ user }) {
     <div id="MyPoint">
       <h2>내 포인트</h2>
       <div className="currentPoint">{user.point}</div>
-      <h3>포인트 내역</h3>
+      <h2>포인트 내역</h2>
       {isLoading && <p>로딩 중...</p>}
       {error && <p>{error}</p>}
       {pointTransactions.length === 0 && !isLoading && !error && (
