@@ -65,9 +65,3 @@ header a.user-menu nav a:hover {
 .invert {
   color: #fff;
 }
-header.visible {
-  top: 0;
-}
-header.hidden {
-  top: -80px;
-}

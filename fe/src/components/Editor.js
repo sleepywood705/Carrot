@@ -390,6 +390,7 @@ function PostingForm({
         headers: { 'Authorization': `${token}` }
       });
 
+
       console.log('결제 응답:', response.data);
 
       if (response.status) {
