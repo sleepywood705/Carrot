@@ -70,3 +70,87 @@
 
 ## 프로젝트 상태
 현재 구현 중인 프로젝트로, 지속적인 업데이트와 기능 개선이 진행될 예정입니다.
+
+### 일반적인 오류와 해결 방법
+
+#### 1. 무결성 오류
+- 해결:
+  1. npm 캐시 정리: `npm cache clean --force`
+  2. `node_modules` 폴더와 `package-lock.json` 파일 삭제
+  3. 의존성 재설치: `npm install`
+
+#### 2. 400번대 오류 
+
+#### 400 Bad Request
+- 설명: 클라이언트가 잘못된 요청을 보냈음을 나타냅니다.
+- 일반적인 원인:
+  - 잘못된 요청 구문
+  - 유효하지 않은 요청 메시지 프레이밍
+  - 잘못된 요청 라우팅
+- 해결 방법:
+  - 요청 파라미터와 본문을 확인
+  - API 문서를 참조하여 올바른 요청 형식 확인
+  - 클라이언트 측 유효성 검사 강화
+
+#### 401 Unauthorized
+- 설명: 인증이 필요한 리소스에 대해 인증되지 않은 요청을 나타냅니다.
+- 일반적인 원인:
+  - 인증 토큰 누락
+  - 만료된 인증 토큰
+  - 유효하지 않은 인증 정보
+- 해결 방법:
+  - 인증 토큰이 요청 헤더에 포함되어 있는지 확인
+  - 토큰 갱신 메커니즘 구현
+  - 로그인 상태 및 세션 관리 로직 검토
+
+#### 404 Not Found
+- 설명: 요청한 리소스를 서버에서 찾을 수 없음을 나타냅니다.
+- 일반적인 원인:
+  - 잘못된 URL
+  - 삭제되거나 이동된 리소스
+  - 서버 측 라우팅 오류
+- 해결 방법:
+  - API 엔드포인트 URL 철자와 형식 확인
+  - 백엔드 라우팅 설정 검토
+  - 리소스의 존재 여부 확인
+  - 적절한 에러 핸들링 및 사용자 피드백 구현
+
+#### 3. CORS (Cross-Origin Resource Sharing) 오류
+- 증상: "Access to XMLHttpRequest at 'http://api.example.com' from origin 'http://localhost:3000' has been blocked by CORS policy"
+- 해결:
+  1. 백엔드에서 CORS 설정 확인
+  2. 프록시 설정 (개발 환경)
+  3. 올바른 Origin 헤더 설정
+
+#### 4. 'module not found' 오류
+- 증상: "Module not found: Can't resolve 'some-module'"
+- 해결:
+  1. `npm install some-module` 실행
+  2. `package.json`에 모듈이 올바르게 리스트되어 있는지 확인
+  3. `node_modules` 폴더 삭제 후 `npm install` 재실행
+
+#### 5. 환경 변수 관련 오류
+- 증상: "process is not defined" 또는 환경 변수 값이 undefined
+- 해결:
+  1. `.env` 파일이 올바른 위치에 있는지 확인
+  2. `dotenv` 패키지가 설치되어 있고 올바르게 구성되었는지 확인
+  3. 환경 변수 이름이 올바른지 확인 (대소문자 구분)
+
+#### 6. 버전 불일치 오류
+- 증상: "This version of node"
+- 해결:
+  1. `package.json`에서 의존성 버전 확인
+  2. 호환되는 버전으로 업데이트 또는 다운그레이드
+  3. `npm update` 또는 특정 패키지 재설치
+
+#### 7.API 요청 실패
+- 증상: "Failed to fetch" 또는 특정 HTTP 상태 코드 (예: 404, 500)
+- 해결:
+  1. API 엔드포인트 URL 확인
+  2. 네트워크 연결 상태 확인
+  3. API 서버 상태 확인
+  4. 요청 헤더 및 본문 데이터 확인
+
+
+
+

@@ -36,8 +36,7 @@ export function Main() {
     setError(null);
     try {
       const response = await axios.get('/posts/gets');
-      console.log('서버에서 받은 데이터:', response.data);
-
+      
       if (response.data && Array.isArray(response.data.data)) {
         const tripsWithReservationStatus = response.data.data.map(trip => ({
           ...trip,
@@ -48,7 +47,7 @@ export function Main() {
         throw new Error("서버에서 받은 데이터 구조가 예상과 다릅니다.");
       }
     } catch (error) {
-      console.error("포스팅 데이터를 가져오는 데 실패했습니다:", error);
+
       setError(error.message || "데이터를 불러오는 데 실패했습니다.");
     } finally {
       setIsLoading(false);
@@ -64,9 +63,9 @@ export function Main() {
         headers: { 'Authorization': `${token}` }
       });
       setUserId(response.data.data.id);
-      console.log('현재 로그인한 사용자의 이메일:', response.data.data.id);
+   
     } catch (error) {
-      console.error('사용자 정보를 가져오는 데 실패했습니다:', error);
+  
     }
   };
 
@@ -114,8 +113,7 @@ export function Main() {
       );
       return userReservation || null;
     } catch (error) {
-      console.error('예약 정보를 가져오는 데 실패했습니다:', error);
-      return null;
+
     } finally {
       setIsReservationLoading(false);
     }
@@ -126,20 +124,19 @@ export function Main() {
     try {
       const reservation = await fetchUserReservation(trip.id);
       const isReservationEnded = trip.title.endsWith('[예약마감]');
-      console.log('Main - 선택된 여행:', trip);
-      console.log('Main - 예약 마감 여부:', isReservationEnded);
+
 
       const updatedTrip = {
         ...trip,
         isReservationEnded: isReservationEnded
       };
-      console.log('Main - 업데이트된 여행 정보:', updatedTrip);
+
 
       setUserReservation(reservation);
       setSelectedTrip(updatedTrip);
       setIsEditModalOpen(true);
     } catch (error) {
-      console.error('예약 정보를 가져오는 중 오류가 발생했습니다:', error);
+   
       alert('예약 정보를 가져오는 데 실패했습니다. 다시 시도해 주세요.');
     } finally {
       setIsReservationLoading(false);
@@ -229,7 +226,7 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
           {filteredTrips
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .map((trip, index) => {
-              console.log('게시물 ID:', trip.id, '예약 정보:', trip.reservations);
+
               const reservationCount = trip.reservations ? trip.reservations.length : 0;
               const isUserReserved = trip.reservations &&
                 trip.reservations.some(reservation => reservation.bookerId === userId);
