@@ -44,7 +44,7 @@ export function Post({ isOpen, onClose, onSubmit }) {
 }
 
 export function PostingForm({ onSubmit, onClose, mapData }) {
-  const [type, setType] = useState("탑승자");
+  const [type, setType] = useState("운전자");
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
   const [gender, setGender] = useState("성별무관");
@@ -127,8 +127,8 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
       <div className="row">
         <h2>유형을 선택해 주세요</h2>
         <select value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="탑승자">탑승자</option>
           <option value="운전자">운전자</option>
+          <option value="탑승자">탑승자</option>
           <option value="택시">택시</option>
         </select>
       </div>
