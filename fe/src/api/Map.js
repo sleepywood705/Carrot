@@ -209,7 +209,7 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
       <div className="row">
-        <h2>경로 검색</h2>
+        <h2>지도</h2>
         <div id="Map" ref={mapRef}></div>
       </div>
       <div className="row">
@@ -220,7 +220,7 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
         </div>
       </div>
       <div className="row">
-        <h2>경로</h2>
+        <h2>경로 검색</h2>
         <div className="outline">
           <input 
             type="text" 
