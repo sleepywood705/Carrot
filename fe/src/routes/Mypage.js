@@ -89,13 +89,13 @@ export function Mypage() {
           <ul>
             <li onClick={() => setSelectedMenu("ChangeInfo")}>회원정보변경</li>
             <li onClick={() => setSelectedMenu("MyPoint")}>내 포인트</li>
-            <li onClick={() => setSelectedMenu("MyPost")}>내가 작성한 글</li>
             <li onClick={() => setSelectedMenu("Withdrawal")}>회원 탈퇴</li>
           </ul>
         </details>
         <details open>
-          <summary>예약 관리</summary>
+          <summary>글 관리</summary>
           <ul>
+            <li onClick={() => setSelectedMenu("MyPost")}>내가 작성한 글</li>
             <li onClick={() => setSelectedMenu("MyReserve")}>내가 예약한 글</li>
           </ul>
         </details>

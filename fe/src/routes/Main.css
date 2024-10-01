@@ -4,6 +4,7 @@
 }
 #Main h1 {
   padding: 80px;
+  color: #333;
   font-size: 28px;
   display: grid;
   place-items: center;
