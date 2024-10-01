@@ -58,7 +58,6 @@ export function Header({ isLoggedIn, onLogout, userName }) {
   return (
     <header>
       <Link to="/" id="logo" className={invert} onClick={goLandingPage}>당근마차</Link>
-      <Link to="/guide" className={invert}>이용가이드</Link>
       <Link to="/main" id="logo" className={invert}>체험해보기</Link>
       {isLoggedIn && userPoint !== null && (
         <span className={invert}>포인트: {userPoint}</span>
@@ -68,7 +67,7 @@ export function Header({ isLoggedIn, onLogout, userName }) {
           {userName} 님 안녕하세요
           <nav>
             <Link to='/mypage'>마이페이지</Link>
-            {/* <Link to='/history'>이용 내역</Link> */}
+            <Link to='/guide'>이용가이드</Link>
           </nav>
         </Link>
       )}
