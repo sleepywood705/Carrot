@@ -213,13 +213,6 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
         <div id="Map" ref={mapRef}></div>
       </div>
       <div className="row">
-        <h2>비용 계산 결과</h2>
-        <div className="costResult">
-          <p>{fuelCost}</p>
-          <p>{taxiCost}</p>
-        </div>
-      </div>
-      <div className="row">
         <h2>경로 검색</h2>
         <div className="outline">
           <input 
@@ -240,6 +233,13 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
             onChange={(e) => setEndName(e.target.value)} // 상태 업데이트
             required 
           />
+        </div>
+      </div>
+      <div className="row">
+        <h2>비용 계산 결과</h2>
+        <div className="costResult">
+          <p>{fuelCost}</p>
+          <p>{taxiCost}</p>
         </div>
       </div>
       <div className="wrap_btn">
