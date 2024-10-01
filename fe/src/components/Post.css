@@ -38,6 +38,7 @@
   flex-direction: column;
 }
 .PostingForm .btn_close {
+  z-index: 999;
   position: absolute;
   right: 16px; top: 16px;
   height: 16px; aspect-ratio: 1;
