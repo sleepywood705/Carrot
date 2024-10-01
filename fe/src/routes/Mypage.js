@@ -11,7 +11,7 @@ export function Mypage() {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedMenu, setSelectedMenu] = useState("MyReserve");
+  const [selectedMenu, setSelectedMenu] = useState("MyPoint");
 
   useEffect(() => {
     const fetchUserData = async () => {

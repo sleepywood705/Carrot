@@ -46,26 +46,25 @@ export function MyPoint({ user }) {
 
   const formatTransaction = (transaction) => {
     const date = new Date(transaction.createdAt);
-    const formattedDate = `${date.getFullYear()}. ${date.getMonth() + 1}. ${date.getDate()}.`;
+    const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     const formattedTime = date.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
 
     let description;
     if (transaction.amount < 0) {
       const recipient = transaction.description.split(' ')[4];
-      description = `${recipient} 님에게 ${Math.abs(transaction.amount)}원을 보내셨습니다.`;
+      description = `${recipient} 님으로부터 ${Math.abs(transaction.amount)}원을 받으셨습니다.`;
     } else {
       const sender = transaction.description.split(' ')[4];
-      description = `${sender} 님에게 ${transaction.amount}원을 받으셨습니다.`;
+      description = `${sender} 님에게 ${transaction.amount}원을 결제하셨습니다.`;
     }
 
     return (
-      <li key={transaction.id} className="transaction-item">
+      <li key={transaction.id} className="pointHistory">
         <p>{description}</p>
         {transaction.reservation && (
-          <p>예약 정보: {transaction.reservation.from}→{transaction.reservation.to}</p>
+          <p>{transaction.reservation.from}→{transaction.reservation.to}</p>
         )}
-        <p>날짜: {formattedDate}</p>
-        <p>시간: {formattedTime}</p>
+        <p>{formattedDate}<span>{formattedTime}</span></p>
       </li>
     );
   };
@@ -80,7 +79,7 @@ export function MyPoint({ user }) {
       {pointTransactions.length === 0 && !isLoading && !error && (
         <div><p>포인트 내역이 없습니다</p></div>
       )}
-      <ul className="transaction-list">
+      <ul>
         {pointTransactions.map(formatTransaction)}
       </ul>
     </div>
