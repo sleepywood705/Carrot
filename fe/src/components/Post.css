@@ -60,15 +60,17 @@
 .PostingForm .row > select,
 .PostingForm .row > input,
 .PostingForm .costResult,
-.PostingForm .wrap_payment input {
-  padding: 0 20px;
-  height: 50px;
+.PostingForm .wrap_payment input,
+.outline input[type="text"]:nth-child(1),
+.outline input[type="text"]:nth-child(2) { 
+  padding: 0 16px;
+  height: 44px;
   color: #444;
-  font-size: 16px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid #ddd;
 }
 .PostingForm .costResult p {
@@ -90,14 +92,16 @@
   align-items: center;
   justify-content: center;
 }
-.PostingForm .wrap_payment {
+.wrap_payment {
   gap: 10px;
   display: grid;
   grid-template-columns: auto auto;
 }
-.PostingForm .wrap_payment input,
-.PostingForm .wrap_payment button {
-  width: 100%;
+.wrap_payment button {
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  background-color: #ff7f00;
 }
 .wrap_btn {
   margin-top: auto;
@@ -108,9 +112,9 @@
 }
 .wrap_btn button {
   padding: 10px;
-  width: 100%; height: 50px !important;
+  width: 100%; height: 44px !important;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   background-color: #ff7f00;
   color: white;
   font-weight: bold;
@@ -120,10 +124,8 @@
 .btn_delete {
   flex: 1;
 }
-.outline input[type="text"]:nth-child(1),
-.outline input[type="number"]:nth-child(1) {
-  padding: 0 10px;
-  width:100%; height: 50px;
+.outline input[type="text"]:nth-child(1) {
+  width:100%;
   border-radius: 10px 10px 0 0;
   border-left: 1px solid #ddd;
   border-top: 1px solid #ddd;
@@ -133,8 +135,7 @@
 .outline input[type="text"]:nth-child(2),
 .outline button {
   margin-top: -1px;
-  padding: 0 10px;
-  width:100%; height: 50px;
+  width:100%;
   border-radius: 0 0 10px 10px !important;
   border-left: 1px solid #ddd;
   border-top: 1px solid #ddd;
