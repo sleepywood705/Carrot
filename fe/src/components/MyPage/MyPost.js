@@ -64,7 +64,7 @@ export function MyPost({ user }) {
           const isSameGender = genderInfo === "동성";
 
           return (
-            <div key={post.id} className="Card" onClick={() => handleEditClick(post)}>
+            <div key={post.id} id="Card" onClick={() => handleEditClick(post)}>
               <div className="row1">
                 <div className="user-name">
                   <span>{post.author?.name || "알 수 없음"}{" "}</span>

@@ -11,6 +11,8 @@
 	background-color: #111;
 	scroll-snap-align: start;
 }
+
+
 #Landing .sect1 {
 	position: sticky;
 	top: 0;
@@ -39,12 +41,16 @@
 #Landing .sect1 .Bubble img {
 	height: 24px;
 }
+
+
 #Landing .sect2 {
 	position: sticky;
 	top: 0;
 	display: grid;
 	place-items: center;
 }
+
+
 #Landing .sect3 {
 	position: sticky;
 	top: 0;
@@ -81,6 +87,8 @@
 	right: -160px;
 	transform: translate(0, -50%) scale(0.6) scaleX(-100%);
 }
+
+
 #Landing .sect4 {
 	position: sticky;
 	top: 0;
@@ -98,6 +106,8 @@
 	left: 50%; top: -270px;
 	transform: translate(-50%, 0) scale(0.4);
 }
+
+
 #Landing .sect5 {
 	position: sticky;
 	top: 0;
@@ -126,6 +136,8 @@
 	right: -300px; top: 50%;
 	transform: translate(0, -50%);
 }
+
+
 #Landing .sect6 {
 	position: sticky;
 	top: 0;
@@ -167,6 +179,8 @@
 		transform: translateX(-100%);
 	}
 }
+
+
 #Landing .sect7 {
 	position: relative;
 	height: fit-content !important;
@@ -203,6 +217,8 @@
 .bgWhite {
 	background-color: #fff;
 }
+
+
 #Landing .sect8 {
 	position: sticky;
 	top: 0;
@@ -271,6 +287,8 @@
 #Landing .sect8 .create:hover {
 	transform: scale(1.4);
 }
+
+
 #Landing .sect9 {
 	position: sticky;
 	top: 0;
@@ -280,6 +298,8 @@
 	color: #333;
 	font-weight: 600;
 }
+
+
 #Landing .sect10 {
 	position: sticky;
 	top: 0;
@@ -302,4 +322,115 @@
 }
 #Landing .sect10 span:nth-child(odd) {
 	color: #FF6600;
+}
+
+
+/* 모바일 반응형 */
+@media screen and (max-width: 767px) {
+	#Landing .sect1 {
+		padding: 40px;
+		gap: 10px;
+	}
+	#Landing .sect1 .Bubble {
+		padding: 8px 16px;
+		width: fit-content;
+	}
+	#Landing .sect1 .Bubble p {
+		font-size: 14px;
+	}
+	#Landing .sect1 .Bubble img {
+		height: 16px;
+	}
+	#Landing .sect2 img {
+		width: 100%;
+	}
+	#Landing .sect3 {
+		padding: 100px;
+		gap: 10px;
+	}
+	#Landing .sect3 > p {
+		z-index: 1;
+		position: relative;
+		width: fit-content;
+		color: #fff;
+		font-size: 40px;
+		font-weight: 600;
+	}
+	#Landing .sect3 .p1 img,
+	#Landing .sect3 .p2 img,
+	#Landing .sect3 .p3 img {
+		z-index: -1;
+		position: absolute;
+		top: 50%;
+	}
+	#Landing .sect3 .p1 img {
+		right: -160px;
+		transform: translate(0, -50%) scale(0.3) scaleX(-100%);
+	}
+	#Landing .sect3 .p2 img {
+		right: -210px;
+		transform: translate(0, -50%) scale(0.3) scaleX(-100%);
+	}
+	#Landing .sect3 .p3 img {
+		right: -140px;
+		transform: translate(0, -50%) scale(0.4) scaleX(-100%);
+	}
+	#Landing .sect4 p {
+		font-size: 30px;
+	}
+	#Landing .sect4 p img {
+		top: -240px;
+		transform: translate(-50%, 0) scale(0.3);
+	}
+	#Landing .sect5 p {
+		color: #fff;
+		font-size: 28px;
+		font-weight: 600;
+	}
+	.img_people {
+		left: -100px; top: 60%;
+		transform: translate(0, -40%) scale(0.2);
+	}
+	.img_car {
+		z-index: -1;
+		position: absolute;
+		right: -150px; top: 69%;
+		transform: translate(0, -50%) scale(0.33);
+	}
+	#Landing .sect6 p span {
+		font-size: 60px;
+	}
+	#Landing .sect6 p span img {
+		height: 60px;
+	}
+	#Landing .sect7 {
+		position: relative;
+		height: fit-content !important;
+		background-color: #fff !important;
+		display: flex;
+		flex-direction: column;
+	}
+	#Landing .sect7 .row {
+		display: flex;
+		flex-direction: column;
+	}
+	#Landing .sect7 .row2 {
+		margin-top: -426px;
+	}
+	#Landing .sect7 .row p {
+		padding: 0;
+	}
+	#Landing .sect7 .row span {
+		font-size: 30px;
+	}
+	#Landing .sect8 > p,
+	#Landing .sect9 > p {
+		font-size: 30px;
+	}
+	#Landing .sect10 > div {
+		gap: 10px;
+	}
+	#Landing .sect10 span {
+		font-size: 40px;
+	}
 }

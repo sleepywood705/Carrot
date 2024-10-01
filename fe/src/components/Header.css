@@ -67,3 +67,16 @@ header a.user-menu nav a:hover {
 .invert {
   color: #fff;
 }
+
+/* 모바일 반응형 */
+@media screen and (max-width: 767px) {
+  header {
+    padding: 0 20px;
+  }
+  header > a,
+  header > span,
+  header > button {
+    padding: 10px;
+    font-size: 14px;
+  }
+}

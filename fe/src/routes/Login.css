@@ -19,6 +19,9 @@
   gap: 10px;
   display: grid;
 }
+
+
+/* Login.js, Singup.js 폼 */
 #form_login,
 #form_signup {
   margin-top: 10px;

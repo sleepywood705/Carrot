@@ -9,6 +9,7 @@
   overflow-y: scroll;
 }
 
+
 /* 사이드 내비게이션 레이아웃 */
 #SNB {
   width: 300px;
@@ -37,6 +38,7 @@
   padding: 8px 16px;
   background-color: #fff;
 }
+
 
 /* 사이드 내비게이션 드랍다운박스 */
 #SNB > details {
@@ -73,6 +75,7 @@
   flex-direction: column;
 }
 
+
 /* 패딩 처리 */
 #ChangeInfo .wrap > div,
 #ChangeInfo .wrap > input,
@@ -86,6 +89,7 @@
   font-weight: 400;
   height: fit-content;
 }
+
 
 /* 보더 처리 */
 .myName,
@@ -104,6 +108,7 @@
   border: 1px solid #ddd;
 }
 
+
 /* 폰트 사이즈 처리 */
 #ChangeInfo > h2,
 #MyPoint > h2,
@@ -115,6 +120,7 @@
   font-size: 20px;
   font-weight: 700;
 }
+
 
 /* 컴포넌트 안 버튼 처리 */
 .btn_change,
@@ -131,6 +137,7 @@
   background-color: #eee;
 }
 
+
 /* 내 정보 관리 컴포넌트 */
 #ChangeInfo .cont {
   gap: 10px;
@@ -143,6 +150,7 @@
   grid-template-columns: 1fr 4fr;
   align-items: center;
 }
+
 
 /* 내 포인트 컴포넌트 */
 #MyPoint ul {
@@ -175,6 +183,7 @@
 #MyPoint li p:last-child {
   font-size: 14px;
 }
+
 
 /* 내가 작성한 글 컴포넌트 */
 #MyPost .Board,

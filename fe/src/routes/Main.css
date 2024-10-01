@@ -7,6 +7,9 @@
   display: grid;
   place-items: center;
 }
+
+
+/* 검색 섹션 */
 #Search {
   z-index: 999;
   position: sticky;
@@ -39,6 +42,9 @@
   color: #fff;
   background-color: #ff6600;
 }
+
+
+/* 버튼 필터 섹션 */
 #FilterButtons {
   gap: 20px;
   display: flex;
@@ -62,7 +68,6 @@
   display: grid;
   place-items: center;
 }
-
 #FilterButtons .butn_taxi {
   color: #fff;
   background-color: #111;
@@ -89,6 +94,9 @@
 #FilterButtons .butn_write img {
   width: 40px;
 }
+
+
+/* 보드 섹션 */
 #Board {
   padding: 0 400px;
 }
@@ -98,7 +106,10 @@
   display: flex;
   flex-wrap: wrap;
 }
-.Card {
+
+
+/* 카드 섹션 */
+#Card {
   position: relative;
   padding: 10px;
   width: calc(50% - 20px); height: calc(100% + 50px);
@@ -109,28 +120,28 @@
   background-color: #F5F5F7;
   cursor: pointer;
 }
-.Card p,
-.Card span {
+#Card p,
+#Card span {
   color: #444;
   font-weight: 500;
 }
-.Card > div:not(.Cover) {
+#Card > div:not(.Cover) {
   border-radius: 12px;
   background-color: #fff;
 }
-.Card .row1 {
+#Card .row1 {
   padding: 0;
   gap: 8px;
   display: grid;
   grid-template-columns: 2fr 8fr;
   background-color: transparent;
 }
-.Card .row1 .user-name {
+#Card .row1 .user-name {
   padding: 6px;
   border-radius: 10px;
   background-color: #fff;
 }
-.Card .row1 .user-name span {
+#Card .row1 .user-name span {
   padding: 0 20px;
   width: 100%; height: 40px;
   border-radius: 10px;
@@ -139,7 +150,7 @@
   align-items: center;
   justify-content: center;
 }
-.Card .row1 .card-title {
+#Card .row1 .card-title {
   flex-grow: 1;
   padding: 10px 10px 10px 0px;
   display: flex;
@@ -148,20 +159,20 @@
   border-radius: 10px;
   background-color: #fff;
 }
-.Card .row1 .card-title span img {
+#Card .row1 .card-title span img {
   height: 20px; aspect-ratio: 1;
 }
-.Card .row1 .user-type {
+#Card .row1 .user-type {
   font-weight: 600;
   gap: 8px;
   display: flex;
   align-items: stretch;
 }
-.Card .row1 .user-type span {
+#Card .row1 .user-type span {
   display: flex;
   align-items: center;
 }
-.Card .row1 .switch {
+#Card .row1 .switch {
   padding: 2px;
   height: 30px;
   aspect-ratio: 2 / 1;
@@ -173,39 +184,39 @@
   justify-content: flex-start;
   box-shadow: inset 5px -5px 20px -4px rgba(0,0,0,0.3);
 }
-.Card .row1 .gear {
+#Card .row1 .gear {
   height: 100%;
   aspect-ratio: 1;
   border-radius: 50%;
   border: 1px solid #e9e9e9;
   background-color: #fff;
 }
-.Card .row1 .switch.switch-on {
+#Card .row1 .switch.switch-on {
   background-color: rgb(85, 85, 255);
   justify-content: flex-end;
   box-shadow: inset 5px -5px 20px -4px rgba(0,0,0,0.35);
 }
-.Card .row2 {
+#Card .row2 {
   padding: 8px;
   gap: 5px;
   display: flex;
 }
-.Card .row2 > div {
+#Card .row2 > div {
   flex: 1;
 }
-.Card .row2 .route,
-.Card .row2 .date {
+#Card .row2 .route,
+#Card .row2 .date {
   display: flex;
   justify-content: center;
 }
-.Card .row2 .route,
-.Card .row2 .date {
+#Card .row2 .route,
+#Card .row2 .date {
   gap: 8px;
   display: flex;
   flex-direction: column;
 }
-.Card .row2 .route p,
-.Card .row2 .date p {
+#Card .row2 .route p,
+#Card .row2 .date p {
   flex-grow: 1;
   padding: 10px 20px;
   height: 50px;
@@ -217,24 +228,27 @@
   display: flex;
   align-items: center;
 }
-.Card .row2 .route p span {
+#Card .row2 .route p span {
   color: #555;
   font-size: 20px;
   font-weight: 600;
 }
-.Card .row3 {
+#Card .row3 {
   height: 50px;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.Card .row3.reservation-in-progress {
+#Card .row3.reservation-in-progress {
   color: rgb(85, 85, 255);
 }
-.Card .row3.reservation-closed {
+#Card .row3.reservation-closed {
   color: crimson;
 }
+
+
+/* 카드 커버 */
 .Cover {
   position: absolute;
   left: 50%; top: 50%;
@@ -251,22 +265,84 @@
   transform: translate(-50%, -50%);
   width: 570px;
 }
-.Card:hover .Cover {
+#Card:hover .Cover {
   opacity: 0;
 }
-.Board .Card .type {
+
+
+/* 타입별 컬러 처리 */
+.type {
   padding: 5px 10px;
   border-radius: 4px;
 }
-.Board .Card .type-탑승자 {
+.type-탑승자 {
   background-color: crimson;
   color: white;
 }
-.Board .Card .type-운전자 {
+.type-운전자 {
   background-color: gold;
   color: rgb(0, 0, 0);
 }
-.Board .Card .type-택시 {
+.type-택시 {
   background-color: #000000;
   color: rgb(255, 255, 255);
+}
+
+
+/* 모바일 반응형 */
+@media screen and (max-width: 767px) {
+  #Main {
+    padding-bottom: 40px;
+  }  
+  #Main h1 {
+    padding: 40px;
+    font-size: 24px;
+  }
+  #Search {
+    padding: 10px;
+    margin-bottom: 40px;
+    width: 100%; height: fit-content;
+  }
+  #Search form {
+    width: 100%;
+    gap: 8px;    
+  }
+  #Search form {
+    display: flex;
+    border: 1px solid #000;
+  }
+  #Search form input,
+  #Search form button {
+    padding: 10px;
+    font-size: 12px;
+  }
+  #Search form input {
+    flex: 1;
+  }
+  #FilterButtons {
+    padding: 0 50px;
+    gap: 0;
+    display: flex;
+    justify-content: space-around;
+  }
+  #Board {
+    padding: 0 40px;
+  }
+  .Board {
+    padding: 0 20px;
+    gap: 20px;
+  }
+  #Card {
+    width: 100%;
+    height: auto;
+  }
+  .Cover {
+    padding: 0;
+  }
+  .Cover img {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% + 40px);
+  }
 }

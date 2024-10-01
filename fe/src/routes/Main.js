@@ -240,7 +240,7 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
               return (
                 <div
                   key={trip.id || index}
-                  className="Card"
+                  id="Card"
                   onClick={() => handleEditClick(trip)}
                 >
                   <div className="row1">

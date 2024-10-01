@@ -101,7 +101,7 @@ function ReservationCard({ post, onEditClick }) {
   };
 
   return (
-    <div className="Card" onClick={() => onEditClick(post)}>
+    <div id="Card" onClick={() => onEditClick(post)}>
       <div className="row1">
         <div className="user-name">
           <span>{post.author?.name || "알 수 없음"}{" "}</span>
