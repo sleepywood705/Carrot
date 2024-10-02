@@ -157,7 +157,7 @@
   padding: 0;
   gap: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
 }
 #MyPoint li {
   padding: 10px;
@@ -198,3 +198,5 @@
 #MyReserve #Card {
   width: 100%;
 }
+
+
