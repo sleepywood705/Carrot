@@ -1,5 +1,5 @@
 import "./Main.css";
-import { Post } from "../components/Post.js";
+import { Poster } from "../components/Poster.js";
 import { Editor } from "../components/Editor.js";
 import { useState, useEffect } from "react";
 import axios from "../api/axios.js";
@@ -195,7 +195,7 @@ export function Main() {
         handleEditClick={handleEditClick}
         userId={userId}
       />
-      <Post
+      <Poster
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
         onSubmit={handleWriteSubmit}

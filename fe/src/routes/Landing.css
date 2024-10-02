@@ -49,6 +49,9 @@
 	display: grid;
 	place-items: center;
 }
+#Landing .sect2 img {
+	transform: scale(0.8);
+}
 
 
 #Landing .sect3 {
@@ -195,7 +198,7 @@
 #Landing .sect7 .row2 {
 	margin-top: -426px;
 }
-#Landing .sect7 .row p {
+#Landing .sect7 .row div {
 	position: sticky;
 	top: 50%;
 	transform: translate(0, -50%);
@@ -203,7 +206,7 @@
 	height: fit-content;
 	display: flex;
 }
-#Landing .sect7 .row span {
+#Landing .sect7 .row p {
 	flex: 1;
 	aspect-ratio: 1;
 	font-size: 3.125rem;
@@ -211,11 +214,13 @@
 	display: grid;
 	place-items: center;
 }
-#Landing .sect7 .row span img {
+#Landing .sect7 .row p > span {
 	width: 100%;
-}
-.bgWhite {
+	text-align: center;
 	background-color: #fff;
+}
+#Landing .sect7 .row p > img {
+	width: 100%;
 }
 
 

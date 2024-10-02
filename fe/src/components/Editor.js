@@ -1,4 +1,4 @@
-import "./Post.css";
+import "./Poster.css";
 import { Chat } from "./Chat/Chat";
 import { useState, useEffect } from "react";
 import Map from "../api/Map";

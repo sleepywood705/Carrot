@@ -1,9 +1,9 @@
-import "./Post.css";
+import "./Poster.css";
 import Map from "../api/Map.js";
 import React, { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 
-export function Post({ isOpen, onClose, onSubmit }) {
+export function Poster({ isOpen, onClose, onSubmit }) {
   const [mapData, setMapData] = useState(null);
 
   useEffect(() => {
