@@ -283,9 +283,15 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
                             : ''
                         }`}
                     >
-                      {isReservationClosed ? "예약 마감" :
-                        (reservationCount > 0 ? `${reservationCount}명 예약 중` : "")
-                      }
+                       {isReservationClosed ? (
+                        "예약 마감"
+                      ) : (
+                        reservationCount > 0 && (
+                          <span className="sparkling-text">
+                            {`${reservationCount}명 예약 중`}
+                          </span>
+                        )
+                      )}
                     </div>
                   )}
                   <div className="Cover">
