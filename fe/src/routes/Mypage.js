@@ -2,7 +2,7 @@ import "./Mypage.css";
 import { ChangeInfo } from "../components/MyPage/ChangeInfo.js";
 import { MyPoint } from "../components/MyPage/MyPoint.js";
 import { MyPost } from "../components/MyPage/MyPost.js";
-import { MyReserve } from "../components/MyPage/Myreserve.js";
+import { MyReserve } from "../components/MyPage/MyReserve.js";
 import { Withdrawal } from "../components/MyPage/Withdrawal.js";
 import { useState, useEffect } from "react";
 import axios from "../api/axios.js";

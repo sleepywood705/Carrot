@@ -36,7 +36,7 @@ export function Post({ isOpen, onClose, onSubmit }) {
   if (!isOpen) return null;
 
   return (
-    <div id="Posting">
+    <div id="Post">
       <Map onMapSubmit={handleMapSubmit} />
       <PostingForm onSubmit={onSubmit} onClose={onClose} mapData={mapData} />
     </div>

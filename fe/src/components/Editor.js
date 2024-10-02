@@ -207,7 +207,7 @@ export function Editor({
   };
 
   return (
-    <div id="Editing">
+    <div id="Editor">
       {!isLoading && !isReservationLoading && (
         <>
           <Map

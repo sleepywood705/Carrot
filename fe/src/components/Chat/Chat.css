@@ -7,7 +7,7 @@
   position: absolute;
   left: 50%; top: 20px;
   transform: translate(-50%, 0);
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 500;
 }
 #inputArea {
@@ -38,11 +38,11 @@
   padding: 6px 10px;
   width: fit-content;
   color: #444;
-  font-size: 16px;
+  font-size: 1rem;
 }
 .message.system {
   margin: 0 auto;
-  font-size: 12px;
+  font-size: 0.75rem;
   border-radius: 50px;
   background-color: #eee;
 }

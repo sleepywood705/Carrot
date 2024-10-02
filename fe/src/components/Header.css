@@ -12,7 +12,7 @@ header > button {
   position: relative;
   padding: 0 20px;
   width: fit-content; height: 100%;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
   display: grid;
   place-items: center;
@@ -21,7 +21,7 @@ header > a:nth-child(1) {
   position: relative;
   margin-right: auto;
   color: #ff7f00;
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 800;
   font-family: 'TmoneyRoundWindExtraBold';
 }
@@ -77,6 +77,6 @@ header a.user-menu nav a:hover {
   header > span,
   header > button {
     padding: 10px;
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 }
