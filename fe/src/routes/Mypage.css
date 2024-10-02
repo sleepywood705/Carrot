@@ -155,6 +155,9 @@
 /* 내 포인트 컴포넌트 */
 #MyPoint ul {
   padding: 0;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
 }
 #MyPoint li {
   padding: 10px;
@@ -191,7 +194,7 @@
   padding: 0;
   gap: 20px;
 }
-#MyPost .Card,
-#MyReserve .Card {
+#MyPost #Card,
+#MyReserve #Card {
   width: 100%;
 }
