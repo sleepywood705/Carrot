@@ -269,6 +269,16 @@
   opacity: 0;
 }
 
+@keyframes sparkle {
+  0% { opacity: 1; text-shadow: 0 0 0 transparent; }
+  50% { opacity: 1; text-shadow: 0 0 10px #9c9c9c, 0 0 20px #a5a5a5; }
+  100% { opacity: 1; text-shadow: 0 0 0 transparent; }
+}
+
+.sparkling-text {
+  animation: sparkle 2s linear infinite;
+  color: #ff8844; 
+}
 
 /* 타입별 컬러 처리 */
 .type {
