@@ -158,7 +158,7 @@ const KakaoMap = ({ onMapSubmit, initialTitle }) => {
             color: white;
             transform: rotate(45deg);
             font-weight: bold;
-            font-size: 10px;
+            font-size: 0.625rem;
           ">${markerText}</span>
         </div>
       </div>

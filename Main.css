@@ -3,7 +3,7 @@
 }
 #Main h1 {
   padding: 80px;
-  font-size: 30px;
+  font-size: 1.875rem;
   display: grid;
   place-items: center;
 }
@@ -29,7 +29,7 @@
 #Search form button {
   padding: 0 0 0 20px;
   width: 300px; height: 50px;
-  font-size: 16px;
+  font-size: 1rem;
   border-radius: 7px;
   background-color: #fff;
 }
@@ -47,7 +47,7 @@
 #FilterButtons button {
   position: relative;
   width: 100px; aspect-ratio: 1;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 600;
   border-radius: 10px;
 }
@@ -219,7 +219,7 @@
 }
 .Card .row2 .route p span {
   color: #555;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 600;
 }
 .Card .row3 {
