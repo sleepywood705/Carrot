@@ -409,7 +409,7 @@ function PostingForm({
         if (error.response.data && error.response.data.message) {
           alert(`결제 실패: ${error.response.data.message}`);
         } else {
-          alert('결제에 실패했습니다. 서버 오류가 발생했습니다.');
+          alert('결제 실패 : 이미 결제되었습니다.');
         }
       } else if (error.request) {
         console.log('요청 에러:', error.request);
