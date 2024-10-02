@@ -11,6 +11,7 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
   const [distance, setDistance] = useState(0);
   const [fuelCost, setFuelCost] = useState('');
   const [taxiCost, setTaxiCost] = useState('');
+  const [duration, setDuration] = useState(0);
 
   const [startName, setStartName] = useState(initialDeparture); // 출발지 상태
   const [endName, setEndName] = useState(initialArrival); // 도착지 상태
@@ -98,20 +99,62 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
       endMarker.setMap(null);
     }
 
-    const marker = new window.kakao.maps.Marker({
+    let markerColor, markerText;
+    switch(type) {
+      case 'S':
+        markerColor = '#ff7f00'; // 출발지 색상
+        markerText = '출';
+        break;
+      case 'E':
+        markerColor = '#FF0000'; // 도착지 색상
+        markerText = '도';
+        break;
+      default:
+        markerColor = '#0000FF';
+        markerText = '경';
+    }
+
+    const content = `
+      <div style="
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      ">
+        <div style="
+          background-color: ${markerColor};
+          border: 2px solid white;
+          border-radius: 50% 50% 50% 0;
+          transform: rotate(-45deg);
+          width: 18px;
+          height: 18px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        ">
+          <span style="
+            color: white;
+            transform: rotate(45deg);
+            font-weight: bold;
+            font-size: 10px;
+          ">${markerText}</span>
+        </div>
+      </div>
+    `;
+
+    const customOverlay = new window.kakao.maps.CustomOverlay({
       position: coords,
-      map: map,
-      title: type,
-      image: new window.kakao.maps.MarkerImage(
-        `https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png`,
-        new window.kakao.maps.Size(24, 35)
-      )
+      content: content,
+      zIndex: 3
     });
 
+    customOverlay.setMap(map);
+
     if (type === 'S') {
-      setStartMarker(marker);
+      setStartMarker(customOverlay);
     } else if (type === 'E') {
-      setEndMarker(marker);
+      setEndMarker(customOverlay);
     }
 
     // 두 마커가 모두 설정되었을 때 경계를 업데이트합니다
@@ -137,6 +180,7 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
       .then(data => {
         const path = [];
         let newDistance = 0;
+        let newDuration = 0;
         if (data.features && data.features.length > 0) {
           data.features.forEach(feature => {
             if (feature.geometry.type === "LineString") {
@@ -144,8 +188,13 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
                 path.push(new window.kakao.maps.LatLng(coord[1], coord[0]));
               });
             }
-            if (feature.properties && feature.properties.distance) {
-              newDistance += feature.properties.distance;
+            if (feature.properties) {
+              if (feature.properties.totalDistance) {
+                newDistance = feature.properties.totalDistance;
+              }
+              if (feature.properties.totalTime) {
+                newDuration = feature.properties.totalTime;
+              }
             }
           });
 
@@ -159,6 +208,7 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
           newPolyline.setMap(map);
           setPolyline(newPolyline);
           setDistance(newDistance);
+          setDuration(newDuration);
           calculateCosts(newDistance);
 
           // 경로가 그려진 후 경계를 업데이트합니다
@@ -209,11 +259,11 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
       <div className="row">
-        <h2>지도</h2>
+     
         <div id="Map" ref={mapRef}></div>
       </div>
       <div className="row">
-        <h2>경로 검색</h2>
+       
         <div className="outline">
           <input 
             type="text" 
@@ -237,6 +287,10 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
       </div>
       <div className="row">
         <h2>비용 계산 결과</h2>
+        <div className="costResult"> 
+          <p>거리 : {(distance / 1000).toFixed(2)} km</p>
+          <p>예상 시간 : {Math.round(duration / 60)} 분</p>
+        </div>
         <div className="costResult">
           <p>{fuelCost}</p>
           <p>{taxiCost}</p>
