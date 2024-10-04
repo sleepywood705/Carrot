@@ -6,7 +6,7 @@
     transition: all 0.5s;
 }
 html{
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 500;
     scroll-behavior: smooth;
 }
@@ -32,7 +32,7 @@ li{
 }
 input,
 button{
-    font-size: 16px;
+    font-size: 1rem;
     border: none; outline: none; 
     background-color: inherit;
 }

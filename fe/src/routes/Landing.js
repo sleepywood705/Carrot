@@ -39,41 +39,41 @@ export function Landing() {
       </section>
       <section className="sect7">
         <div className="row">
-          <p>
-            <span>그런</span>
-            <span></span>
-            <span></span>
-          </p>
-          <p>
-            <span></span>
-            <span>여러분들을</span>
-            <span></span>
-          </p>
-          <p>
-            <span></span>
-            <span></span>
-            <span>위해</span>
-          </p>
-          <p>
-            <span className="bgWhite">당근이</span>
-            <span></span>
-            <span></span>
-          </p>
-          <p>
-            <span></span>
-            <span className="bgWhite">마차를</span>
-            <span></span>
-          </p>
-          <p>
-            <span></span>
-            <span></span>
-            <span className="bgWhite">준비했습니다~!</span>
-          </p>
-          <p>
-            <span></span>
-            <span className="bgWhite"><img src="/img/car.png" /></span>
-            <span></span>
-          </p>
+          <div>
+            <p><span>그런</span></p>
+            <p></p>
+            <p></p>
+          </div>
+          <div>
+            <p></p>
+            <p><span>여러분들을</span></p>
+            <p></p>
+          </div>
+          <div>
+            <p></p>
+            <p></p>
+            <p><span>위해</span></p>
+          </div>
+          <div>
+            <p><span>당근이</span></p>
+            <p></p>
+            <p></p>
+          </div>
+          <div>
+            <p></p>
+            <p><span>마차를</span></p>
+            <p></p>
+          </div>
+          <div>
+            <p></p>
+            <p></p>
+            <p><span>준비했습니다~!</span></p>
+          </div>
+          <div>
+            <p></p>
+            <p><img src="/img/car.png" /></p>
+            <p></p>
+          </div>
         </div>
       </section>
       <section className="sect8">

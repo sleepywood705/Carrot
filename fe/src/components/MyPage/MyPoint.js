@@ -52,10 +52,10 @@ export function MyPoint({ user }) {
     let description;
     if (transaction.amount < 0) {
       const recipient = transaction.description.split(' ')[4];
-      description = `${recipient} 님으로부터 ${Math.abs(transaction.amount)}원을 받으셨습니다.`;
+      description = `${recipient} 님에게 ${Math.abs(transaction.amount)}원을 결제하셨습니다.`;
     } else {
       const sender = transaction.description.split(' ')[4];
-      description = `${sender} 님에게 ${transaction.amount}원을 결제하셨습니다.`;
+      description = `${sender} 님으로부터 ${transaction.amount}원을 받으셨습니다.`;
     }
 
     return (

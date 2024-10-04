@@ -1,4 +1,4 @@
-import '../components/Post.css'
+import '../components/Poster.css'
 import { useEffect, useRef, useState, useCallback } from 'react';
 
 const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
@@ -137,7 +137,7 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
             color: white;
             transform: rotate(45deg);
             font-weight: bold;
-            font-size: 10px;
+            font-size: 0.625rem;
           ">${markerText}</span>
         </div>
       </div>

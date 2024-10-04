@@ -35,7 +35,7 @@
 }
 #Landing .sect1 .Bubble p {
 	color: #fff;
-	font-size: 22px;
+	font-size: 1.375rem;
 	font-weight: 300;
 }
 #Landing .sect1 .Bubble img {
@@ -48,6 +48,9 @@
 	top: 0;
 	display: grid;
 	place-items: center;
+}
+#Landing .sect2 img {
+	transform: scale(0.8);
 }
 
 
@@ -65,7 +68,7 @@
 	position: relative;
 	width: fit-content;
 	color: #fff;
-	font-size: 80px;
+	font-size: 5rem;
 	font-weight: 600;
 }
 #Landing .sect3 .p1 img,
@@ -98,7 +101,7 @@
 #Landing .sect4 p {
 	position: relative;
 	color: #fff;
-	font-size: 60px;
+	font-size: 3.75rem;
 	font-weight: 600;
 }
 #Landing .sect4 p img {
@@ -119,7 +122,7 @@
 }
 #Landing .sect5 p {
 	color: #fff;
-	font-size: 40px;
+	font-size: 2.5rem;
 	font-weight: 600;
 }
 #Landing .sect5 p span {
@@ -161,7 +164,7 @@
 #Landing .sect6 p span {
 	width: 100%;
 	color: #fff;
-	font-size: 100px;
+	font-size: 6.5rem;
 	font-weight: 600;
 	white-space: nowrap;
 	display: flex;
@@ -195,7 +198,7 @@
 #Landing .sect7 .row2 {
 	margin-top: -426px;
 }
-#Landing .sect7 .row p {
+#Landing .sect7 .row div {
 	position: sticky;
 	top: 50%;
 	transform: translate(0, -50%);
@@ -203,19 +206,21 @@
 	height: fit-content;
 	display: flex;
 }
-#Landing .sect7 .row span {
+#Landing .sect7 .row p {
 	flex: 1;
 	aspect-ratio: 1;
-	font-size: 50px;
+	font-size: 3.125rem;
 	font-weight: 600;
 	display: grid;
 	place-items: center;
 }
-#Landing .sect7 .row span img {
+#Landing .sect7 .row p > span {
 	width: 100%;
-}
-.bgWhite {
+	text-align: center;
 	background-color: #fff;
+}
+#Landing .sect7 .row p > img {
+	width: 100%;
 }
 
 
@@ -229,7 +234,7 @@
 }
 #Landing .sect8 > div {
 	position: relative;
-	font-size: 18px;
+	font-size: 1.125rem;
   font-weight: 500;
 	border-radius: 10px;
 	width: 100px; aspect-ratio: 1;
@@ -247,7 +252,7 @@
 	left: 50%; top: 25%;
 	transform: translate(-50%, 0);
 	color: #fff;
-	font-size: 40px;
+	font-size: 2.5rem;
 }
 #Landing .sect8 .all {
   font-weight: 600;
@@ -317,7 +322,7 @@
 }
 #Landing .sect10 span {
 	color: #333;
-	font-size: 60px;
+	font-size: 3.75rem;
 	font-weight: 600;
 }
 #Landing .sect10 span:nth-child(odd) {
@@ -336,7 +341,7 @@
 		width: fit-content;
 	}
 	#Landing .sect1 .Bubble p {
-		font-size: 14px;
+		font-size: 0.875rem;
 	}
 	#Landing .sect1 .Bubble img {
 		height: 16px;
@@ -353,7 +358,7 @@
 		position: relative;
 		width: fit-content;
 		color: #fff;
-		font-size: 40px;
+		font-size: 2.5rem;
 		font-weight: 600;
 	}
 	#Landing .sect3 .p1 img,
@@ -376,7 +381,7 @@
 		transform: translate(0, -50%) scale(0.4) scaleX(-100%);
 	}
 	#Landing .sect4 p {
-		font-size: 30px;
+		font-size: 1.875rem;
 	}
 	#Landing .sect4 p img {
 		top: -240px;
@@ -384,7 +389,7 @@
 	}
 	#Landing .sect5 p {
 		color: #fff;
-		font-size: 28px;
+		font-size: 1.75rem;
 		font-weight: 600;
 	}
 	.img_people {
@@ -398,7 +403,7 @@
 		transform: translate(0, -50%) scale(0.33);
 	}
 	#Landing .sect6 p span {
-		font-size: 60px;
+		font-size: 3.75rem;
 	}
 	#Landing .sect6 p span img {
 		height: 60px;
@@ -421,16 +426,16 @@
 		padding: 0;
 	}
 	#Landing .sect7 .row span {
-		font-size: 30px;
+		font-size: 1.875rem;
 	}
 	#Landing .sect8 > p,
 	#Landing .sect9 > p {
-		font-size: 30px;
+		font-size: 1.875rem;
 	}
 	#Landing .sect10 > div {
 		gap: 10px;
 	}
 	#Landing .sect10 span {
-		font-size: 40px;
+		font-size: 2.5rem;
 	}
 }
