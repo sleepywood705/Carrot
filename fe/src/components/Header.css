@@ -1,8 +1,9 @@
 header {
   z-index: 1000;
-  position: sticky;
-  padding: 0 100px;
-  width: 100vw; height: 70px;
+  position: fixed;
+  top: 0;
+  padding: 0 30px 0 50px;
+  width: 100%; height: 70px;
   display: flex;
   align-items: center;
 }
@@ -12,7 +13,7 @@ header > button {
   position: relative;
   padding: 0 20px;
   width: fit-content; height: 100%;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 500;
   display: grid;
   place-items: center;
@@ -21,7 +22,7 @@ header > a:nth-child(1) {
   position: relative;
   margin-right: auto;
   color: #ff7f00;
-  font-size: 2rem;
+  font-size: 32px;
   font-weight: 800;
   font-family: 'TmoneyRoundWindExtraBold';
 }
@@ -48,7 +49,7 @@ header nav a {
   padding: 10px;
   text-align: center;
   color: #333;
-  border: 1px solid #333;
+  border: 1px solid #ddd;
   background-color: #fff;
   border-radius: 4px;
 }
@@ -66,17 +67,4 @@ header a.user-menu nav a:hover {
 }
 .invert {
   color: #fff;
-}
-
-/* 모바일 반응형 */
-@media screen and (max-width: 767px) {
-  header {
-    padding: 0 20px;
-  }
-  header > a,
-  header > span,
-  header > button {
-    padding: 10px;
-    font-size: 0.875rem;
-  }
 }

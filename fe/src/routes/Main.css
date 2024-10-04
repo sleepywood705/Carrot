@@ -1,357 +1,211 @@
 #Main {
-  padding-bottom: 70px;
-}
-#Main h1 {
-  padding: 80px;
-  font-size: 1.875rem;
-  display: grid;
-  place-items: center;
+  width: 100vw; height: 100vh;
+  background-color: #f7f8fe;
+  display: flex;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 
 /* 검색 섹션 */
 #Search {
-  z-index: 999;
   position: sticky;
   top: 0;
-  margin-bottom: 70px;
-  padding: 20px 0;
-  width: 100vw; height: 120px;
+  padding-top: 120px;
+  width: 400px; height: 100vh;
   background-color: #111;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+}
+#Search h1 {
+  padding-left: 40px;
+  width: 100%;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 500;
 }
 #Search form {
-  gap: 16px;
+  padding: 20px 40px 0;
+  width: 100%;
+  gap: 10px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
 }
-#Search form input,
-#Search form button {
-  padding: 0 0 0 20px;
-  width: 300px; height: 50px;
-  font-size: 1rem;
-  border-radius: 7px;
+#Search form input[type="text"],
+#Search form input[type="date"],
+#Search .butn_search,
+#Search .butn_write {
+  padding: 10px;
   background-color: #fff;
+  border-radius: 4px;
 }
-#Search .butn_search {
-  padding: 0;
-  width: 100px;
-  color: #fff;
-  background-color: #ff6600;
-}
-
-
-/* 버튼 필터 섹션 */
-#FilterButtons {
-  gap: 20px;
-  display: flex;
-  justify-content: center;
-}
-#FilterButtons button {
-  position: relative;
-  width: 100px; aspect-ratio: 1;
-  font-size: 1.25rem;
+#Search .butn_search,
+#Search .butn_write {
   font-weight: 600;
-  border-radius: 10px;
-}
-#FilterButtons button img {
-  position: absolute;
-  width: 60px; aspect-ratio: 1;
-}
-#FilterButtons .butn_all,
-#FilterButtons .butn_write {
-  border: 2px solid #eee;
-  background-color: #fff;
-  display: grid;
-  place-items: center;
-}
-#FilterButtons .butn_taxi {
-  color: #fff;
-  background-color: #111;
-}
-#FilterButtons .butn_taxi img {
-  left: -18px; bottom: -20px;
-  transform: scaleX(-100%);
-  width: 75px;
-}
-#FilterButtons .butn_driver {
-  background-color: gold;
-}
-#FilterButtons .butn_driver img {
-  left: -16px; bottom: -10px;
-  transform: rotate(-15deg);
-}
-#FilterButtons .butn_passenger {
-  color: #fff;
-  background-color: crimson;
-}
-#FilterButtons .butn_passenger img {
-  left: -16px; top: -16px;
-}
-#FilterButtons .butn_write img {
-  width: 40px;
+  background-color: #DBFF3D;
+  transition: all 0.1s;
 }
 
 
 /* 보드 섹션 */
 #Board {
-  padding: 0 400px;
-}
-.Board {
-  width: 100%;
-  gap: 40px;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-
-/* 카드 섹션 */
-#Card {
-  position: relative;
-  padding: 10px;
-  width: calc(50% - 20px); height: calc(100% + 50px);
-  gap: 8px;
+  width: 100%; height: fit-content;
+  padding: 110px 40px 40px 40px;
+  gap: 20px;
   display: flex;
   flex-direction: column;
-  border-radius: 16px;
-  background-color: #F5F5F7;
+}
+.Board {
+  gap: 20px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+
+/* 필터 섹션 */
+#FilterButtons {
+  width: 100%;
+  gap: 10px;
+  display: flex;
+}
+#FilterButtons button {
+  padding: 6px 12px;
+  height: fit-content;
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+
+/* 카드 컴포넌트 */
+#Card {
+  position: relative;
+  padding: 20px;
+  width: calc(100% / 3 - 14px); height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 25px 25px 40px 10px rgba(0,0,0,0.1);
   cursor: pointer;
 }
-#Card p,
-#Card span {
-  color: #444;
-  font-weight: 500;
+/* 카드 행 패딩 처리 */
+#Card .post-type,
+#Card .journey,
+#Card .carpool-type,
+#Card .promise {
+  margin-top: 10px;
 }
-#Card > div:not(.Cover) {
-  border-radius: 12px;
-  background-color: #fff;
-}
-#Card .row1 {
-  padding: 0;
-  gap: 8px;
-  display: grid;
-  grid-template-columns: 2fr 8fr;
-  background-color: transparent;
-}
-#Card .row1 .user-name {
-  padding: 6px;
-  border-radius: 10px;
-  background-color: #fff;
-}
-#Card .row1 .user-name span {
-  padding: 0 20px;
-  width: 100%; height: 40px;
-  border-radius: 10px;
-  border: 1px solid #eee;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#Card .row1 .card-title {
-  flex-grow: 1;
-  padding: 10px 10px 10px 0px;
+/* 카드 행 스타일링 */
+#Card .user-name {
+  padding: 4px 8px 0;
+  font-size: 20px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 10px;
-  background-color: #fff;
 }
-#Card .row1 .card-title span img {
-  height: 20px; aspect-ratio: 1;
-}
-#Card .row1 .user-type {
-  font-weight: 600;
-  gap: 8px;
-  display: flex;
-  align-items: stretch;
-}
-#Card .row1 .user-type span {
-  display: flex;
-  align-items: center;
-}
-#Card .row1 .switch {
-  padding: 2px;
-  height: 30px;
-  aspect-ratio: 2 / 1;
-  border-radius: 50px;
-  border: 1px solid #e9e9e9;
-  background-color: #f1f1f1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  box-shadow: inset 5px -5px 20px -4px rgba(0,0,0,0.3);
-}
-#Card .row1 .gear {
-  height: 100%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 1px solid #e9e9e9;
-  background-color: #fff;
-}
-#Card .row1 .switch.switch-on {
-  background-color: rgb(85, 85, 255);
-  justify-content: flex-end;
-  box-shadow: inset 5px -5px 20px -4px rgba(0,0,0,0.35);
-}
-#Card .row2 {
-  padding: 8px;
-  gap: 5px;
-  display: flex;
-}
-#Card .row2 > div {
-  flex: 1;
-}
-#Card .row2 .route,
-#Card .row2 .date {
-  display: flex;
-  justify-content: center;
-}
-#Card .row2 .route,
-#Card .row2 .date {
-  gap: 8px;
-  display: flex;
-  flex-direction: column;
-}
-#Card .row2 .route p,
-#Card .row2 .date p {
-  flex-grow: 1;
-  padding: 10px 20px;
-  height: 50px;
-  color: #aaa;
-  font-weight: 300;
-  border-radius: 10px;
+#Card .post-type {
+  position: relative;
+  width: 100%; aspect-ratio: 3 / 1;
   border: 1px solid #eee;
-  gap: 12px;
-  display: flex;
-  align-items: center;
-}
-#Card .row2 .route p span {
-  color: #555;
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-#Card .row3 {
-  height: 50px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#Card .row3.reservation-in-progress {
-  color: rgb(85, 85, 255);
-}
-#Card .row3.reservation-closed {
-  color: crimson;
-}
-
-
-/* 카드 커버 */
-.Cover {
-  position: absolute;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  padding: 0;
-  width: 100%; height: 100%;
-  border-radius: 10px;
-  border: none;
+  border-radius: 16px;
   overflow: hidden;
 }
-.Cover img {
+#Card .carpool-type {
+  padding: 2px;
+  border-radius: 50px;
+  border: 1px solid #eee;
+  background-color: #f7f8f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#Card .carpool-type span {
+  flex: 1;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 50px;
+}
+.switch-on {
+  color: #fff;
+  font-weight: 400 !important;
+  background-color: #333;
+}
+.taxi-party {
+  background-color: #DBFF3D;
+}
+#Card .journey {
+  /* padding: 4px; */
+  /* border-radius: 16px; */
+  /* background-color: #F0F1F5; */
+  border-radius: 16px;
+  border: 1px solid #eee;
+  /* gap: 4px; */
+  display: flex;
+}
+#Card .journey > div {
+  flex: 1;
+  padding: 14px 10px;
+  /* background-color: #fff; */
+  /* border-radius: 12px; */
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+#Card .journey > div span {
+  /* padding: 0 10px; */
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#Card .journey > div span:nth-child(1) {
+  color: #aaa;
+}
+#Card .journey > div span:nth-child(2) {
+  font-size: 22px;
+}
+#Card .promise {
+  margin-left: 4px;
+  margin-right: 4px;
+  padding: 30px 0;
+  border-top: 1px dashed #ccc;
+  border-bottom: 1px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+#Card .promise > span {
+  color: #aaa;
+}
+#Card .booking {
+  margin-top: 4px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 4px 4px 20px 20px;
+  background-color: #DBFF3D;
+}
+
+
+#Card .Cover {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+}
+#Card .Cover img {
   position: absolute;
   left: 50%; top: 50%;
   transform: translate(-50%, -50%);
-  width: 570px;
-}
-#Card:hover .Cover {
-  opacity: 0;
-}
-
-@keyframes sparkle {
-  0% { opacity: 1; text-shadow: 0 0 0 transparent; }
-  50% { opacity: 1; text-shadow: 0 0 10px #9c9c9c, 0 0 20px #a5a5a5; }
-  100% { opacity: 1; text-shadow: 0 0 0 transparent; }
-}
-
-.sparkling-text {
-  animation: sparkle 2s linear infinite;
-  color: #ff8844; 
-}
-
-/* 타입별 컬러 처리 */
-.type {
-  padding: 5px 10px;
-  border-radius: 4px;
-}
-.type-탑승자 {
-  color: #fff !important;
-  background-color: crimson;
-}
-.type-운전자 {
-  background-color: gold;
-}
-.type-택시 {
-  color: #fff !important;
-  background-color: #000000;
-}
-
-
-/* 모바일 반응형 */
-@media screen and (max-width: 767px) {
-  #Main {
-    padding-bottom: 40px;
-  }  
-  #Main h1 {
-    padding: 40px;
-    font-size: 1.5rem;
-  }
-  #Search {
-    padding: 10px;
-    margin-bottom: 40px;
-    width: 100%; height: fit-content;
-  }
-  #Search form {
-    width: 100%;
-    gap: 8px;    
-  }
-  #Search form {
-    display: flex;
-    border: 1px solid #000;
-  }
-  #Search form input,
-  #Search form button {
-    padding: 10px;
-    font-size: 0.75rem;
-  }
-  #Search form input {
-    flex: 1;
-  }
-  #FilterButtons {
-    padding: 0 50px;
-    gap: 0;
-    display: flex;
-    justify-content: space-around;
-  }
-  #Board {
-    padding: 0 40px;
-  }
-  .Board {
-    padding: 0 20px;
-    gap: 20px;
-  }
-  #Card {
-    width: 100%;
-    height: auto;
-  }
-  .Cover {
-    padding: 0;
-  }
-  .Cover img {
-    position: absolute;
-    left: 50%; top: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(100% + 40px);
-  }
+  width: 100%;
 }

@@ -1,8 +1,12 @@
 import "./Landing.css";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
+import { Link } from "react-router-dom";
 
 export function Landing() {
   return (
     <div id="Landing">
+      <Header />
       <section className="sect1">
         {bubbleTexts.map((item, i) => (<Bubble key={i} {...item} />))}
       </section>
@@ -24,7 +28,7 @@ export function Landing() {
         </p>
       </section>
       <section className="sect5">
-        <img src="/img/people.png" className="img_people"/>
+        <img src="/img/people.png" className="img_people" />
         <img src="/img/car.png" className="img_car" />
         <p>도로변에서 택시를 잡고 있는 우리<span> ,</span></p>
         <p>서로 갈 길이 멀어 보이는데 같이 타고 갈 수는 없는 걸까요 ?</p>
@@ -84,11 +88,11 @@ export function Landing() {
           택시
         </div>
         <div className="driver">
-          <img src="/img/wheel.png"/>
+          <img src="/img/wheel.png" />
           드라이버
         </div>
         <div className="carfuller">
-          <img src="/img/siren.png"/>
+          <img src="/img/siren.png" />
           카풀러
         </div>
         <div className="create"></div>
@@ -102,6 +106,8 @@ export function Landing() {
           <span>근처의</span>
           <span>마차</span>
         </div>
+        <Link to="/main">체험해보기</Link>
+        <Footer />
       </section>
     </div>
   );

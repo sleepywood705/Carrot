@@ -1,12 +1,14 @@
 import './Login.css';
-import axios from "../api/axios.js"
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer"
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from "../api/axios.js"
 
-export function Signup({ onLogin }) {  // onLogin prop 추가
+
+export function Signup({ onLogin }) {
 
   const navigate = useNavigate();
-
   const [userName, setUserName] = useState('');
   const [userMail, setUserMail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,7 +22,6 @@ export function Signup({ onLogin }) {  // onLogin prop 추가
       return;
     }
     try {
-      // 회원가입 요청
       const signupResponse = await axios.post('/users/signup', {
         name: userName,
         email: userMail,
@@ -32,7 +33,6 @@ export function Signup({ onLogin }) {  // onLogin prop 추가
         throw new Error('회원가입에 실패했습니다.');
       }
 
-      // 회원가입 성공 시 자동 로그인
       const loginResponse = await axios.post('/users/signin', {
         email: userMail,
         password
@@ -42,12 +42,11 @@ export function Signup({ onLogin }) {  // onLogin prop 추가
       
       if (token) {
         localStorage.setItem('token', token);
-        // 사용자 정보를 가져오는 추가 요청
         const userResponse = await axios.get('/users/me', {
           headers: { Authorization: token }
         });
         const loggedInUserName = userResponse.data.data.name;
-        onLogin(loggedInUserName);  // 로그인 상태 업데이트
+        onLogin(loggedInUserName);
         alert('회원가입 및 로그인 성공!');
         navigate('/main');
       } else {
@@ -56,13 +55,10 @@ export function Signup({ onLogin }) {  // onLogin prop 추가
     } catch (err) {
       console.error(err);
       if (err.response) {
-        // 서버에서 응답을 받았지만 2xx 범위를 벗어난 상태 코드인 경우
         alert(`오류: ${err.response.data.message || '알 수 없는 오류가 발생했습니다.'}`);
       } else if (err.request) {
-        // 요청이 전송되었지만 응답을 받지 못한 경우
         alert('서버와의 통신에 실패했습니다. 네트워크 연결을 확인해주세요.');
       } else {
-        // 요청 설정 중에 오류가 발생한 경우
         alert(err.message || '회원가입 중 오류가 발생했습니다.');
       }
     }
@@ -70,6 +66,7 @@ export function Signup({ onLogin }) {  // onLogin prop 추가
 
   return (
     <div id="Login">
+      <Header />
       <img src="/img/logo.svg" alt="logo" />
       <h2>당신 근처의 마차</h2>
       <p>동네라서 가능한 모든 것<br/>지금 내 동네에서 카풀을 시작해 보세요</p>
@@ -141,6 +138,7 @@ export function Signup({ onLogin }) {  // onLogin prop 추가
         </div>
         <button type="submit" className='btn_signup'>회원가입</button>
       </form>
+      <Footer />
     </div>
   );
 }

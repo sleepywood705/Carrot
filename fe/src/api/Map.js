@@ -1,7 +1,9 @@
 import '../components/Poster.css'
 import { useEffect, useRef, useState, useCallback } from 'react';
 
-const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
+
+const KakaoMap = ({ onMapSubmit, initialTitle }) => {
+
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);
   const [kakaoLoaded, setKakaoLoaded] = useState(false);
@@ -9,15 +11,22 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
   const [endMarker, setEndMarker] = useState(null);
   const [polyline, setPolyline] = useState(null);
   const [distance, setDistance] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [fuelCost, setFuelCost] = useState('');
   const [taxiCost, setTaxiCost] = useState('');
-  const [duration, setDuration] = useState(0);
 
-  const [startName, setStartName] = useState(initialDeparture); // 출발지 상태
-  const [endName, setEndName] = useState(initialArrival); // 도착지 상태
+  const [startName, setStartName] = useState("");
+  const [endName, setEndName] = useState("");
+  const [waypointName, setWaypointName] = useState("");
 
   const [bounds, setBounds] = useState(null);
 
+  const [waypoints, setWaypoints] = useState([]);
+  const [showWaypointInput, setShowWaypointInput] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [lastSubmittedData, setLastSubmittedData] = useState(null);
+  const [title, setTitle] = useState(initialTitle || '');
+  
   useEffect(() => {
     const script = document.createElement('script');
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=c2828d7dee20f4b50bd4e887a055a84b&libraries=services&autoload=false`;
@@ -82,35 +91,46 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
     const fuelPrice = 1800;
     const fuelEfficiency = 10;
     const fuelCost = (distanceKm / fuelEfficiency) * fuelPrice;
-    setFuelCost(`기름값: 약 ${numberWithCommas(fuelCost.toFixed(0))}원`);
+    setFuelCost(`기름값 : 약 ${numberWithCommas(fuelCost.toFixed(0))}원`);
 
     const baseFare = 4000;
     const per100mFare = 132;
     const taxiCost = baseFare + (distance / 100 * per100mFare);
-    setTaxiCost(`택시비: 약 ${numberWithCommas(taxiCost.toFixed(0))}원`);
+    setTaxiCost(`택시비 : 약 ${numberWithCommas(taxiCost.toFixed(0))}원`);
   }, []);
+
+  const clearMarkers = useCallback(() => {
+    if (startMarker) {
+      startMarker.setMap(null);
+      setStartMarker(null);
+    }
+    if (endMarker) {
+      endMarker.setMap(null);
+      setEndMarker(null);
+    }
+    waypoints.forEach(waypoint => {
+      if (waypoint.marker) {
+        waypoint.marker.setMap(null);
+      }
+    });
+    setWaypoints([]);
+  }, [startMarker, endMarker, waypoints]);
 
   const setMarker = useCallback((coords, type) => {
     if (!map) return;
 
-    if (type === 'S' && startMarker) {
-      startMarker.setMap(null);
-    } else if (type === 'E' && endMarker) {
-      endMarker.setMap(null);
-    }
-
     let markerColor, markerText;
     switch(type) {
       case 'S':
-        markerColor = '#ff7f00'; // 출발지 색상
+        markerColor = '#ff7f00'; // 초록색
         markerText = '출';
         break;
       case 'E':
-        markerColor = '#FF0000'; // 도착지 색상
+        markerColor = '#FF0000'; // 빨간색
         markerText = '도';
         break;
       default:
-        markerColor = '#0000FF';
+        markerColor = '#0000FF'; // 파란색
         markerText = '경';
     }
 
@@ -126,8 +146,8 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
           border: 2px solid white;
           border-radius: 50% 50% 50% 0;
           transform: rotate(-45deg);
-          width: 18px;
-          height: 18px;
+          width: 15px;
+          height: 15px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -137,7 +157,7 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
             color: white;
             transform: rotate(45deg);
             font-weight: bold;
-            font-size: 0.625rem;
+            font-size: 10px;
           ">${markerText}</span>
         </div>
       </div>
@@ -152,41 +172,60 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
     customOverlay.setMap(map);
 
     if (type === 'S') {
+      if (startMarker) startMarker.setMap(null);
       setStartMarker(customOverlay);
     } else if (type === 'E') {
+      if (endMarker) endMarker.setMap(null);
       setEndMarker(customOverlay);
+    } else {
+      setWaypoints(prev => [...prev, { coords, marker: customOverlay }]);
     }
 
-    // 두 마커가 모두 설정되었을 때 경계를 업데이트합니다
-    if (startMarker && endMarker) {
-      const newBounds = new window.kakao.maps.LatLngBounds();
-      newBounds.extend(startMarker.getPosition());
-      newBounds.extend(endMarker.getPosition());
-      setBounds(newBounds);
-      map.setBounds(newBounds);
-    }
-  }, [map, startMarker, endMarker]);
+    // 모든 마커의 경계를 업데이트합니다
+    const newBounds = new window.kakao.maps.LatLngBounds();
+    [startMarker, endMarker, ...waypoints.map(wp => wp.marker)].forEach(marker => {
+      if (marker) newBounds.extend(marker.getPosition());
+    });
+    newBounds.extend(coords);
+    setBounds(newBounds);
+    map.setBounds(newBounds);
+  }, [map, startMarker, endMarker, waypoints]);
 
-  const drawRoute = useCallback((startCoords, endCoords) => {
+  const drawRoute = useCallback((startCoords, endCoords, currentWaypoints) => {
+    if (!map) return;
+
+    // 기존 폴리라인 제거
     if (polyline) {
-      polyline.setMap(null);
+      (Array.isArray(polyline) ? polyline : [polyline]).forEach(line => {
+        if (line && typeof line.setMap === 'function') {
+          line.setMap(null);
+        }
+      });
     }
 
     const tmapKey = 'wqfQUHgfrF9iw5X1Csutj9uNrAyZqVmU5xZbXapt';
-    const tmapUrl = `https://apis.openapi.sk.com/tmap/routes?version=1&format=json&startX=${startCoords.getLng()}&startY=${startCoords.getLat()}&endX=${endCoords.getLng()}&endY=${endCoords.getLat()}&appKey=${tmapKey}`;
+    let tmapUrl = `https://apis.openapi.sk.com/tmap/routes?version=1&format=json&startX=${startCoords.getLng()}&startY=${startCoords.getLat()}&endX=${endCoords.getLng()}&endY=${endCoords.getLat()}&appKey=${tmapKey}`;
+
+    // 경유지 추가
+    const validWaypoints = currentWaypoints.filter(waypoint => waypoint.coords && waypoint.coords.getLat && waypoint.coords.getLng);
+    if (validWaypoints.length > 0) {
+      const passList = validWaypoints.map(wp => `${wp.coords.getLng()},${wp.coords.getLat()}`).join('_');
+      tmapUrl += `&passList=${passList}`;
+    }
 
     fetch(tmapUrl)
       .then(response => response.json())
       .then(data => {
-        const path = [];
+        const paths = [];
         let newDistance = 0;
         let newDuration = 0;
         if (data.features && data.features.length > 0) {
           data.features.forEach(feature => {
             if (feature.geometry.type === "LineString") {
-              feature.geometry.coordinates.forEach(coord => {
-                path.push(new window.kakao.maps.LatLng(coord[1], coord[0]));
-              });
+              const path = feature.geometry.coordinates.map(coord => 
+                new window.kakao.maps.LatLng(coord[1], coord[0])
+              );
+              paths.push(path);
             }
             if (feature.properties) {
               if (feature.properties.totalDistance) {
@@ -198,33 +237,86 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
             }
           });
 
-          const newPolyline = new window.kakao.maps.Polyline({
-            path: path,
-            strokeWeight: 5,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeStyle: 'solid'
-          });
-          newPolyline.setMap(map);
-          setPolyline(newPolyline);
+          // 기존 폴리라인 제거
+          if (Array.isArray(polyline)) {
+            polyline.forEach(line => line.setMap(null));
+          } else if (polyline) {
+            polyline.setMap(null);
+          }
+
+          // 새로운 폴리라인 생성
+          const newPolylines = paths.map(path => 
+            new window.kakao.maps.Polyline({
+              path: path,
+              strokeWeight: 5,
+              strokeColor: '#FF0000',
+              strokeOpacity: 0.8,
+              strokeStyle: 'solid'
+            })
+          );
+
+          newPolylines.forEach(line => line.setMap(map));
+          setPolyline(newPolylines);  // 항상 배열로 설정
           setDistance(newDistance);
           setDuration(newDuration);
           calculateCosts(newDistance);
 
           // 경로가 그려진 후 경계를 업데이트합니다
           const routeBounds = new window.kakao.maps.LatLngBounds();
-          path.forEach(coord => routeBounds.extend(coord));
+          paths.flat().forEach(coord => routeBounds.extend(coord));
+          routeBounds.extend(new window.kakao.maps.LatLng(startCoords.getLat(), startCoords.getLng()));
+          routeBounds.extend(new window.kakao.maps.LatLng(endCoords.getLat(), endCoords.getLng()));
+          validWaypoints.forEach(wp => routeBounds.extend(new window.kakao.maps.LatLng(wp.coords.getLat(), wp.coords.getLng())));
           setBounds(routeBounds);
           map.setBounds(routeBounds);
         } else {
-          alert('경로를 찾을 수 없습니다.');
+          alert('경로를 찾을 수 없습니다. 입력한 주소를 확인해 주세요.');
         }
       })
-      .catch(error => console.error('경로 가져오기 실패:', error));
+      .catch(error => {
+        console.error('경로 가져오기 실패:', error);
+        alert('경로를 찾을 수 없습니다. 입력한 주소를 확인해 주세요.');
+      });
   }, [map, polyline, calculateCosts]);
+
+  const resetState = useCallback(() => {
+    setDistance(0);
+    setDuration(0);
+    setFuelCost('');
+    setTaxiCost('');
+    if (polyline) {
+      (Array.isArray(polyline) ? polyline : [polyline]).forEach(line => {
+        if (line && typeof line.setMap === 'function') {
+          line.setMap(null);
+        }
+      });
+    }
+    setPolyline(null);
+    clearMarkers();
+  }, [polyline, clearMarkers]);
+
+  const removeWaypoint = (index) => {
+    setWaypoints(prev => prev.filter((_, i) => i !== index));
+    updateTitle(startName, endName, waypoints.filter((_, i) => i !== index));
+  };
+
+  const updateTitle = useCallback((start, end, currentWaypoints) => {
+    let newTitle = `${start} -> ${end}`;
+    if (currentWaypoints.length > 0) {
+      const waypointsString = currentWaypoints.map(wp => wp.name).join(" -> ");
+      newTitle += ` ${waypointsString}`;
+    }
+    setTitle(newTitle);
+  }, []);
+
+  useEffect(() => {
+    updateTitle(startName, endName, waypoints);
+  }, [startName, endName, waypoints, updateTitle]);
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
+    if (isSubmitting) return;
+
     const start = startName.trim();
     const end = endName.trim();
 
@@ -233,24 +325,91 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
       return;
     }
 
-    searchPlaceByName(start, 'S', (startCoords) => {
-      searchPlaceByName(end, 'E', (endCoords) => {
-        drawRoute(startCoords, endCoords);
-        if (onMapSubmit) {
-          onMapSubmit({ startName: start, endName: end, distance, fuelCost, taxiCost });
+    setIsSubmitting(true);
+    resetState();
+
+    const searchAllPlaces = async () => {
+      const startCoords = await new Promise(resolve => searchPlaceByName(start, 'S', resolve));
+      const endCoords = await new Promise(resolve => searchPlaceByName(end, 'E', resolve));
+
+      const updatedWaypoints = [];
+      for (let i = 0; i < waypoints.length; i++) {
+        if (waypoints[i].name) {
+          const coords = await new Promise(resolve => 
+            searchPlaceByName(waypoints[i].name, `W${i}`, resolve)
+          );
+          if (coords) {
+            updatedWaypoints.push({ name: waypoints[i].name, coords });
+          }
         }
-      });
+      }
+
+      updateTitle(start, end, updatedWaypoints);
+      return { startCoords, endCoords, updatedWaypoints };
+    };
+
+    searchAllPlaces().then(({ startCoords, endCoords, updatedWaypoints }) => {
+      setWaypoints(updatedWaypoints);
+      if (startCoords && endCoords) {
+        drawRoute(startCoords, endCoords, updatedWaypoints);
+      }
+    }).finally(() => {
+      setIsSubmitting(false);
     });
-  }, [searchPlaceByName, drawRoute, distance, fuelCost, taxiCost, onMapSubmit, startName, endName]);
+  }, [searchPlaceByName, drawRoute, startName, endName, waypoints, resetState, isSubmitting, updateTitle]);
 
   useEffect(() => {
-    if (initialDeparture) {
-      setStartName(initialDeparture); // 초기 출발지 설정
+    if (distance && duration && fuelCost && taxiCost && onMapSubmit) {
+      const routeData = {
+        startName,
+        endName,
+        waypoints: waypoints.map(wp => wp.name),  // 경유지 이름들
+        distance,
+        duration,
+        fuelCost,
+        taxiCost,
+        title // 업데이트된 title 포함
+      };
+      
+      // 콘솔에 저장된 데이터 출력
+      if (JSON.stringify(routeData) !== JSON.stringify(lastSubmittedData)) {
+        console.log('저장된 경로 데이터:', routeData);
+        onMapSubmit(routeData);
+        setLastSubmittedData(routeData);
+      }
     }
-    if (initialArrival) {
-      setEndName(initialArrival); // 초기 도착지 설정
+  }, [distance, duration, fuelCost, taxiCost, onMapSubmit, startName, endName, waypoints, title]);
+
+  useEffect(() => {
+    if (initialTitle) {
+      const titleParts = initialTitle.split(" ");
+    
+      
+      setStartName(titleParts[0]);
+      setEndName(titleParts[2]);
+      
+      // 경유지 확인 로직
+      if (titleParts[7] && titleParts[7] !== '[예약마감]' && titleParts[7] !== '[결제완료]' && titleParts[7] !== "") {
+        setWaypoints([{ name: titleParts[7] }]);
+      } else {
+        setWaypoints([]);
+      }
     }
-  }, [initialDeparture, initialArrival]);
+  }, [initialTitle]);
+
+  const toggleWaypoint = () => {
+    if (waypoints.length > 0) {
+      setWaypoints([]);
+      updateTitle(startName, endName, []);
+    } else {
+      setWaypoints([{ name: '' }]);
+    }
+  };
+
+  const handleWaypointChange = (value) => {
+    setWaypoints([{ name: value }]);
+    updateTitle(startName, endName, [{ name: value }]);
+  };
 
   if (!kakaoLoaded) {
     return <div>카카오맵을 로딩 중입니다...</div>;
@@ -259,12 +418,10 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
       <div className="row">
-     
         <div id="Map" ref={mapRef}></div>
       </div>
       <div className="row">
-       
-        <div className="outline">
+        <div className="outline input-grid">
           <input 
             type="text" 
             id="startName" 
@@ -273,20 +430,35 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
             value={startName}
             onChange={(e) => setStartName(e.target.value)}
             required 
+            className="location-input"
           />
+          {waypoints.length > 0 && (
+            <input
+              type="text"
+              placeholder="경유지"
+              value={waypoints[0].name}
+              onChange={(e) => handleWaypointChange(e.target.value)}
+              className="location-input"
+            />
+          )}
           <input 
             type="text" 
             id="endName" 
             name="endName" 
             placeholder="도착지 이름을 입력하세요" 
-            value={endName} // 상태를 입력 필드에 연결
-            onChange={(e) => setEndName(e.target.value)} // 상태 업데이트
+            value={endName}
+            onChange={(e) => setEndName(e.target.value)}
             required 
+            className="location-input"
           />
+          <button type="button" onClick={toggleWaypoint} className="toggle-waypoint">
+            {waypoints.length > 0 ? '경유지 삭제' : '경유지 추가'}
+          </button>
         </div>
       </div>
+      
       <div className="row">
-        <h2>비용 계산 결과</h2>
+       
         <div className="costResult"> 
           <p>거리 : {(distance / 1000).toFixed(2)} km</p>
           <p>예상 시간 : {Math.round(duration / 60)} 분</p>
@@ -303,4 +475,4 @@ const KakaoMap = ({ onMapSubmit, initialDeparture, initialArrival }) => {
   );
 };
 
-export default KakaoMap;
+export default KakaoMap; 
