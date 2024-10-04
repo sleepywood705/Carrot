@@ -7,7 +7,6 @@ header {
   display: flex;
   align-items: center;
 }
-
 header > a,
 header > span,
 header > button {
@@ -20,13 +19,6 @@ header > button {
   place-items: center;
   transition: all 0.3s ease;
 }
-
-header > a:hover,
-header > span:hover,
-header > button:hover {
-  color: #ff7f00;
-}
-
 header > a:nth-child(1) {
   position: relative;
   margin-right: auto;
@@ -35,7 +27,6 @@ header > a:nth-child(1) {
   font-weight: 800;
   font-family: 'TmoneyRoundWindExtraBold';
 }
-
 header > a:nth-child(1)::before {
   content: "";
   position: absolute;
@@ -44,7 +35,6 @@ header > a:nth-child(1)::before {
   width: 20px; aspect-ratio: 1 / 2;
   background: url(../../public/img/logo.svg) center/contain no-repeat;
 }
-
 header nav {
   position: absolute;
   top: 70px;
@@ -57,7 +47,6 @@ header nav {
   background-color: #fff;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
-
 header nav a {
   position: relative;
   padding: 10px;
@@ -68,26 +57,18 @@ header nav a {
   border-radius: 4px;
   transition: all 0.3s ease;
 }
-
 header a.user-menu:hover nav {
   display: flex;
 }
-
 header a.user-menu nav a {
   padding: 10px;
   text-align: center;
   transition: all 0.3s ease;
 }
-
 header a.user-menu nav a:hover {
   color: #fff;
   background-color: #ff7f00;
 }
-
 .invert {
   color: #fff;
-}
-
-.invert:hover {
-  color: #ff7f00;
 }
