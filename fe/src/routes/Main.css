@@ -44,11 +44,7 @@
 #Search .butn_write {
   font-weight: 600;
   background-color: #DBFF3D;
-  transition: all 0.3s;
-}
-#Search .butn_search:hover,
-#Search .butn_write:hover {
-  background-color: #c2e635; /* 호버 시 약간 어두운 색상 */
+  transition: all 0.1s;
 }
 
 
@@ -82,12 +78,6 @@
   border-radius: 4px;
   background-color: #fff;
   border: 1px solid #ddd;
-  transition: all 0.3s;
-}
-#FilterButtons button:hover,
-#FilterButtons button.active {
-  background-color: #DBFF3D; /* 호버 시 노란색 */
-  border-color: #DBFF3D;
 }
 
 
@@ -102,12 +92,6 @@
   background-color: #fff;
   box-shadow: 25px 25px 40px 10px rgba(0,0,0,0.1);
   cursor: pointer;
-  transition: all 0.3s;
-}
-#Card:hover {
-  transform: scale(1.06); /* 호버 시 카드 확대 */
-  border: 2px solid #c2e635; /* 테두리 추가 */
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 /* 카드 행 패딩 처리 */
 #Card .post-type,
