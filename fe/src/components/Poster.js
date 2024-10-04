@@ -1,10 +1,11 @@
 import "./Poster.css";
+import { PosterForm } from "./PosterForm.js";
+import { useState, useEffect } from "react";
 import Map from "../api/Map.js";
-import { PosterForm } from "./PosterForm";
-import React, { useState, useEffect } from "react";
 
 
 export function Poster({ isOpen, onClose, onSubmit }) {
+
   const [mapData, setMapData] = useState(null);
 
   useEffect(() => {
@@ -23,24 +24,25 @@ export function Poster({ isOpen, onClose, onSubmit }) {
     };
   }, [isOpen, onClose]);
 
-  // handleMapSubmit 함수 정의
   const handleMapSubmit = (data) => {
     console.log('Map data received:', data); // 데이터 확인
-    if (!mapData || mapData.from !== data.startName || mapData.to !== data.endName) {
-      setMapData({
-        from: data.startName,
-        to: data.endName,
-      });
-    }
+    setMapData({
+      startName: data.startName,
+      endName: data.endName,
+      waypoints: data.waypoints,
+      distance: data.distance,
+      duration: data.duration,
+      fuelCost: data.fuelCost,
+      taxiCost: data.taxiCost
+    });
   };
 
   if (!isOpen) return null;
 
   return (
-    <div id="Post">
+    <div id="Posting">
       <Map onMapSubmit={handleMapSubmit} />
       <PosterForm onSubmit={onSubmit} onClose={onClose} mapData={mapData} />
     </div>
   );
 }
-

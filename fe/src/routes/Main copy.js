@@ -1,19 +1,11 @@
+import React, { useState, useEffect } from "react";
 import "./Main.css";
-import "react-toastify/dist/ReactToastify.css";
-import { Header } from "../components/Header";
-import { Poster } from "../components/Poster";
-import { Editor } from "../components/Editor";
-import { Board } from "../components/Board"
-import { Search } from "../components/Search";
-import { ConfirmModal } from "../components/ConfirmModal"; 
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from "react";
-import { ToastContainer, toast } from 'react-toastify';
+import { Post } from "../components/Post.js";
+import { Editor } from "../components/Editor.js";
 import axios from "../api/axios.js";
-
+import ConfirmModal from "./ConfirmModal.js"; 
 
 export function Main() {
-  const navigate = useNavigate();
   const [trips, setTrips] = useState([]);
   const [filteredTrips, setFilteredTrips] = useState([]);
   const [activeFilter, setActiveFilter] = useState("전체");
@@ -32,30 +24,11 @@ export function Main() {
   const [isReservationLoading, setIsReservationLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [pendingSearchParams, setPendingSearchParams] = useState(null);
-  const [viewedReservations, setViewedReservations] = useState(() => {
-    const stored = localStorage.getItem('viewedReservations');
-    return stored ? JSON.parse(stored) : [];
-  });
-  const [searchInputs, setSearchInputs] = useState({
-    departure: "",
-    arrival: "",
-    date: "",
-  });
 
   useEffect(() => {
-    fetchUserEmail();
     fetchTrips();
+    fetchUserEmail();
   }, []);
-
-  useEffect(() => {
-    if (userId !== null) {
-      fetchTrips();
-    }
-  }, [userId]);
-
-  useEffect(() => {
-    localStorage.setItem('viewedReservations', JSON.stringify(viewedReservations));
-  }, [viewedReservations]);
 
   useEffect(() => {
     applyFiltersAndSearch();
@@ -75,7 +48,6 @@ export function Main() {
         console.log('Fetched trips:', tripsWithReservationStatus); // 추가된 로그
         setTrips(tripsWithReservationStatus);
         applyFiltersAndSearch(); // 필터와 검색 조건을 다시 적용합니다.
-        checkForNewReservations(tripsWithReservationStatus);
       } else {
         throw new Error("서버에서 받은 데이터 구조가 예상과 다릅니다.");
       }
@@ -130,23 +102,9 @@ export function Main() {
     return result;
   };
 
-  const showNotification = (message, type = 'info', options = {}) => {
-    toast[type](message, {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      ...options
-    });
-  };
-
   const handleWriteSubmit = (newTrip) => {
     setTrips((prevTrips) => [newTrip, ...prevTrips]);
-    fetchTrips();
-    showNotification('새 게시물이 작성되었습니다.', 'success');
+    fetchTrips(); // 게시물 추가 후 목록 새로고침
   };
 
   const fetchUserReservation = async (postId) => {
@@ -173,16 +131,19 @@ export function Main() {
       const reservation = await fetchUserReservation(trip.id);
       const isReservationEnded = trip.title.endsWith('[예약마감]');
 
+
       const updatedTrip = {
         ...trip,
         isReservationEnded: isReservationEnded
       };
 
+
       setUserReservation(reservation);
       setSelectedTrip(updatedTrip);
       setIsEditModalOpen(true);
     } catch (error) {
-      showNotification('예약 정보를 가져오는 데 실패했습니다. 다시 시도해 주세요.', 'error');
+   
+      alert('예약 정보를 가져오는 데 실패했습니다. 다시 시도해 주세요.');
     } finally {
       setIsReservationLoading(false);
     }
@@ -199,20 +160,24 @@ export function Main() {
     setActiveFilter(filterType);
     if (filterType === "전체") {
       setFilteredTrips(trips);
-      // 검색 조건 및 입력 필드 초기화
-      setSearchParams({ departure: "", arrival: "", date: "" });
-      setSearchInputs({ departure: "", arrival: "", date: "" });
     } else {
       const filtered = trips.filter(
         (trip) => trip.title.split(" ")[3] === filterType
       );
       setFilteredTrips(filtered);
     }
+
+    // 검색 조건 초기화
+    setSearchParams({ departure: "", arrival: "", date: "" });
+    // 입력 필드 초기화
+    document.getElementById("departure").value = "";
+    document.getElementById("arrival").value = "";
+    document.getElementById("tripDate").value = "";
   };
 
   const handleSearch = (newSearchParams) => {
     setSearchParams(newSearchParams);
-    const searchResults = applyFiltersAndSearch(newSearchParams);
+    const searchResults = applyFiltersAndSearch();
     
     if (searchResults.length === 0) {
       setPendingSearchParams(newSearchParams);
@@ -223,13 +188,8 @@ export function Main() {
   const handleConfirmWrite = async () => {
     setShowConfirmModal(false);
     if (pendingSearchParams) {
-      try {
-        await createNewTrip(pendingSearchParams);
-        showNotification('새 게시물이 작성되었습니다.', 'success');
-        setPendingSearchParams(null);
-      } catch (error) {
-        showNotification('게시물 작성에 실패했습니다.', 'error');
-      }
+      await createNewTrip(pendingSearchParams);
+      setPendingSearchParams(null);
     }
   };
 
@@ -251,7 +211,7 @@ export function Main() {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        showNotification('로그인이 필요합니다.', 'error');
+        alert('로그인이 필요합니다.');
         return;
       }
 
@@ -264,86 +224,27 @@ export function Main() {
       await fetchTrips();
     } catch (error) {
       console.error('게시물 생성 중 오류 발생:', error);
-      throw error; // 에러를 상위로 전파하여 handleConfirmWrite에서 처리할 수 있게 합니다.
+      alert('게시물 생성에 실패했습니다. 다시 시도해 주세요.');
     }
   };
-
-  const checkForNewReservations = (trips) => {
-    console.log('Checking for new reservations. User ID:', userId);
-    const userPosts = trips.filter(trip => trip.authorId === userId);
-    console.log('User posts:', userPosts);
-    const newReservations = userPosts.flatMap(post => 
-      (post.reservations || []).filter(reservation => 
-        !viewedReservations.includes(reservation.id)
-      )
-    );
-    console.log('New reservations:', newReservations);
-
-    if (newReservations.length > 0) {
-      showNewReservationNotification(newReservations);
-    }
-  };
-
-  const showNewReservationNotification = (newReservations) => {
-    newReservations.forEach(reservation => {
-      if (reservation && reservation.id) {
-        toast.info(`새로운 예약이 있습니다`, {
-          position: "bottom-right",
-          autoClose: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          onClick: () => handleReservationClick(reservation.id)
-        });
-        setViewedReservations(prev => [...prev, reservation.id]);
-      }
-    });
-  };
-
-  const handleReservationClick = async (reservationId) => {
-    toast.dismiss();
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    navigate('/mypage', { state: { activeSection: 'MyPost', reservationId: reservationId } });
-  };
-
-  const handleSearchInputChange = (e) => {
-    const { id, value } = e.target;
-    setSearchInputs(prev => ({ ...prev, [id]: value }));
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    setSearchParams(searchInputs);
-    const searchResults = applyFiltersAndSearch(searchInputs);
-    
-    if (searchResults.length === 0) {
-      setPendingSearchParams(searchInputs);
-      setShowConfirmModal(true);
-    }
-  };
-
 
   return (
     <div id="Main">
-      <Header />
-      <ToastContainer position="bottom-right"/>
-      <Search
-        searchInputs={searchInputs}
-        onInputChange={handleSearchInputChange}
-        onSubmit={handleSearchSubmit}
+      <Search onSearch={handleSearch} />
+      <FilterButtons
+        activeFilter={activeFilter}
+        onFilterChange={setActiveFilter}
         onWriteClick={() => setIsWriteModalOpen(true)}
       />
+      <h1>최근 게시글</h1>
       <Board
         isLoading={isLoading}
         error={error}
         filteredTrips={filteredTrips}
         handleEditClick={handleEditClick}
         userId={userId}
-        activeFilter={activeFilter}
-        onFilterChange={filterTrips}
       />
-      <Poster
+      <Post
         isOpen={isWriteModalOpen}
         onClose={() => setIsWriteModalOpen(false)}
         onSubmit={handleWriteSubmit}
@@ -360,7 +261,6 @@ export function Main() {
         userReservation={userReservation}
         userId={userId}
         isReservationEnded={selectedTrip?.isReservationEnded}
-        showNotification={showNotification}
       />
       <ConfirmModal
         isOpen={showConfirmModal}
@@ -368,6 +268,177 @@ export function Main() {
         onConfirm={handleConfirmWrite}
         message="검색 결과가 없습니다. 새로운 게시물을 작성하시겠습니까?"
       />
+    </div>
+  );
+}
+
+export function Board({ isLoading, error, filteredTrips, handleEditClick, userId }) {
+  return (
+    <section id="Board">
+      {isLoading ? (
+        <p>데이터를 불러오는 중...</p>
+      ) : error ? (
+        <p>에러: {error}</p>
+      ) : (
+        <div className="Board">
+          {filteredTrips
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .map((trip, index) => {
+
+              const reservationCount = trip.reservations ? trip.reservations.length : 0;
+              const isUserReserved = trip.reservations &&
+                trip.reservations.some(reservation => reservation.bookerId === userId);
+              const isReservationClosed = trip.title.endsWith('[예약마감]');
+
+              const titleParts = trip.title.split(" ");
+              const genderInfo = titleParts[6];
+              const isSameGender = genderInfo === "동성";
+              const tripType = titleParts[3].toLowerCase();
+
+              return (
+                <div
+                  key={trip.id || index}
+                  className={`Card ${trip.isNewlyCreated ? 'newly-created' : ''}`}
+                  onClick={() => handleEditClick(trip)}
+                >
+                  <div className="row1">
+                    <div className="user-name">
+                      <span>{trip.author?.name || "알 수 없음"}{" "}</span>
+                    </div>
+                    <div className="card-title">
+                      <div className="user-type">
+      
+                        <span className={`type type-${tripType}`}>
+                          {titleParts[3]}
+                        </span>
+                        <span style={{ color: isSameGender ? 'blue' : 'inherit' }}>
+                          {titleParts[3] === "택시" ? titleParts[6] : genderInfo}
+                        </span>
+                      </div>
+                      <div 
+                        className={`switch ${isSameGender ? 'switch-on' : ''}`}
+                      >
+                        <div className="gear"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row2">
+                    <div className="route">
+                    <p>경로
+                    <span>
+                      {trip.title.split(" ")[0]} → 
+                      {trip.title.split(" ")[7] && 
+                      trip.title.split(" ")[7] !== '[예약마감]' &&
+                      trip.title.split(" ")[7] !== '[결제완료]' &&
+                      trip.title.split(" ")[7] !== "" &&
+                      trip.title.split(" ")[7] !== "undefined"
+                        ? `${trip.title.split(" ")[7]} → ` 
+                        : ''}
+                      {trip.title.split(" ")[2]}
+                    </span>
+                    </p>
+                      
+                    </div>
+                    <div className="date">
+                    <p>날짜<span>{trip.title.split(" ")[4]}{" "}</span></p>
+                    <p>출발<span>{trip.title.split(" ")[5]}</span></p>
+                    </div>
+                  </div>
+                  {(isReservationClosed || reservationCount > 0) && (
+                    <div 
+                      className={`row3 ${
+                        isReservationClosed 
+                          ? 'booking'
+                          : reservationCount > 0 
+                            ? 'booking-finished'
+                            : ''
+                      }`}
+                    >
+                      {isReservationClosed ? "예약 마감" :
+                        (reservationCount > 0 ? `${reservationCount}명 예약 중` : "")
+                      }
+                    </div>
+                  )}
+                  <div className="Cover">
+                    {isReservationClosed ? (
+                      <img src="/img/finish.png" alt="예약 마감" />
+                    ) : (
+                      isUserReserved && userId === trip.reservations.find(res => res.bookerId === userId)?.bookerId ? (
+                        <img src="/img/booking.png" alt="예약 중" />
+                      ) : null
+                    )}
+                  </div>
+                  {trip.isNewlyCreated && (
+                    <div className="new-trip-indicator">새로 생성된 게시물</div>
+                  )}
+                </div>
+              );
+            })}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function Search({ onSearch }) {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const newSearchParams = {
+      departure: event.target.departure.value,
+      arrival: event.target.arrival.value,
+      date: event.target.tripDate.value,
+    };
+    onSearch(newSearchParams);
+  };
+
+  return (
+    <section id="Search">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          id="departure"
+          placeholder="출발지"
+        />
+        <input
+          type="text"
+          id="arrival"
+          placeholder="도착지"
+        />
+        <input
+          type="date"
+          id="tripDate"
+        />
+        <button
+          type="submit"
+          className="butn_search"
+        >
+          검색
+        </button>
+      </form>
+    </section>
+  );
+}
+
+function FilterButtons({ onFilterChange, onWriteClick }) {
+  const filters = ["전체", "택시", "운전자", "탑승자"];
+  const filtersClass = ["butn_all", "butn_taxi", "butn_driver", "butn_passenger"];
+  const filterImages = [null, "/img/taxi.png", "/img/wheel.png", "/img/siren.png"];
+
+  return (
+    <div id="FilterButtons">
+      {filters.map((filter, index) => (
+        <button
+          key={filter}
+          onClick={() => onFilterChange(filter)}
+          className={filtersClass[index]}
+        >
+          {filterImages[index] && <img src={filterImages[index]} />}
+          {filter}
+        </button>
+      ))}
+      <button className="butn_write" onClick={onWriteClick}>
+        <img src="/img/plus.png" />
+      </button>
     </div>
   );
 }

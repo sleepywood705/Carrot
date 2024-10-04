@@ -1,17 +1,21 @@
 import "./Mypage.css";
-import { ChangeInfo } from "../components/MyPage/ChangeInfo.js";
-import { MyPoint } from "../components/MyPage/MyPoint.js";
-import { MyPost } from "../components/MyPage/MyPost.js";
-import { MyReserve } from "../components/MyPage/MyReserve.js";
-import { Withdrawal } from "../components/MyPage/Withdrawal.js";
+import { Header } from "../components/Header"
+import { Footer } from "../components/Footer"
+import { ChangeInfo } from "../components/MyPage/ChangeInfo";
+import { MyPoint } from "../components/MyPage/MyPoint";
+import { MyPost } from "../components/MyPage/MyPost";
+import { MyReserve } from "../components/MyPage/Myreserve";
+import { Withdrawal } from "../components/MyPage/Withdrawal";
+import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 
 export function Mypage() {
+  const location = useLocation();
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedMenu, setSelectedMenu] = useState("MyPoint");
+  const [selectedMenu, setSelectedMenu] = useState("ChangeInfo");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -23,7 +27,6 @@ export function Mypage() {
             Authorization: token,
           },
         });
-        // console.log("토큰", token )
         setUser(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -34,7 +37,11 @@ export function Mypage() {
     };
 
     fetchUserData();
-  }, []);
+
+    if (location.state && location.state.activeSection) {
+      setSelectedMenu(location.state.activeSection);
+    }
+  }, [location]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -70,6 +77,7 @@ export function Mypage() {
 
   return (
     <div id="Mypage">
+      <Header />
       <aside id="SNB" className="left">
         <div className="myProfile">
           <img src="/img/leaf.png" alt="leaf" className="leaf" />
@@ -101,6 +109,7 @@ export function Mypage() {
         </details>
       </aside>
       <div className="right">{renderContent()}</div>
+      <Footer />
     </div>
   );
 }

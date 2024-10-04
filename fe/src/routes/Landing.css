@@ -1,7 +1,6 @@
 #Landing {
 	position: relative;
 	width: 100vw; height: 100vh;
-	margin-top: -70px;
 	overflow: hidden;
 	overflow-y: scroll;
 	scroll-snap-type: y mandatory;
@@ -131,13 +130,13 @@
 }
 .img_people {
 	position: absolute;
-	left: 0; top: 40%;
-	transform: translate(0, -40%) scale(0.53);
+	left: 0; top: 41%;
+	transform: translate(0, -40%) scale(0.5);
 }
 .img_car {
 	position: absolute;
 	right: -300px; top: 50%;
-	transform: translate(0, -50%);
+	transform: translate(0, -50%) scale(0.9);
 }
 
 
@@ -220,7 +219,7 @@
 	background-color: #fff;
 }
 #Landing .sect7 .row p > img {
-	width: 100%;
+	width: 90%;
 }
 
 
@@ -309,133 +308,37 @@
 	position: sticky;
 	top: 0;
 	background-color: #fff !important;
+	gap: 30px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 }
 #Landing .sect10 > div {
-	gap: 20px;
+	gap: 16px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
+#Landing .sect10 > a {
+	padding: 10px 30px;
+	color: #fff;
+	font-size: 1.25rem;
+	border-radius: 50px;
+	background-color: #FF6600;
+}
+#Landing .sect10 > a:hover {
+	color: #fff;
+	background-color: #333;
+}
 #Landing .sect10 span {
 	color: #333;
-	font-size: 3.75rem;
-	font-weight: 600;
+	font-size: 2.875rem;
+  font-family: 'TmoneyRoundWindExtraBold';
+}
+#Landing .sect10 span:nth-child(even) {
+	color: #333;
 }
 #Landing .sect10 span:nth-child(odd) {
 	color: #FF6600;
-}
-
-
-/* 모바일 반응형 */
-@media screen and (max-width: 767px) {
-	#Landing .sect1 {
-		padding: 40px;
-		gap: 10px;
-	}
-	#Landing .sect1 .Bubble {
-		padding: 8px 16px;
-		width: fit-content;
-	}
-	#Landing .sect1 .Bubble p {
-		font-size: 0.875rem;
-	}
-	#Landing .sect1 .Bubble img {
-		height: 16px;
-	}
-	#Landing .sect2 img {
-		width: 100%;
-	}
-	#Landing .sect3 {
-		padding: 100px;
-		gap: 10px;
-	}
-	#Landing .sect3 > p {
-		z-index: 1;
-		position: relative;
-		width: fit-content;
-		color: #fff;
-		font-size: 2.5rem;
-		font-weight: 600;
-	}
-	#Landing .sect3 .p1 img,
-	#Landing .sect3 .p2 img,
-	#Landing .sect3 .p3 img {
-		z-index: -1;
-		position: absolute;
-		top: 50%;
-	}
-	#Landing .sect3 .p1 img {
-		right: -160px;
-		transform: translate(0, -50%) scale(0.3) scaleX(-100%);
-	}
-	#Landing .sect3 .p2 img {
-		right: -210px;
-		transform: translate(0, -50%) scale(0.3) scaleX(-100%);
-	}
-	#Landing .sect3 .p3 img {
-		right: -140px;
-		transform: translate(0, -50%) scale(0.4) scaleX(-100%);
-	}
-	#Landing .sect4 p {
-		font-size: 1.875rem;
-	}
-	#Landing .sect4 p img {
-		top: -240px;
-		transform: translate(-50%, 0) scale(0.3);
-	}
-	#Landing .sect5 p {
-		color: #fff;
-		font-size: 1.75rem;
-		font-weight: 600;
-	}
-	.img_people {
-		left: -100px; top: 60%;
-		transform: translate(0, -40%) scale(0.2);
-	}
-	.img_car {
-		z-index: -1;
-		position: absolute;
-		right: -150px; top: 69%;
-		transform: translate(0, -50%) scale(0.33);
-	}
-	#Landing .sect6 p span {
-		font-size: 3.75rem;
-	}
-	#Landing .sect6 p span img {
-		height: 60px;
-	}
-	#Landing .sect7 {
-		position: relative;
-		height: fit-content !important;
-		background-color: #fff !important;
-		display: flex;
-		flex-direction: column;
-	}
-	#Landing .sect7 .row {
-		display: flex;
-		flex-direction: column;
-	}
-	#Landing .sect7 .row2 {
-		margin-top: -426px;
-	}
-	#Landing .sect7 .row p {
-		padding: 0;
-	}
-	#Landing .sect7 .row span {
-		font-size: 1.875rem;
-	}
-	#Landing .sect8 > p,
-	#Landing .sect9 > p {
-		font-size: 1.875rem;
-	}
-	#Landing .sect10 > div {
-		gap: 10px;
-	}
-	#Landing .sect10 span {
-		font-size: 2.5rem;
-	}
 }

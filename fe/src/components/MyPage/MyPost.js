@@ -1,6 +1,6 @@
+import { Editor } from "../Editor.js";
 import { useState, useEffect } from "react";
 import axios from "../../api/axios.js";
-import { Editor } from "../Editor.js";
 
 export function MyPost({ user }) {
   const [myPosts, setMyPosts] = useState([]);
@@ -44,16 +44,16 @@ export function MyPost({ user }) {
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
     setSelectedPost(null);
-    fetchMyPosts(); // 모달이 닫힐 때 목록 새로고침
+    fetchMyPosts();
   };
 
   return (
     <div id="MyPost">
       <h2>내가 작성한 글</h2>
-      {isLoading && <p>로딩 중...</p>}
-      {error && <p>{error}</p>}
+      {isLoading && <div className="Board">로딩 중...</div>}
+      {error && <div className="Board">{error}</div>}
       {myPosts.length === 0 && !isLoading && !error && (
-        <div><p>작성한 게시글이 없습니다</p></div>
+        <div className="Board">작성한 게시글이 없습니다</div>
       )}
       <div className="Board">
         {myPosts.map((post) => {
@@ -62,44 +62,76 @@ export function MyPost({ user }) {
           const isReservationClosed = post.title.endsWith('[예약마감]');
           const genderInfo = titleParts[6];
           const isSameGender = genderInfo === "동성";
+          const stopover = titleParts[7];
+
+          let backgroundImage = '';
+          if (titleParts[3] === "운전자") {
+            backgroundImage = '/img/driver.png';
+          } else if (titleParts[3] === "탑승자") {
+            backgroundImage = '/img/carpooler.png';
+          } else if (titleParts[3] === "택시") {
+            backgroundImage = '/img/taxi-driver.png';
+          }
 
           return (
-            <div key={post.id} id="Card" onClick={() => handleEditClick(post)}>
-              <div className="row1">
-                <div className="user-name">
-                  <span>{post.author?.name || "알 수 없음"}{" "}</span>
+            <div
+              key={post.id}
+              id="Card"
+              onClick={() => handleEditClick(post)}
+            >
+              <div className="user-name">
+                {post.author?.name || "알 수 없음"}{" "}
+              </div>
+              <div className="carpool-type">
+                {
+                  titleParts[3] === "택시"
+                    ? (
+                      <>
+                        <span>{titleParts[3]}</span>
+                        <span className="taxi-party">{genderInfo}</span>
+                      </>
+                    )
+                    : (
+                      <>
+                        <span className={`carpool ${isSameGender ? 'switch-on' : ''}`}>
+                          성별무관
+                        </span>
+                        <span className={`carpool ${isSameGender ? '' : 'switch-on'}`}>
+                          동성끼리
+                        </span>
+                      </>
+                    )
+                }
+              </div>
+              <div className="journey">
+                <div className="journey-departure">
+                  <span>출발지</span>
+                  <span>{titleParts[0]}</span>
                 </div>
-                <div className="card-title">
-                  <div className="user-type">
-                    <span>{titleParts[3]}</span>
-                    ·
-                    <span style={{ color: isSameGender ? 'blue' : 'inherit' }}>
-                      {titleParts[3] === "택시" ? titleParts[6] : genderInfo}
-                    </span>
+                {stopover && stopover !== '[예약마감]' && stopover !== '[결제완료]' && stopover !== "" && stopover !== "undefined" && (
+                  <div className="journey-stopover">
+                    <span>경유지</span>
+                    <span>{stopover}</span>
                   </div>
-                  <div className={`switch ${isSameGender ? 'switch-on' : ''}`}>
-                    <div className="gear"></div>
-                  </div>
+                )}
+                <div className="journey-arrival">
+                  <span>도착지</span>
+                  <span>{titleParts[2]}</span>
                 </div>
               </div>
-              <div className="row2">
-                <div className="route">
-                  <p>출발지<span>{titleParts[0]}</span></p>
-                  <p>도착지<span>{titleParts[2]}</span></p>
-                </div>
-                <div className="date">
-                  <p>날짜<span>{titleParts[4]}{" "}</span></p>
-                  <p>출발<span>{titleParts[5]}</span></p>
-                </div>
+              <div className="promise">
+                <span>날짜</span>
+                <div className="promise-date">{post.title.split(" ")[4]}{" "}</div>
+                <span>시간</span>
+                <div className="promise-time">{post.title.split(" ")[5]}</div>
               </div>
               {(isReservationClosed || reservationCount > 0) && (
-                <div className={`row3 ${isReservationClosed ? 'booking' : 'booking-finished'}`}>
-                  {isReservationClosed ? "예약 마감" : `${reservationCount}명 예약 중`}
+                <div className="booking">
+                  {isReservationClosed ? "예약 마감" :
+                    (reservationCount > 0 ? `${reservationCount}명 예약 중` : "")
+                  }
                 </div>
               )}
-              <div className="Cover">
-                {isReservationClosed && <img src="/img/finish.png" alt="예약 마감" />}
-              </div>
             </div>
           );
         })}

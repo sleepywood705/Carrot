@@ -1,8 +1,8 @@
-import '../components/Poster.css'
+import '../components/Post.css'
 import { useEffect, useRef, useState, useCallback } from 'react';
 
-
 const KakaoMap = ({ onMapSubmit, initialTitle }) => {
+
 
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);

@@ -22,17 +22,14 @@ export function Withdrawal() {
 
       const userId = response.data.data.id;
 
-      // 사용자 삭제 요청
       await axios.delete(`/users/delete/${userId}`, {
         headers: {
           Authorization: token
         }
       });
 
-      // 로컬 스토리지에서 토큰 제거
       localStorage.removeItem('token');
 
-      // 홈 페이지로 이동 및 페이지 새로고침
       navigate('/', { replace: true });
       window.location.reload();
 

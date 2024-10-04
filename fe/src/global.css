@@ -6,7 +6,7 @@
     transition: all 0.5s;
 }
 html{
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: 500;
     scroll-behavior: smooth;
 }
@@ -16,6 +16,7 @@ section
 , span
 , a
 , ul
+, input
 , button
 , table{
     font-family: 'Pretendard Variable';
@@ -32,7 +33,7 @@ li{
 }
 input,
 button{
-    font-size: 1rem;
+    font-size: 16px;
     border: none; outline: none; 
     background-color: inherit;
 }

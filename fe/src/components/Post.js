@@ -1,8 +1,36 @@
-import { useState, useEffect } from "react";
+import "./Post.css";
+import Map from "../api/Map.js";
+import React, { useState, useEffect } from "react";
 import axios from "../api/axios.js";
 
+export function Post({ isOpen, onClose, onSubmit }) {
+  const [mapData, setMapData] = useState(null);
 
-export function PosterForm({ onSubmit, onClose, mapData }) {
+  // handleMapSubmit 함수 수정
+  const handleMapSubmit = (data) => {
+    console.log('Map data received:', data); // 데이터 확인
+    setMapData({
+      startName: data.startName,
+      endName: data.endName,
+      waypoints: data.waypoints,
+      distance: data.distance,
+      duration: data.duration,
+      fuelCost: data.fuelCost,
+      taxiCost: data.taxiCost
+    });
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div id="Posting">
+      <Map onMapSubmit={handleMapSubmit} />
+      <PostingForm onSubmit={onSubmit} onClose={onClose} mapData={mapData} />
+    </div>
+  );
+}
+
+export function PostingForm({ onSubmit, onClose, mapData }) {
   const [type, setType] = useState("운전자");
   const [time, setTime] = useState("");
   const [date, setDate] = useState("");
@@ -107,7 +135,7 @@ export function PosterForm({ onSubmit, onClose, mapData }) {
 
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
-      <button onClick={handleCloseModal} className="btn_close" />
+      <button onClick={handleCloseModal} className="btn_close"/>
       <div className="row">
         <h2>유형을 선택해 주세요</h2>
         <select value={type} onChange={(e) => setType(e.target.value)}>

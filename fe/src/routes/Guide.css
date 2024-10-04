@@ -1,3 +1,8 @@
+.membership header {
+  position: fixed;
+  left: 0; top: 0;
+}
+
 .membership {
   font-family: 'Arial', sans-serif;
   max-width: 1600px; /* 800px에서 1600px로 2배 증가 */
@@ -5,6 +10,7 @@
   padding: 20px;
   background-color: #FFF5E6; /* 연한 주황색 배경 */
   line-height: 1.6;
+  overflow: hidden;
 }
 
 .membership h1 {
@@ -105,7 +111,7 @@
   }
   
   .membership table {
-      font-size: 0.875rem;
+      font-size: 14px;
   }
   
   .membership th, .membership td {
