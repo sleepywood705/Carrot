@@ -1,7 +1,9 @@
 import './Login.css';
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer"
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from '../api/axios.js'
+
 
 export function Login({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -25,12 +27,11 @@ export function Login({ onLogin }) {
       
       if (token) {
         localStorage.setItem('token', token);
-        // 사용자 정보를 가져오는 추가 요청
         const userResponse = await axios.get('/users/me', {
           headers: { Authorization: token }
         });
-        const userName = userResponse.data.data.name; // data.data.name으로 수정
-        onLogin(userName);  // 이메일 대신 이름을 전달
+        const userName = userResponse.data.data.name;
+        onLogin(userName);
 
         if (rememberMe) {
           localStorage.setItem('savedEmail', email);
@@ -49,6 +50,7 @@ export function Login({ onLogin }) {
 
   return (
     <div id="Login">
+      <Header />
       <img src="/img/logo.svg" alt="logo" />
       <h2>당신 근처의 마차</h2>
       <p>동네라서 가능한 모든 것<br/>지금 내 동네에서 카풀을 시작해 보세요</p>
@@ -86,6 +88,7 @@ export function Login({ onLogin }) {
         </span>
         <button type="submit" className="btn_login">로그인</button>
       </form>
+      <Footer />
     </div>
   );
 }

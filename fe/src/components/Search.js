@@ -1,30 +1,30 @@
-export function Search({ onSearch }) {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const newSearchParams = {
-      departure: event.target.departure.value,
-      arrival: event.target.arrival.value,
-      date: event.target.tripDate.value,
-    };
-    onSearch(newSearchParams);
-  };
+import '../routes/Main.css'
+import { FilterButtons } from './FilterButtons';
 
+export function Search({ searchInputs, onInputChange, onSubmit, onWriteClick }) {
   return (
-    <section id="Search">
-      <form onSubmit={handleSubmit}>
+    <div id="Search">
+      <h1>경로 검색</h1>
+      <form onSubmit={onSubmit}>
         <input
           type="text"
           id="departure"
           placeholder="출발지"
+          value={searchInputs.departure}
+          onChange={onInputChange}
         />
         <input
           type="text"
           id="arrival"
           placeholder="도착지"
+          value={searchInputs.arrival}
+          onChange={onInputChange}
         />
         <input
           type="date"
-          id="tripDate"
+          id="date"
+          value={searchInputs.date}
+          onChange={onInputChange}
         />
         <button
           type="submit"
@@ -32,7 +32,10 @@ export function Search({ onSearch }) {
         >
           검색
         </button>
+        <button className="butn_write" onClick={onWriteClick}>
+          작성
+        </button>
       </form>
-    </section>
+    </div>
   );
 }

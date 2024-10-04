@@ -1,10 +1,10 @@
 import "./Poster.css";
 import { Chat } from "./Chat/Chat";
-import { useState, useEffect } from "react";
 import { EditorForm } from "./EditorForm";
+import { toast } from 'react-toastify';
+import { useState, useEffect } from "react";
 import Map from "../api/Map";
 import axios from '../api/axios';
-
 
 export function Editor({
   isOpen,
@@ -18,6 +18,7 @@ export function Editor({
   isReservationLoading,
   userId,
   isReservationEnded,
+  showNotification,
 }) {
   const [showChat, setShowChat] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
@@ -108,11 +109,11 @@ export function Editor({
       if (response.status) {
         onClose();
         refreshPosts();
-        console.log('서버 응답:', response.data);
+        toast.success('게시물이 성공적으로 수정되었습니다.');
       }
     } catch (error) {
       console.error('게시물 수정 중 오류 발생:', error);
-      alert('게시물을 수정하는 데 실패했습니다.');
+      toast.error('게시물을 수정하는 데 실패했습니다.');
     }
   };
 
@@ -130,11 +131,11 @@ export function Editor({
       if (response.status) {
         onClose();
         refreshPosts();
-        console.log('삭제된 게시물 ID:', editData.id);
+        toast.success('게시물이 성공적으로 삭제되었습니다.');
       }
     } catch (error) {
       console.error('게시물 삭제 중 오류 발생:', error);
-      alert('게시물을 삭제하는 데 실패했습니다.');
+      toast.error('게시물을 삭제하는 데 실패했습니다.');
     }
   };
 
@@ -161,13 +162,13 @@ export function Editor({
 
       if (response.status === 201) {
         console.log('예약 성공:', response.data);
-        alert('예약이 완료되었습니다.');
+        toast.success('예약이 완료되었습니다.');
         onClose();
         refreshPosts();
       }
     } catch (error) {
       console.error('예약 중 오류 발생:', error);
-      alert('예약에 실패했습니다.');
+      toast.error('예약에 실패했습니다.');
     }
   };
 
@@ -186,36 +187,30 @@ export function Editor({
 
       console.log('Reservation check response:', checkResponse.data);
 
-      // 예약이 존재하면 삭제를 진행합니다.
+      
       const cancelResponse = await axios.delete(`/reserve/delete/${userReservation.id}`, {
         headers: { 'Authorization': `${token}` }
       });
 
       if (cancelResponse.status) {
         console.log('예약 취소 성공:', cancelResponse.data);
-        alert('예약이 취소되었습니다.');
+        toast.success('예약이 취소되었습니다.');
         onClose();
         refreshPosts();
       }
     } catch (error) {
       console.error('예약 취소 중 오류 발생:', error);
-      if (error.response) {
-        console.log('에러 응답:', error.response.data);
-        console.log('에러 상태:', error.response.status);
-        console.log('에러 헤더:', error.response.headers);
-      }
-      alert('예약 취소에 실패했습니다. 예약이 이미 취소되었거나 존재하지 않을 수 있습니다.');
+      toast.error('예약 취소에 실패했습니다. 예약이 이미 취소되었거나 존재하지 않을 수 있습니다.');
     }
   };
 
   return (
-    <div id="Editor">
+    <div id="Editing">
       {!isLoading && !isReservationLoading && (
         <>
           <Map
             onMapSubmit={handleMapSubmit}
-            initialDeparture={initialDeparture}
-            initialArrival={initialArrival}
+            initialTitle={editData?.title}
           />
           <EditorForm
             isOpen={isOpen}
@@ -236,6 +231,7 @@ export function Editor({
             userId={userId}
             refreshPosts={refreshPosts}
             isReservationEnded={isReservationEnded}
+            showNotification={showNotification}
           />
           {showChat && <Chat postId={postId} user={user} messageList={messageList} setMessageList={setMessageList} />}
         </>
@@ -243,4 +239,3 @@ export function Editor({
     </div>
   );
 }
-

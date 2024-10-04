@@ -1,11 +1,13 @@
 import './Guide.css';
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 
 
 export function Guide() {
   return (
     <div className="membership">
+      <Header />
       <h1>카풀 플러스 멤버십 프로그램</h1>
-      
       <section className="membership-tiers">
         <h2>멤버십 등급 체계</h2>
         <table>
@@ -132,6 +134,7 @@ export function Guide() {
         <h2>친구 추천 프로그램</h2>
         <p>신규 가입 시 추천인과 피추천인 모두에게 추가 포인트 지급</p>
       </section>
+      <Footer />
     </div>
   );
 }

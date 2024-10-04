@@ -11,10 +11,8 @@ export function MessageContainer({ messageList, user }) {
             <p className="message my">{message.chat}</p>
           ) : (
             <div className="message-container">
-              <span>
-                <p className="name user">{message.user.name}</p>
-                <p className="message other">{message.chat}</p>
-              </span>
+              <p className="name user">{message.user.name}</p>
+              <p className="message other">{message.chat}</p>
             </div>
           )}
         </div>
