@@ -40,7 +40,8 @@ export function EditorForm({
       setType(titleParts[3] || "");
       setTime(titleParts[5] || "");
       setDate(titleParts[4] || "");
-      setGender(editData.gender || "성별무관");
+      const genderInfo = titleParts[6];
+    setGender(genderInfo === "동성" ? "동성" : "성별무관");
     }
   }, [editData]);
 
