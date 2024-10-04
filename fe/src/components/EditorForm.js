@@ -41,12 +41,12 @@ export function EditorForm({
       setTime(titleParts[5] || "");
       setDate(titleParts[4] || "");
       const genderInfo = titleParts[6];
-    setGender(genderInfo === "동성" ? "동성" : "성별무관");
+      setGender(genderInfo === "동성" ? "동성" : "성별무관");
     }
   }, [editData]);
 
   useEffect(() => {
-    console.log('PostingForm - 예약 마감 여부:', isReservationEnded);
+    // console.log('PostingForm - 예약 마감 여부:', isReservationEnded);
   }, [isReservationEnded]);
 
   const handleSubmit = (e) => {
@@ -75,7 +75,7 @@ export function EditorForm({
       title: title,
     };
 
-    console.log('수정된 데이터 (서버로 전송 전):', editedTrip);
+    // console.log('수정된 데이터 (서버로 전송 전):', editedTrip);
     onEdit(editedTrip);
   };
 
@@ -97,7 +97,7 @@ export function EditorForm({
         }
 
         const updatedTitle = `${editData.title} [예약마감]`;
-        console.log(updatedTitle);
+        // console.log(updatedTitle);
         const response = await axios.patch(`/posts/patch/${editData.id}`,
           { title: updatedTitle },
           { headers: { 'Authorization': `${token}` } }
@@ -168,17 +168,17 @@ export function EditorForm({
         cost: parseInt(paymentAmount)
       };
 
-      console.log('결제 요청 데이터:', paymentData);
+      // console.log('결제 요청 데이터:', paymentData);
 
       const response = await axios.post('/point/payment', paymentData, {
         headers: { 'Authorization': `${token}` }
       });
 
 
-      console.log('결제 응답:', response.data);
+      // console.log('결제 응답:', response.data);
 
       if (response.status) {
-        console.log('결제 성공:', response.data);
+        // console.log('결제 성공:', response.data);
         showNotification(`${paymentAmount}원 결제가 완료되었습니다.`, 'success');
         setPaymentAmount('');
         window.location.reload()

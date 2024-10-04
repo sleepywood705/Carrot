@@ -20,7 +20,7 @@ export function PosterForm({ onSubmit, onClose, mapData }) {
   }, []);
 
   useEffect(() => {
-    console.log('mapData 변경됨:', mapData);
+    // console.log('mapData 변경됨:', mapData);
   }, [mapData]);
 
   const createTitle = (mapData, type, date, time, taxiCapacity, gender) => {
@@ -87,10 +87,10 @@ export function PosterForm({ onSubmit, onClose, mapData }) {
         taxiCapacity: type === '택시' ? taxiCapacity : undefined,
         gender: type !== '택시' ? gender : undefined
       };
-      console.log('Sending post data:', postData);
+      // console.log('Sending post data:', postData);
 
       const postResponse = await axios.post('/posts/post', postData, config);
-      console.log('Post가 성공적으로 생성되었습니다:', postResponse.data);
+      // console.log('Post가 성공적으로 생성되었습니다:', postResponse.data);
 
       onSubmit({ ...postResponse.data, ...postData });
       onClose();

@@ -5,7 +5,7 @@ import { Poster } from "../components/Poster";
 import { Editor } from "../components/Editor";
 import { Board } from "../components/Board"
 import { Search } from "../components/Search";
-import { ConfirmModal } from "../components/ConfirmModal"; 
+import { ConfirmModal } from "../components/ConfirmModal";
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
@@ -66,13 +66,13 @@ export function Main() {
     setError(null);
     try {
       const response = await axios.get('/posts/gets');
-      
+
       if (response.data && Array.isArray(response.data.data)) {
         const tripsWithReservationStatus = response.data.data.map(trip => ({
           ...trip,
           isReservationCompleted: trip.isReservationCompleted || false
         }));
-        console.log('Fetched trips:', tripsWithReservationStatus); // 추가된 로그
+        // console.log('Fetched trips:', tripsWithReservationStatus); // 추가된 로그
         setTrips(tripsWithReservationStatus);
         applyFiltersAndSearch(); // 필터와 검색 조건을 다시 적용합니다.
         checkForNewReservations(tripsWithReservationStatus);
@@ -96,9 +96,9 @@ export function Main() {
         headers: { 'Authorization': `${token}` }
       });
       setUserId(response.data.data.id);
-   
+
     } catch (error) {
-  
+
     }
   };
 
@@ -213,7 +213,7 @@ export function Main() {
   const handleSearch = (newSearchParams) => {
     setSearchParams(newSearchParams);
     const searchResults = applyFiltersAndSearch(newSearchParams);
-    
+
     if (searchResults.length === 0) {
       setPendingSearchParams(newSearchParams);
       setShowConfirmModal(true);
@@ -259,8 +259,7 @@ export function Main() {
         headers: { 'Authorization': token }
       });
 
-      console.log('새 게시물이 생성되었습니다.');
-      // 전체 게시물 목록을 다시 불러옵니다.
+      // console.log('새 게시물이 생성되었습니다.');
       await fetchTrips();
     } catch (error) {
       console.error('게시물 생성 중 오류 발생:', error);
@@ -269,15 +268,15 @@ export function Main() {
   };
 
   const checkForNewReservations = (trips) => {
-    console.log('Checking for new reservations. User ID:', userId);
+    // console.log('Checking for new reservations. User ID:', userId);
     const userPosts = trips.filter(trip => trip.authorId === userId);
-    console.log('User posts:', userPosts);
-    const newReservations = userPosts.flatMap(post => 
-      (post.reservations || []).filter(reservation => 
+    // console.log('User posts:', userPosts);
+    const newReservations = userPosts.flatMap(post =>
+      (post.reservations || []).filter(reservation =>
         !viewedReservations.includes(reservation.id)
       )
     );
-    console.log('New reservations:', newReservations);
+    // console.log('New reservations:', newReservations);
 
     if (newReservations.length > 0) {
       showNewReservationNotification(newReservations);
@@ -316,7 +315,7 @@ export function Main() {
     e.preventDefault();
     setSearchParams(searchInputs);
     const searchResults = applyFiltersAndSearch(searchInputs);
-    
+
     if (searchResults.length === 0) {
       setPendingSearchParams(searchInputs);
       setShowConfirmModal(true);
@@ -327,7 +326,7 @@ export function Main() {
   return (
     <div id="Main">
       <Header />
-      <ToastContainer position="bottom-right"/>
+      <ToastContainer position="bottom-right" />
       <Search
         searchInputs={searchInputs}
         onInputChange={handleSearchInputChange}

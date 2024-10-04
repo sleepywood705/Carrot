@@ -1,13 +1,13 @@
 import { FilterButtons } from './FilterButtons'
 
 export function Board({
-    isLoading,
-    error,
-    filteredTrips,
-    handleEditClick,
-    userId, activeFilter,
-    onFilterChange,
-    onWriteClick 
+  isLoading,
+  error,
+  filteredTrips,
+  handleEditClick,
+  userId, activeFilter,
+  onFilterChange,
+  onWriteClick
 }) {
   return (
     <section id="Board">
@@ -26,8 +26,8 @@ export function Board({
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .map((trip, index) => {
               const titleParts = trip.title.split(" ");
-              console.log("Trip title:", trip.title); // 타이틀 전체 로그
-              console.log("Gender info from title:", titleParts[6]); // 성별 정보 로그
+              // console.log("Trip title:", trip.title); 
+              // console.log("Gender info from title:", titleParts[6]); 
 
               const reservationCount = trip.reservations ? trip.reservations.length : 0;
               const isUserReserved = trip.reservations && trip.reservations.some(reservation => reservation.bookerId === userId);
@@ -55,7 +55,7 @@ export function Board({
                     {trip.author?.name || "알 수 없음"}{" "}
                   </div>
                   <div className="post-type"
-                    style={{background : `url(${backgroundImage}) center/cover no-repeat`}}
+                    style={{ background: `url(${backgroundImage}) center/cover no-repeat` }}
                   >
                     <div className="Cover">
                       {isReservationClosed ? (

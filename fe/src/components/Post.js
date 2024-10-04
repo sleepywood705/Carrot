@@ -8,7 +8,7 @@ export function Post({ isOpen, onClose, onSubmit }) {
 
   // handleMapSubmit 함수 수정
   const handleMapSubmit = (data) => {
-    console.log('Map data received:', data); // 데이터 확인
+    // console.log('Map data received:', data); // 데이터 확인
     setMapData({
       startName: data.startName,
       endName: data.endName,
@@ -48,7 +48,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
   }, []);
 
   useEffect(() => {
-    console.log('mapData 변경됨:', mapData);
+    // console.log('mapData 변경됨:', mapData);
   }, [mapData]);
 
   const createTitle = (mapData, type, date, time, taxiCapacity, gender) => {
@@ -115,10 +115,10 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
         taxiCapacity: type === '택시' ? taxiCapacity : undefined,
         gender: type !== '택시' ? gender : undefined
       };
-      console.log('Sending post data:', postData);
+      // console.log('Sending post data:', postData);
 
       const postResponse = await axios.post('/posts/post', postData, config);
-      console.log('Post가 성공적으로 생성되었습니다:', postResponse.data);
+      // console.log('Post가 성공적으로 생성되었습니다:', postResponse.data);
 
       onSubmit({ ...postResponse.data, ...postData });
       onClose();
@@ -135,7 +135,7 @@ export function PostingForm({ onSubmit, onClose, mapData }) {
 
   return (
     <form onSubmit={handleSubmit} className="PostingForm">
-      <button onClick={handleCloseModal} className="btn_close"/>
+      <button onClick={handleCloseModal} className="btn_close" />
       <div className="row">
         <h2>유형을 선택해 주세요</h2>
         <select value={type} onChange={(e) => setType(e.target.value)}>

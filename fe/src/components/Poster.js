@@ -25,7 +25,7 @@ export function Poster({ isOpen, onClose, onSubmit }) {
   }, [isOpen, onClose]);
 
   const handleMapSubmit = (data) => {
-    console.log('Map data received:', data); // 데이터 확인
+    // console.log('Map data received:', data); // 데이터 확인
     setMapData({
       startName: data.startName,
       endName: data.endName,

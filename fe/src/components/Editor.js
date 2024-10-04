@@ -57,8 +57,8 @@ export function Editor({
 
   useEffect(() => {
     if (isOpen && editData) {
-      console.log('Editor - 받은 editData:', editData);
-      console.log('Editor - 예약 마감 여부:', isReservationEnded);
+      // console.log('Editor - 받은 editData:', editData);
+      // console.log('Editor - 예약 마감 여부:', isReservationEnded);
     }
   }, [isOpen, editData, isReservationEnded]);
 
@@ -100,7 +100,7 @@ export function Editor({
         throw new Error('인증 토큰이 없습니다. 다시 로그인해 주세요.');
       }
 
-      console.log('서버로 전송되는 데이터:', editedTrip);
+      // console.log('서버로 전송되는 데이터:', editedTrip);
 
       const response = await axios.patch(`/posts/patch/${editData.id}`, editedTrip, {
         headers: { 'Authorization': `${token}` }
@@ -154,14 +154,14 @@ export function Editor({
         bookerId: userId,
       };
 
-      console.log('예약 데이터 (서버로 전송 전):', reserveData);
+      // console.log('예약 데이터 (서버로 전송 전):', reserveData);
 
       const response = await axios.post('/reserve/reserve', reserveData, {
         headers: { 'Authorization': `${token}` }
       });
 
       if (response.status === 201) {
-        console.log('예약 성공:', response.data);
+        // console.log('예약 성공:', response.data);
         toast.success('예약이 완료되었습니다.');
         onClose();
         refreshPosts();
@@ -175,7 +175,7 @@ export function Editor({
   const handleCancelReservation = async () => {
     const token = localStorage.getItem('token');
     if (!token || !userReservation) {
-      console.log('토큰이 없거나 예약 정보가 없습니다.');
+      // console.log('토큰이 없거나 예약 정보가 없습니다.');
       return;
     }
 
@@ -187,13 +187,13 @@ export function Editor({
 
       console.log('Reservation check response:', checkResponse.data);
 
-      
+
       const cancelResponse = await axios.delete(`/reserve/delete/${userReservation.id}`, {
         headers: { 'Authorization': `${token}` }
       });
 
       if (cancelResponse.status) {
-        console.log('예약 취소 성공:', cancelResponse.data);
+        // console.log('예약 취소 성공:', cancelResponse.data);
         toast.success('예약이 취소되었습니다.');
         onClose();
         refreshPosts();

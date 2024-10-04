@@ -24,7 +24,7 @@ export function Login({ onLogin }) {
       const response = await axios.post('/users/signin', { email, password });
 
       const token = response.headers['authorization']
-      
+
       if (token) {
         localStorage.setItem('token', token);
         const userResponse = await axios.get('/users/me', {
@@ -41,7 +41,7 @@ export function Login({ onLogin }) {
       } else {
         alert('No token received.');
       }
-      console.log("successfully logged in");
+      // console.log("successfully logged in");
     } catch (error) {
       console.error('Login error:', error);
       alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
@@ -53,7 +53,7 @@ export function Login({ onLogin }) {
       <Header />
       <img src="/img/logo.svg" alt="logo" />
       <h2>당신 근처의 마차</h2>
-      <p>동네라서 가능한 모든 것<br/>지금 내 동네에서 카풀을 시작해 보세요</p>
+      <p>동네라서 가능한 모든 것<br />지금 내 동네에서 카풀을 시작해 보세요</p>
       <form onSubmit={handleSubmit} id="form_login">
         <span>
           <label>이메일</label>

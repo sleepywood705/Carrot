@@ -26,7 +26,7 @@ const KakaoMap = ({ onMapSubmit, initialTitle }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [lastSubmittedData, setLastSubmittedData] = useState(null);
   const [title, setTitle] = useState(initialTitle || '');
-  
+
   useEffect(() => {
     const script = document.createElement('script');
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=c2828d7dee20f4b50bd4e887a055a84b&libraries=services&autoload=false`;
@@ -120,7 +120,7 @@ const KakaoMap = ({ onMapSubmit, initialTitle }) => {
     if (!map) return;
 
     let markerColor, markerText;
-    switch(type) {
+    switch (type) {
       case 'S':
         markerColor = '#ff7f00'; // 초록색
         markerText = '출';
@@ -222,7 +222,7 @@ const KakaoMap = ({ onMapSubmit, initialTitle }) => {
         if (data.features && data.features.length > 0) {
           data.features.forEach(feature => {
             if (feature.geometry.type === "LineString") {
-              const path = feature.geometry.coordinates.map(coord => 
+              const path = feature.geometry.coordinates.map(coord =>
                 new window.kakao.maps.LatLng(coord[1], coord[0])
               );
               paths.push(path);
@@ -245,7 +245,7 @@ const KakaoMap = ({ onMapSubmit, initialTitle }) => {
           }
 
           // 새로운 폴리라인 생성
-          const newPolylines = paths.map(path => 
+          const newPolylines = paths.map(path =>
             new window.kakao.maps.Polyline({
               path: path,
               strokeWeight: 5,
@@ -335,7 +335,7 @@ const KakaoMap = ({ onMapSubmit, initialTitle }) => {
       const updatedWaypoints = [];
       for (let i = 0; i < waypoints.length; i++) {
         if (waypoints[i].name) {
-          const coords = await new Promise(resolve => 
+          const coords = await new Promise(resolve =>
             searchPlaceByName(waypoints[i].name, `W${i}`, resolve)
           );
           if (coords) {
@@ -370,10 +370,10 @@ const KakaoMap = ({ onMapSubmit, initialTitle }) => {
         taxiCost,
         title // 업데이트된 title 포함
       };
-      
+
       // 콘솔에 저장된 데이터 출력
       if (JSON.stringify(routeData) !== JSON.stringify(lastSubmittedData)) {
-        console.log('저장된 경로 데이터:', routeData);
+        // console.log('저장된 경로 데이터:', routeData);
         onMapSubmit(routeData);
         setLastSubmittedData(routeData);
       }
@@ -383,11 +383,11 @@ const KakaoMap = ({ onMapSubmit, initialTitle }) => {
   useEffect(() => {
     if (initialTitle) {
       const titleParts = initialTitle.split(" ");
-    
-      
+
+
       setStartName(titleParts[0]);
       setEndName(titleParts[2]);
-      
+
       // 경유지 확인 로직
       if (titleParts[7] && titleParts[7] !== '[예약마감]' && titleParts[7] !== '[결제완료]' && titleParts[7] !== "") {
         setWaypoints([{ name: titleParts[7] }]);
@@ -422,14 +422,14 @@ const KakaoMap = ({ onMapSubmit, initialTitle }) => {
       </div>
       <div className="row">
         <div className="outline input-grid">
-          <input 
-            type="text" 
-            id="startName" 
-            name="startName" 
-            placeholder="출발지 이름을 입력하세요" 
+          <input
+            type="text"
+            id="startName"
+            name="startName"
+            placeholder="출발지 이름을 입력하세요"
             value={startName}
             onChange={(e) => setStartName(e.target.value)}
-            required 
+            required
             className="location-input"
           />
           {waypoints.length > 0 && (
@@ -441,14 +441,14 @@ const KakaoMap = ({ onMapSubmit, initialTitle }) => {
               className="location-input"
             />
           )}
-          <input 
-            type="text" 
-            id="endName" 
-            name="endName" 
-            placeholder="도착지 이름을 입력하세요" 
+          <input
+            type="text"
+            id="endName"
+            name="endName"
+            placeholder="도착지 이름을 입력하세요"
             value={endName}
             onChange={(e) => setEndName(e.target.value)}
-            required 
+            required
             className="location-input"
           />
           <button type="button" onClick={toggleWaypoint} className="toggle-waypoint">
@@ -456,10 +456,10 @@ const KakaoMap = ({ onMapSubmit, initialTitle }) => {
           </button>
         </div>
       </div>
-      
+
       <div className="row">
-       
-        <div className="costResult"> 
+
+        <div className="costResult">
           <p>거리 : {(distance / 1000).toFixed(2)} km</p>
           <p>예상 시간 : {Math.round(duration / 60)} 분</p>
         </div>

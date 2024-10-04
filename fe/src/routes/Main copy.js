@@ -3,7 +3,7 @@ import "./Main.css";
 import { Post } from "../components/Post.js";
 import { Editor } from "../components/Editor.js";
 import axios from "../api/axios.js";
-import ConfirmModal from "./ConfirmModal.js"; 
+import ConfirmModal from "./ConfirmModal.js";
 
 export function Main() {
   const [trips, setTrips] = useState([]);
@@ -39,13 +39,13 @@ export function Main() {
     setError(null);
     try {
       const response = await axios.get('/posts/gets');
-      
+
       if (response.data && Array.isArray(response.data.data)) {
         const tripsWithReservationStatus = response.data.data.map(trip => ({
           ...trip,
           isReservationCompleted: trip.isReservationCompleted || false
         }));
-        console.log('Fetched trips:', tripsWithReservationStatus); // 추가된 로그
+        // console.log('Fetched trips:', tripsWithReservationStatus); // 추가된 로그
         setTrips(tripsWithReservationStatus);
         applyFiltersAndSearch(); // 필터와 검색 조건을 다시 적용합니다.
       } else {
@@ -68,9 +68,9 @@ export function Main() {
         headers: { 'Authorization': `${token}` }
       });
       setUserId(response.data.data.id);
-   
+
     } catch (error) {
-  
+
     }
   };
 
@@ -142,7 +142,7 @@ export function Main() {
       setSelectedTrip(updatedTrip);
       setIsEditModalOpen(true);
     } catch (error) {
-   
+
       alert('예약 정보를 가져오는 데 실패했습니다. 다시 시도해 주세요.');
     } finally {
       setIsReservationLoading(false);
@@ -178,7 +178,7 @@ export function Main() {
   const handleSearch = (newSearchParams) => {
     setSearchParams(newSearchParams);
     const searchResults = applyFiltersAndSearch();
-    
+
     if (searchResults.length === 0) {
       setPendingSearchParams(newSearchParams);
       setShowConfirmModal(true);
@@ -219,7 +219,7 @@ export function Main() {
         headers: { 'Authorization': token }
       });
 
-      console.log('새 게시물이 생성되었습니다.');
+      // console.log('새 게시물이 생성되었습니다.');
       // 전체 게시물 목록을 다시 불러옵니다.
       await fetchTrips();
     } catch (error) {
@@ -307,7 +307,7 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
                     </div>
                     <div className="card-title">
                       <div className="user-type">
-      
+
                         <span className={`type type-${tripType}`}>
                           {titleParts[3]}
                         </span>
@@ -315,7 +315,7 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
                           {titleParts[3] === "택시" ? titleParts[6] : genderInfo}
                         </span>
                       </div>
-                      <div 
+                      <div
                         className={`switch ${isSameGender ? 'switch-on' : ''}`}
                       >
                         <div className="gear"></div>
@@ -324,35 +324,34 @@ export function Board({ isLoading, error, filteredTrips, handleEditClick, userId
                   </div>
                   <div className="row2">
                     <div className="route">
-                    <p>경로
-                    <span>
-                      {trip.title.split(" ")[0]} → 
-                      {trip.title.split(" ")[7] && 
-                      trip.title.split(" ")[7] !== '[예약마감]' &&
-                      trip.title.split(" ")[7] !== '[결제완료]' &&
-                      trip.title.split(" ")[7] !== "" &&
-                      trip.title.split(" ")[7] !== "undefined"
-                        ? `${trip.title.split(" ")[7]} → ` 
-                        : ''}
-                      {trip.title.split(" ")[2]}
-                    </span>
-                    </p>
-                      
+                      <p>경로
+                        <span>
+                          {trip.title.split(" ")[0]} →
+                          {trip.title.split(" ")[7] &&
+                            trip.title.split(" ")[7] !== '[예약마감]' &&
+                            trip.title.split(" ")[7] !== '[결제완료]' &&
+                            trip.title.split(" ")[7] !== "" &&
+                            trip.title.split(" ")[7] !== "undefined"
+                            ? `${trip.title.split(" ")[7]} → `
+                            : ''}
+                          {trip.title.split(" ")[2]}
+                        </span>
+                      </p>
+
                     </div>
                     <div className="date">
-                    <p>날짜<span>{trip.title.split(" ")[4]}{" "}</span></p>
-                    <p>출발<span>{trip.title.split(" ")[5]}</span></p>
+                      <p>날짜<span>{trip.title.split(" ")[4]}{" "}</span></p>
+                      <p>출발<span>{trip.title.split(" ")[5]}</span></p>
                     </div>
                   </div>
                   {(isReservationClosed || reservationCount > 0) && (
-                    <div 
-                      className={`row3 ${
-                        isReservationClosed 
-                          ? 'booking'
-                          : reservationCount > 0 
-                            ? 'booking-finished'
-                            : ''
-                      }`}
+                    <div
+                      className={`row3 ${isReservationClosed
+                        ? 'booking'
+                        : reservationCount > 0
+                          ? 'booking-finished'
+                          : ''
+                        }`}
                     >
                       {isReservationClosed ? "예약 마감" :
                         (reservationCount > 0 ? `${reservationCount}명 예약 중` : "")
