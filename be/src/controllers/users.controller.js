@@ -115,17 +115,6 @@ export class UsersController {
             return res.status(500).json({ error, message: '서버 오류' });
         }
     };
-    processPayment = async (req, res, next) => {
-        try {
-            const { payer, receiver, cost } = req.body;
-            const result = await this.usersService.processPayment(payer, receiver, cost);
-            return res.status(200).json(result);
-        } catch (error) {
-            // next(err);
-            console.log("error : ", error)
-            return res.status(500).json({ error, message: '서버 오류' });
-        }
-    }
 
     getUserReservations = async (req, res, next) => {
         try {

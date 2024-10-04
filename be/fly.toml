@@ -13,23 +13,35 @@ primary_region = 'nrt'
   processes = ['app']
 
 [[services]]
-  protocol = "tcp"
   internal_port = 4000
-  processes = ["app"]
-
+  protocol = "tcp"
   [[services.ports]]
     port = 80
     handlers = ["http"]
-    force_https = true
-
+  
   [[services.ports]]
     port = 443
     handlers = ["tls", "http"]
+
+  [services.concurrency]
+    soft_limit = 25
+    hard_limit = 50
+
+[[services]]
+  internal_port = 5001
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 5001
+    handlers = ["http"]
   
-  [[services.tcp_checks]]
-    interval = "15s"
-    timeout = "2s"
-    grace_period = "1s"
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+  [services.concurrency]
+    soft_limit = 25
+    hard_limit = 50
 
 [[vm]]
   memory = '1gb'
@@ -38,3 +50,8 @@ primary_region = 'nrt'
 
 [env]
   PORT = "4000"
+  DATABASE_URL = "mysql://root:757131@svc.sel4.cloudtype.app:30327/project_mysql"
+  FRONTEND_URL = "https://carrotfe10011341.fly.dev"
+  JWT_SECRET = "jwtsecret"
+  HTTP_PORT= "4000"  
+  SOCKET_PORT= "5001"  

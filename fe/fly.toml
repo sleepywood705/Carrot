@@ -16,7 +16,26 @@ primary_region = 'nrt'
   min_machines_running = 0
   processes = ['app']
 
+[[services]]
+  protocol = "tcp"
+  internal_port = 5001
+  processes = ["app"]
+
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+ 
+
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+
+[env]
+  REACT_APP_BACKEND_URL = "https://flycarrot10011413.fly.dev"
+  REACT_APP_SOCKET_URL = "wss://flycarrot10011413.fly.dev"

@@ -41,6 +41,4 @@ RUN apt-get update -qq && \
 # Copy built application from build stage
 COPY --from=build /app /app
 
-# Expose port and set the command to start the server
-EXPOSE 3000
 CMD ["yarn", "start"]

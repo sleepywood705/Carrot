@@ -8,23 +8,10 @@ dotenv.config();
 
 const httpServer = createServer(app);
 
-const allowedOrigins = [
-  "https://carrotfe10011341.fly.dev",
-  "http://localhost:3000"
-];
-
 const io = new Server(httpServer, {
   cors: {
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        console.log(`Blocked by CORS: ${origin}`);
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    origin: "https://carrotfe10011341.fly.dev",
+    methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
     credentials: true,
   },
