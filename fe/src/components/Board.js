@@ -25,8 +25,10 @@ export function Board({
           {filteredTrips
             .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
             .map((trip, index) => {
-
               const titleParts = trip.title.split(" ");
+              console.log("Trip title:", trip.title); // 타이틀 전체 로그
+              console.log("Gender info from title:", titleParts[6]); // 성별 정보 로그
+
               const reservationCount = trip.reservations ? trip.reservations.length : 0;
               const isUserReserved = trip.reservations && trip.reservations.some(reservation => reservation.bookerId === userId);
               const isReservationClosed = trip.title.endsWith('[예약마감]');
@@ -76,10 +78,10 @@ export function Board({
                         )
                         : (
                           <>
-                            <span className={`carpool ${isSameGender ? 'switch-on' : ''}`}>
+                            <span className={`carpool ${!isSameGender ? 'switch-on' : ''}`}>
                               성별무관
                             </span>
-                            <span className={`carpool ${isSameGender ? '' : 'switch-on'}`}>
+                            <span className={`carpool ${isSameGender ? 'switch-on' : ''}`}>
                               동성끼리
                             </span>
                           </>
